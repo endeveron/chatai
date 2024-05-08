@@ -1,19 +1,29 @@
 :root {
-  --topbar-h: 64px;
-  --chat-input-h: 64px;
+  --bar-h: 64px;
+}
+
+@media only screen and (min-height: 768px) {
+  :root {
+    --bar-h: 72px;
+  }
+}
+
+:root {
+  --topbar-h: var(--bar-h);
+  --chat-input-h: var(--bar-h);
   --avatar: 56px;
 }
 
 .topbar {
-  @apply bg-topbar bg-opacity-25;
+  @apply bg-topbar/25;
   height: var(--topbar-h);
 }
 
 .chat-container {
   width: 100%;
   max-width: 696px;
-  padding-right: var(--gap-half);
-  padding-left: var(--gap-half);
+  padding-right: var(--gap-1-2);
+  padding-left: var(--gap-1-2);
 }
 
 .column-stack,
@@ -44,19 +54,14 @@
   gap: 0;
 }
 
-/* :root(:not(.dark)) .chat-list_items {
-  padding-top: 2px;
-  padding-bottom: 2px;
-} */
-
 /* Chat Item */
 
 .chat-item {
-  user-select: none;
   padding-right: var(--gap);
   padding-left: var(--gap);
-  padding-top: var(--gap-half);
-  padding-bottom: var(--gap-half);
+  padding-top: var(--gap-1-2);
+  padding-bottom: var(--gap-1-2);
+  user-select: none;
 }
 
 .chat-item:not(.active) {
@@ -64,7 +69,7 @@
 }
 
 .chat-item.active {
-  @apply bg-background;
+  @apply bg-gradient-to-r from-card to-background;
 }
 
 .chat-item_avatar .avatar {
@@ -78,6 +83,10 @@
   align-items: center;
 }
 
+.chat-note {
+  @apply flex flex-col items-center justify-center w-full;
+}
+
 .chat .topbar {
   align-self: stretch;
 }
@@ -87,17 +96,24 @@
 }
 
 .chat-message {
-  cursor: default;
-  margin-top: var(--gap-half);
+  margin-top: var(--gap-1-2);
+  user-select: none;
+}
+
+.chat-message:last-child {
+  margin-bottom: var(--gap-1-4);
 }
 
 .chat-message .typing {
-  @apply ml-2;
+  @apply m-2;
 }
 
 .chat-message.role-hm {
   @apply justify-end;
-  user-select: none;
+}
+
+.chat-message_content {
+  cursor: pointer;
 }
 
 .chat-message.role-hm .chat-message_content {
@@ -119,6 +135,16 @@
   display: flex;
   align-items: center;
   height: var(--chat-input-h);
+}
+
+.chat-input input {
+  @apply focus-visible:ring-0;
+}
+
+/* Chat Notification */
+
+.chat-notification {
+  display: none;
 }
 
 /* Chat Details */
@@ -229,6 +255,17 @@
   @apply absolute top-5 left-3 opacity-80;
 }
 
+@media only screen and (min-height: 768px) {
+  .sign-out-btn {
+    @apply top-6;
+  }
+
+  .chat-item {
+    padding-top: var(--gap-3-4);
+    padding-bottom: var(--gap-3-4);
+  }
+}
+
 @media only screen and (max-width: 479px) {
   .translate-chat-xs,
   .translate-new-chat-xs {
@@ -245,6 +282,10 @@
   .new-chat {
     width: auto;
     flex-grow: 1;
+  }
+
+  .chat-notification {
+    @apply flex flex-col items-center justify-center w-full text-muted-foreground cursor-default opacity-70;
   }
 
   .people-list_wrapper {

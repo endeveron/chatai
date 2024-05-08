@@ -71,14 +71,14 @@ const ChatMenu = ({ clearChat }: TChatMenuProps) => {
           {clearChat.show && (
             <DropdownMenuItem
               onClick={handleClearChat}
-              className="dropdown-menu_item !cursor-pointer"
+              className="dropdown-menu_item"
             >
               Clear chat
             </DropdownMenuItem>
           )}
           <DropdownMenuItem
             onClick={handleDeleteChat}
-            className="dropdown-menu_item text-destructive !cursor-pointer"
+            className="dropdown-menu_item"
           >
             Delete chat
           </DropdownMenuItem>

@@ -136,6 +136,11 @@ export default async function Page({ params }: { params: { slug: string } }) {
           <Chat {...(chatItem as TChatItem)} fetchedMessages={messages} />
         )}
 
+        {/* Select chat notification */}
+        {!isNewChat && !chatItem && userChats.length > 0 && (
+          <div className="chat-notification">No chat selected</div>
+        )}
+
         {/* Chat details component */}
         {!isNewChat && chatItem && <ChatDetails />}
       </main>

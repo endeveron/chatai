@@ -47,7 +47,7 @@
 
     --icon: 240 10% 20%;
     --border: 240 10% 80%;
-    --button-border: 240 10% 85%;
+    --button-border: 240 10% 92%;
     --input: 240 10% 80%;
     --ring: 240 10% 4%;
     --middletone: 240 10% 70%;
@@ -59,32 +59,32 @@
     --background: 240 10% 10%;
     --foreground: 0 0% 98%;
 
-    --background-secondary: 240 10% 20%;
-    --foreground-secondary: 0 0% 85%;
+    --background-secondary: 240 10% 18%;
+    --foreground-secondary: 0 0% 90%;
 
     --card: 240 10% 17%;
-    --card-foreground: 240 10% 85%;
+    --card-foreground: 240 10% 90%;
 
-    --chat-message: 200 90% 15%;
-    --chat-message-foreground: 200 5% 90%;
+    --chat-message: 240 10% 25%;
+    --chat-message-foreground: 240 5% 95%;
 
     --topbar: 240 10% 25%;
-    --topbar-foreground: 240 10% 85%;
+    --topbar-foreground: 240 10% 90%;
 
     --sidebar: 240 10% 20%;
     --sidebar-foreground: 240 10% 95%;
 
     --popover: 240 10% 4%;
-    --popover-foreground: 0 0% 98%;
+    --popover-foreground: 240 10% 90%;
 
     --primary: 0 0% 98%;
     --primary-foreground: 240 6% 10%;
 
-    --secondary: 240 6% 16%;
+    --secondary: 240 8% 16%;
     --secondary-foreground: 0 0% 98%;
 
     --muted: 240 4% 16%;
-    --muted-foreground: 240 5% 64.9%;
+    --muted-foreground: 240 6% 60%;
 
     --accent: 240 4% 16%;
     --accent-foreground: 0 0% 98%;
@@ -97,8 +97,8 @@
 
     --icon: 240 6% 75%;
     --border: 240 6% 20%;
-    --button-border: 240 6% 18%;
-    --input: 240 6% 20%;
+    --button-border: 240 8% 25%;
+    --input: 240 6% 30%;
     --ring: 240 6% 84%;
     --middletone: 240 6% 55%;
   }

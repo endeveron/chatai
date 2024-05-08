@@ -1,6 +1,8 @@
 'use client';
 
 import Avatar from '@/components/chat/avatar';
+import { useToast } from '@/components/ui/use-toast';
+import useCopyToClipboard from '@/lib/hooks/useCopyToClipboard';
 import { TBaseChatMessage } from '@/lib/types/chat.types';
 import { AvatarKey, MessageRole } from '@/lib/types/person.types';
 import { cn } from '@/lib/utils';
@@ -18,8 +20,19 @@ const ChatMessage = ({
   role,
   timestamp,
 }: TChatMessageProps) => {
+  const toast = useToast();
+  const [copy] = useCopyToClipboard();
+
   const isAi = role === MessageRole.ai;
   const isHuman = role === MessageRole.human;
+
+  const handleContentClick = () => {
+    copy(content);
+    toast.toast({
+      title: 'Message text copied to clipboard',
+      duration: 3000,
+    });
+  };
 
   const avatar = isAi && (
     <Avatar avatarKey={avatarKey} avatarBlur={avatarBlur} emotion={emotion} />
@@ -34,7 +47,10 @@ const ChatMessage = ({
     >
       {avatar}
       <div className="chat-message_content-wrapper flex items-center">
-        <div className="chat-message_content py-4 px-6 rounded-3xl rounded-tl-0 text-sm">
+        <div
+          onClick={handleContentClick}
+          className="chat-message_content py-4 px-6 rounded-3xl rounded-tl-0 text-sm"
+        >
           {content}
         </div>
       </div>
