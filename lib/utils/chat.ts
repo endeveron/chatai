@@ -32,19 +32,28 @@ export const createQuestionTemplate = ({
   personName: string;
   personInstructions: string;
 }) => {
-  // Add the person's name to the instructions
-  const instructions = personInstructions.replace(/{personName}/g, personName);
-  const beHonest = personInstructions.includes('{beHonest}');
-  let altAnswerInstructions = `If you don't have enough information from the context `;
-
-  // Alternative answer instructions
   // Get an alternate answer to a difficult question
   const altAnswer = getRandom(altAnswerList);
-  const commonInstruction = `don't understand the question, use the following answer: ${altAnswer}`;
+  const commonInstructions = `don't understand the question, use the following answer: ${altAnswer}`;
+  let altAnswerInstructions = `If you don't have enough information from the context `;
+
+  // Add the person's name to the instructions
+  let instructions = personInstructions.replace(/{personName}/g, personName);
+
+  // Add guidelines about honesty. Find a honesty keyword `{beHonest}`
+  const beHonest = personInstructions.includes('{beHonest}');
+
+  // Instructions for the case when AI doesn't understand the question,
+  // doesn't have enouth info to answer the question...
   if (beHonest) {
-    altAnswerInstructions += `or ${commonInstruction}`;
+    // ...and is NOT ALLOWED to provide fictitious facts.
+    altAnswerInstructions += `or ${commonInstructions}`;
+
+    // Remove the keyword `{beHonest}` from the instructions
+    instructions = instructions.replace(/{beHonest}/, '');
   } else {
-    altAnswerInstructions += `provide fictitious facts about you with a some details from the context. If you ${commonInstruction}`;
+    // ...and been ALLOWED to provide fictitious facts.
+    altAnswerInstructions += `provide fictitious facts about you with a some details from the context. If you ${commonInstructions}`;
   }
 
   return PromptTemplate.fromTemplate(`

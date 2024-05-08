@@ -163,6 +163,7 @@ export const verifyEmailToken = async ({
 
     return { success: true, data: 'onboard' };
   } catch (err: any) {
+    console.log(err);
     return {
       success: false,
       error: {
