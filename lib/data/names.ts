@@ -1,0 +1,26 @@
+export const names = {
+  female: [
+    'Sophia',
+    'Ariana',
+    'Emma',
+    'Emily',
+    'Mia',
+    'Amelia',
+    'Lily',
+    'Scarlett',
+    'Natalie',
+    'Stella',
+  ],
+  male: [
+    'Ethan',
+    'William',
+    'Lucas',
+    'Alexander',
+    'Michael',
+    'Daniel',
+    'Liam',
+    'Oliver',
+    'Henry',
+    'Sebastian',
+  ],
+};

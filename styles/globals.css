@@ -1,0 +1,242 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Colors */
+
+@layer base {
+  :root {
+    --background: 240 5% 96%;
+    --foreground: 240 10% 4%;
+
+    --background-secondary: 240 10% 93%;
+    --foreground-secondary: 240 10% 10%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 240 10% 4%;
+
+    --chat-message: 208 75% 90%;
+    --chat-message-foreground: 0 0% 0%;
+
+    --topbar: 0 0% 100%;
+    --topbar-foreground: 240 10% 0%;
+
+    --sidebar: 240 10% 20%;
+    --sidebar-foreground: 240 10% 95%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 10% 4%;
+
+    --primary: 240 6% 10%;
+    --primary-foreground: 0 0% 98%;
+
+    --secondary: 240 4.8% 98%;
+    --secondary-foreground: 240 6% 10%;
+
+    --muted: 240 4.8% 95.9%;
+    --muted-foreground: 240 3.8% 50%;
+
+    --accent: 240 4.8% 95.9%;
+    --accent-foreground: 240 6% 10%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+
+    --inverse: 240 10% 10%;
+    --inverse-foreground: 0 0% 98%;
+
+    --icon: 240 10% 20%;
+    --border: 240 10% 80%;
+    --button-border: 240 10% 85%;
+    --input: 240 10% 80%;
+    --ring: 240 10% 4%;
+    --middletone: 240 10% 70%;
+
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: 240 10% 10%;
+    --foreground: 0 0% 98%;
+
+    --background-secondary: 240 10% 20%;
+    --foreground-secondary: 0 0% 85%;
+
+    --card: 240 10% 17%;
+    --card-foreground: 240 10% 85%;
+
+    --chat-message: 200 90% 15%;
+    --chat-message-foreground: 200 5% 90%;
+
+    --topbar: 240 10% 25%;
+    --topbar-foreground: 240 10% 85%;
+
+    --sidebar: 240 10% 20%;
+    --sidebar-foreground: 240 10% 95%;
+
+    --popover: 240 10% 4%;
+    --popover-foreground: 0 0% 98%;
+
+    --primary: 0 0% 98%;
+    --primary-foreground: 240 6% 10%;
+
+    --secondary: 240 6% 16%;
+    --secondary-foreground: 0 0% 98%;
+
+    --muted: 240 4% 16%;
+    --muted-foreground: 240 5% 64.9%;
+
+    --accent: 240 4% 16%;
+    --accent-foreground: 0 0% 98%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+
+    --inverse: 240 5% 96%;
+    --inverse-foreground: 240 10% 4%;
+
+    --icon: 240 6% 75%;
+    --border: 240 6% 20%;
+    --button-border: 240 6% 18%;
+    --input: 240 6% 20%;
+    --ring: 240 6% 84%;
+    --middletone: 240 6% 55%;
+  }
+}
+
+@layer base {
+  body {
+    @apply bg-background text-foreground;
+  }
+
+  h1,
+  h2,
+  h3 {
+    @apply tracking-tight font-bold scroll-m-20;
+  }
+
+  h1 {
+    @apply text-3xl lg:text-5xl text-opacity-90;
+  }
+
+  h2,
+  h3 {
+    @apply first:mt-0;
+  }
+
+  h2 {
+    @apply text-2xl;
+  }
+
+  h3 {
+    @apply text-xl;
+  }
+
+  .title {
+    @apply cursor-default;
+  }
+
+  p {
+    @apply leading-7 [&:not(:first-child)]:mt-4;
+  }
+
+  a {
+    @apply font-medium;
+  }
+
+  .link {
+    @apply underline underline-offset-4;
+  }
+
+  ul {
+    @apply ml-6 list-disc [&>li]:mt-2;
+  }
+
+  .space {
+    flex-grow: 1;
+  }
+
+  .elipsis {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  .clickable {
+    @apply cursor-pointer;
+  }
+
+  .inactive {
+    @apply !pointer-events-none !text-muted-foreground;
+  }
+
+  .inactive button {
+    @apply opacity-5;
+  }
+
+  .form-loading {
+    transition: opacity 0.2s ease;
+  }
+
+  .icon,
+  .action-icon,
+  .loading-icon {
+    @apply text-icon;
+  }
+
+  .action-icon {
+    @apply cursor-pointer opacity-40 hover:opacity-100 transition-opacity;
+  }
+
+  .loading-icon {
+    animation: rotating 0.5s linear infinite;
+  }
+
+  .card {
+    @apply rounded-xl bg-card text-card-foreground shadow-sm;
+  }
+
+  .dropdown-menu_item {
+    @apply !p-4;
+  }
+
+  .flip-y {
+    transform: rotateY(180deg);
+  }
+
+  /* TEMP */
+
+  .avatar_emotion {
+    display: none;
+  }
+  .chat-message .avatar_emotion {
+    display: block;
+    position: absolute;
+    opacity: 0;
+    bottom: -1.25rem;
+    left: 50%;
+    transform: translate(-50%);
+    will-change: opacity;
+    transition: opacity 0.2s ease-in-out;
+  }
+  .chat-message .avatar:hover .avatar_emotion {
+    opacity: 0.7;
+  }
+}
+
+@keyframes rotating {
+  from {
+    -ms-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    -webkit-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  to {
+    -ms-transform: rotate(360deg);
+    -moz-transform: rotate(360deg);
+    -webkit-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}

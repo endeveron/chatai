@@ -1,0 +1,17 @@
+/* Auth form */
+
+.auth-form {
+  @apply relative w-72 flex flex-col space-y-4;
+}
+
+.auth-form_button {
+  @apply w-full;
+}
+
+.auth-form_link {
+  @apply mt-2 mb-1 text-center text-sm text-muted-foreground hover:text-foreground;
+}
+
+.form-control-with-icon input {
+  @apply pr-10;
+}
