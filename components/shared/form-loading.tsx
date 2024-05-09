@@ -18,7 +18,7 @@ const FormLoading = ({ isPending }: TFormLoadingProps) => {
       )}
     >
       <div className="form-loading_icon-wrapper">
-        <LoadingIcon className="-my-8" />
+        <LoadingIcon className="-my-6" />
       </div>
     </div>
   );

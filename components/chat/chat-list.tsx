@@ -1,8 +1,7 @@
-import SignOutButton from '@/components/auth/sign-out-btn';
 import ChatItem from '@/components/chat/chat-item';
 import NewChatButton from '@/components/chat/new-chat-btn';
 import Topbar from '@/components/chat/topbar';
-// import MenuButton from '@/components/shared/menu-button';
+import MainMenu from '@/components/shared/main-menu';
 import { TChatItem } from '@/lib/types/chat.types';
 
 type TChatListProps = {
@@ -14,12 +13,13 @@ const ChatList = async ({ items }: TChatListProps) => {
 
   return (
     <div className="chat-list">
-      <Topbar className="justify-center relative">
-        {/* <MenuButton /> */}
-        <SignOutButton />
-        <NewChatButton />
+      <Topbar>
+        <MainMenu />
+        <div className="w-full flex justify-center">
+          <NewChatButton />
+        </div>
       </Topbar>
-      <div className="chat-list_items column-stack">
+      <ul className="chat-list_items column-stack" role="list">
         {items.map((c) => (
           <ChatItem
             chatId={c.chatId}
@@ -29,7 +29,7 @@ const ChatList = async ({ items }: TChatListProps) => {
             key={c.chatId}
           />
         ))}
-      </div>
+      </ul>
     </div>
   );
 };

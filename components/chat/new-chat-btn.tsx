@@ -16,7 +16,7 @@ const NewChatButton = (props: TNewChatButtonProps) => {
 
   return (
     <Link href={href} className="flex">
-      <Button variant={'secondary'} className="new-chat-button">
+      <Button variant="secondary" className="new-chat-button">
         New chat
       </Button>
     </Link>

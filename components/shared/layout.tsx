@@ -6,6 +6,7 @@ import { TWithChildren } from '@/lib/types/common.types';
 import '@/styles/globals.css';
 import '@/styles/layout.css';
 import { cn } from '@/lib/utils';
+import ThemeInit from '@/components/shared/theme-init';
 
 const font = Mulish({
   weight: ['400', '500', '600', '700'],
@@ -28,6 +29,7 @@ const Layout = async ({ children, isAlignCenter }: TLayoutProps) => {
         >
           {children}
           <Toaster />
+          <ThemeInit />
         </div>
       </body>
     </html>

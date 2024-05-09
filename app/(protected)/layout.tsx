@@ -1,5 +1,5 @@
-import type { Metadata, Viewport } from 'next';
 import Layout from '@/components/shared/layout';
+import type { Metadata, Viewport } from 'next';
 
 export const viewport: Viewport = {
   interactiveWidget: 'resizes-content',

@@ -19,11 +19,12 @@ const ChatItem = ({ chatId, title, person, personName }: TChatItemProps) => {
     router.push(chatPath);
   };
   return (
-    <div
+    <li
       className={cn('chat-item flex items-center', {
         active: isActive,
       })}
       onClick={openChat}
+      role="listitem"
     >
       <div className="chat-item_avatar">
         <Avatar avatarKey={person.avatarKey} avatarBlur={person.avatarBlur} />
@@ -36,7 +37,7 @@ const ChatItem = ({ chatId, title, person, personName }: TChatItemProps) => {
           {person.status}
         </div>
       </div>
-    </div>
+    </li>
   );
 };
 

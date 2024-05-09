@@ -14,11 +14,14 @@ const SignOutButton = () => {
     signOut();
   };
   return (
-    <div onClick={handleClick} className="sign-out-btn absolute top-5 left-4">
+    <div onClick={handleClick} className="sign-out-btn">
       {pending ? (
         <LoadingIcon />
       ) : (
-        <SignOutIcon className="action-icon flip-y" />
+        <div className="flex gap-4 cursor-default">
+          <SignOutIcon className="icon opacity-40 flip-y" />
+          Sign Out
+        </div>
       )}
     </div>
   );

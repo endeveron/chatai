@@ -27,6 +27,7 @@ const Chat = ({
   fetchedMessages,
 }: TChatProps) => {
   const pathname = usePathname();
+
   const [messages, setMessages] = useState<TChatMessage[]>([]);
   const [isPending, setPending] = useState(false);
 
@@ -79,7 +80,7 @@ const Chat = ({
   }, [fetchedMessages]);
 
   return (
-    <section className="chat flex-grow">
+    <section className="chat">
       <Topbar>
         <TopbarHeader title={title || personName} navPath={CHAT_LIST_PATH}>
           <div className="space"></div>
