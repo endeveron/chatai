@@ -116,7 +116,6 @@ export default async function Page({ params }: { params: { slug: string } }) {
         className={cn('', {
           'translate-chat-xs': chatId,
           'translate-new-chat-xs': isNewChat && userChats.length > 0,
-          // 'show-details': isChatDetails,
         })}
       >
         {/* Chat list component */}
@@ -142,7 +141,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
         )}
 
         {/* Chat details component */}
-        {!isNewChat && chatItem && <ChatDetails />}
+        {!isNewChat && chatItem && <ChatDetails {...(chatItem as TChatItem)} />}
       </main>
     </>
   );

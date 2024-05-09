@@ -4,7 +4,7 @@
 
 @media only screen and (min-height: 768px) {
   :root {
-    --bar-h: 72px;
+    --bar-h: 80px;
   }
 }
 
@@ -254,8 +254,12 @@
 
 @media only screen and (min-height: 768px) {
   .chat-item {
-    padding-top: var(--gap-3-4);
-    padding-bottom: var(--gap-3-4);
+    padding-top: var(--gap);
+    padding-bottom: var(--gap);
+  }
+
+  .chat-input form {
+    transform: translateY(-0.25rem);
   }
 }
 

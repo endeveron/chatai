@@ -93,7 +93,8 @@ export const fetchUserChats = async ({
     const chats = await ChatModel.find({ user: userId }).populate({
       path: 'person',
       model: PersonModel,
-      select: '_id title gender avatarKey personKey status bio avatarBlur',
+      select:
+        '_id title gender avatarKey personKey status bio avatarBlur imgBlur',
     });
 
     return {
