@@ -28,7 +28,7 @@ const TopbarHeader = ({ title, navPath, children }: TTopbarHeaderProps) => {
   return (
     <header className="topbar-header w-full flex items-center">
       {navEl}
-      <h2 className="new-chat_title title">{title}</h2>
+      <h2 className="title w-full flex justify-center">{title}</h2>
       {children}
     </header>
   );

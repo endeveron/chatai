@@ -47,12 +47,12 @@ const ChatMessage = ({
     >
       {avatar}
       <div className="chat-message_content-wrapper flex items-center">
-        <div
+        <p
           onClick={handleContentClick}
           className="chat-message_content py-4 px-6 rounded-3xl rounded-tl-0 text-sm"
         >
           {content}
-        </div>
+        </p>
       </div>
     </div>
   );

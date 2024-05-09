@@ -83,7 +83,7 @@ const Chat = ({
     <section className="chat">
       <Topbar>
         <TopbarHeader title={title || personName} navPath={CHAT_LIST_PATH}>
-          <div className="space"></div>
+          {/* <div className="space"></div> */}
           <ChatMenu
             clearChat={{ show: !!messages.length, chatId, path: pathname }}
           />

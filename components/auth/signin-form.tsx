@@ -58,7 +58,7 @@ const SignInForm = (props: TSignInFormProps) => {
       }
     } catch (err: any) {
       toastError(err);
-      // setPending(false);
+      setPending(false);
     }
   };
 

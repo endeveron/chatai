@@ -1,7 +1,7 @@
 'use client';
 
 import { signOut } from 'next-auth/react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import LoadingIcon from '@/components/shared/loading-icon';
 import MenuDotsVButton from '@/components/shared/menu-dots-button';
@@ -9,25 +9,46 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { useTheme } from '@/lib/hooks/useTheme';
+import SunIcon from '@/public/assets/ui/sun.svg';
+import MoonIcon from '@/public/assets/ui/moon.svg';
 import SignOutIcon from '@/public/assets/ui/sign-out.svg';
+import { User } from 'next-auth';
 
-type TMenuProps = {};
+type TMenuProps = {
+  user: User | undefined;
+};
 
-const MainMenu = (props: TMenuProps) => {
+const MainMenu = ({ user }: TMenuProps) => {
   const { toggleTheme } = useTheme();
   const [signoutPending, setSignoutPending] = useState(false);
+  const [theme, setTheme] = useState('');
 
   const handleToggleTheme = () => {
     toggleTheme();
+    setTheme((prev) => (prev === 'light' ? 'dark' : 'light'));
   };
 
   const handleSignOut = () => {
     setSignoutPending(true);
     signOut();
   };
+
+  useEffect(() => {
+    const lsTheme = localStorage.getItem('theme');
+    setTheme(lsTheme || 'light');
+  }, []);
+
+  const themeIcon =
+    theme === 'light' ? (
+      <MoonIcon className="menu-icon" />
+    ) : (
+      <SunIcon className="menu-icon" />
+    );
 
   return (
     <div className="main-menu h-6">
@@ -41,12 +62,26 @@ const MainMenu = (props: TMenuProps) => {
           <MenuDotsVButton />
         </DropdownMenuTrigger>
         <DropdownMenuContent>
-          <DropdownMenuItem onClick={handleToggleTheme}>
-            Toggle Theme
-          </DropdownMenuItem>
+          {user && (
+            <>
+              <div className="main-menu_user-data cursor-default px-4 pt-4 pb-2">
+                <div className="text-lg font-bold">{user.name}</div>
+                <div className="text-sm text-muted-foreground">
+                  {user.email}
+                </div>
+              </div>
+            </>
+          )}
+
           <DropdownMenuItem onClick={handleSignOut}>
-            <SignOutIcon className="icon menu-icon flip-y" />
-            <span>Sign Out</span>
+            <SignOutIcon className="menu-icon flip-y" />
+            Sign Out
+          </DropdownMenuItem>
+
+          <DropdownMenuSeparator />
+          <DropdownMenuItem onClick={handleToggleTheme}>
+            {themeIcon}
+            {theme === 'light' ? 'Dark' : 'Light'} Mode
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>

@@ -1,3 +1,4 @@
+import { auth } from '@/auth';
 import ChatItem from '@/components/chat/chat-item';
 import NewChatButton from '@/components/chat/new-chat-btn';
 import Topbar from '@/components/chat/topbar';
@@ -11,10 +12,12 @@ type TChatListProps = {
 const ChatList = async ({ items }: TChatListProps) => {
   if (!items.length) return null;
 
+  const session = await auth();
+
   return (
     <div className="chat-list">
       <Topbar>
-        <MainMenu />
+        <MainMenu user={session?.user} />
         <div className="w-full flex justify-center">
           <NewChatButton />
         </div>

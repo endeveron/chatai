@@ -29,8 +29,8 @@ const ChatDetails = async ({ person }: TChatDetailsProps) => {
           <div className="mt-1 text-sm font-medium opacity-50">
             {person.status}
           </div>
-          <div className="mt-5 text-sm font-medium leading-6 opacity-80">
-            {person.bio}
+          <div className="mt-6 text-sm font-medium opacity-80">
+            <p>{person.bio}</p>
           </div>
         </div>
       </div>

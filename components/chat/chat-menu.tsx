@@ -10,6 +10,8 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { clearChat as clear, deleteChat } from '@/lib/actions/chat.actions';
 import { useErrorHandler } from '@/lib/hooks/error';
+import CleanIcon from '@/public/assets/ui/clean.svg';
+import DeleteIcon from '@/public/assets/ui/delete.svg';
 import { CHAT_LIST_PATH } from '@/routes';
 
 type TChatMenuProps = {
@@ -66,14 +68,14 @@ const ChatMenu = ({ clearChat }: TChatMenuProps) => {
           <MenuDotsVButton />
         </DropdownMenuTrigger>
         <DropdownMenuContent>
-          {/* <DropdownMenuLabel>My Account</DropdownMenuLabel>
-          <DropdownMenuSeparator /> */}
           {clearChat.show && (
             <DropdownMenuItem onClick={handleClearChat}>
-              Clear chat
+              <CleanIcon className="menu-icon" />
+              Clean chat
             </DropdownMenuItem>
           )}
           <DropdownMenuItem onClick={handleDeleteChat}>
+            <DeleteIcon className="menu-icon" />
             Delete chat
           </DropdownMenuItem>
         </DropdownMenuContent>
