@@ -358,6 +358,18 @@
     flex-direction: column;
     align-items: stretch;
   }
+
+  .chat-details_image {
+    opacity: 0.85;
+  }
+
+  :root.dark .chat-details_image {
+    opacity: 0.7;
+  }
+
+  .chat-details:hover .chat-details_image {
+    opacity: 100;
+  }
 }
 
 @keyframes pulse {

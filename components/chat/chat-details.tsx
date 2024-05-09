@@ -13,7 +13,7 @@ const ChatDetails = async ({ person }: TChatDetailsProps) => {
     <div className="chat-details">
       {/* <Topbar></Topbar> */}
       <div className="chat-details_content">
-        <div className="chat-details_image h-80 relative">
+        <div className="chat-details_image h-80 relative transition-opacity">
           <Image
             src={imageSrc}
             placeholder="blur"

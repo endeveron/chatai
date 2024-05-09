@@ -31,7 +31,7 @@ const DropdownMenuSubTrigger = React.forwardRef<
   <DropdownMenuPrimitive.SubTrigger
     ref={ref}
     className={cn(
-      'flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none focus:bg-accent data-[state=open]:bg-accent transition-colors',
+      'flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none focus:bg-popover data-[state=open]:bg-popover transition-colors',
       inset && 'pl-8',
       className
     )}
@@ -88,7 +88,7 @@ const DropdownMenuItem = React.forwardRef<
   <DropdownMenuPrimitive.Item
     ref={ref}
     className={cn(
-      'dropdown-menu-item relative flex cursor-default select-none items-center rounded-sm p-4 text-sm outline-none transition-colors focus:bg-accent data-[disabled]:pointer-events-none data-[disabled]:opacity-50',
+      'dropdown-menu-item relative flex cursor-default select-none items-center rounded-sm p-4 text-sm outline-none transition-colors focus:bg-background data-[disabled]:pointer-events-none data-[disabled]:opacity-50',
       // !! Removed className `focus:text-accent-foreground`
       inset && 'pl-8',
       className

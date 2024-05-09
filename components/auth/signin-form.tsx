@@ -52,15 +52,13 @@ const SignInForm = (props: TSignInFormProps) => {
       setPending(true);
       const res = await signIn(signinData);
       if (!res?.success) {
-        console.log('E1');
         toastError(res);
         setPending(false);
         return;
       }
     } catch (err: any) {
       toastError(err);
-      console.log('E2');
-      setPending(false);
+      // setPending(false);
     }
   };
 
