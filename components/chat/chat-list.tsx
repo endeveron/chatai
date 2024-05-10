@@ -23,7 +23,7 @@ const ChatList = async ({ items }: TChatListProps) => {
           <NewChatButton />
         </div>
       </Topbar>
-      <ScrollArea className="chat-list_items column-stack">
+      <ScrollArea className="chat-list_items">
         {items.map((c) => (
           <ChatItem
             chatId={c.chatId}

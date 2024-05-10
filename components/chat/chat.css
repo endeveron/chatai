@@ -50,13 +50,12 @@
 
 .chat-list_items {
   height: calc(100dvh - var(--topbar-h));
-  gap: 1px;
 }
 
 /* Chat Item */
 
 .chat-item {
-  @apply select-none transition-colors;
+  @apply select-none transition-colors mt-0.5;
   padding-right: var(--gap);
   padding-left: var(--gap);
   padding-top: var(--gap-1-2);
@@ -72,7 +71,7 @@
 }
 
 .chat-item:not(.active):hover {
-  @apply bg-popover/60;
+  @apply bg-popover/55;
 }
 
 .chat-item_avatar .avatar {
