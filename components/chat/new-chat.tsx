@@ -76,7 +76,7 @@ const NewChat = ({ userId, isSingle, people }: TCreateChatProps) => {
   return (
     <section
       className={cn('new-chat', {
-        'full-width': isSingle,
+        single: isSingle,
       })}
     >
       <Topbar>

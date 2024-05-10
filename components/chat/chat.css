@@ -163,7 +163,6 @@
 
 .new-chat {
   @apply items-center;
-  /* flex-grow: 1; */
 }
 
 .new-chat .topbar {

@@ -11,6 +11,8 @@ type TErrorProps = {
 const ErrorDialog = ({ error, onReset }: TErrorProps) => {
   const router = useRouter();
 
+  console.log('ERR', error);
+
   return (
     <div className="error w-full max-width-[420px] flex flex-col items-center px-4 py-20 m-auto">
       <h2>Oops!</h2>

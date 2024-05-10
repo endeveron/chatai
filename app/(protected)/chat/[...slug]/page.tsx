@@ -27,12 +27,11 @@ export default async function Page({ params }: { params: { slug: string } }) {
   const session = await auth();
   if (!session?.user) return null;
 
-  const userId = session.user.id!;
+  let userEmail = session.user.email!;
   let urlParam1 = params.slug[0] || ChatUrlParam.list; // 'list' | 'new' | chat object id
   // let urlParam2 = params.slug[1]; // Chat details toggle
 
   let chatId = '';
-  let isChatDetails = false;
   let isNewChat = false;
   let userChatsData: TChatData[] = [];
   let userChats: TChatItem[] = [];
@@ -41,7 +40,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
   let people: TPersonChatData<string>[] = [];
 
   // Fetch user's chats
-  const userChatsRes = await fetchUserChats({ userId });
+  const userChatsRes = await fetchUserChats({ userEmail });
   // console.log('userChatsRes', userChatsRes);
   if (!userChatsRes?.success) {
     throw new Error(
@@ -49,7 +48,8 @@ export default async function Page({ params }: { params: { slug: string } }) {
     );
   }
   // userChatsData = JSON.parse(userChatsRes.data);
-  userChatsData = userChatsRes.data;
+  const userId = userChatsRes.data.userId;
+  userChatsData = userChatsRes.data.chats;
 
   // Redirect to `/chat/new` if the user doesn't have any chats
   if (urlParam1 === ChatUrlParam.list && userChatsData.length === 0) {

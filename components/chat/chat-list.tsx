@@ -14,15 +14,11 @@ const ChatList = async ({ items }: TChatListProps) => {
   if (!items.length) return null;
 
   const session = await auth();
-  const user = {
-    name: session?.user?.name || '',
-    email: session?.user?.email || '',
-  };
 
   return (
     <div className="chat-list">
       <Topbar>
-        <MainMenu user={user} />
+        <MainMenu user={session?.user} />
         <div className="w-full flex justify-center">
           <NewChatButton />
         </div>

@@ -17,6 +17,7 @@ import { MessageRole } from '@/lib/types/person.types';
 import { createChainForPerson, extractEmotionFromText } from '@/lib/utils/chat';
 import { handleActionError } from '@/lib/utils/error';
 import PersonModel from '@/lib/models/person.model';
+import UserModel from '@/lib/models/user.model';
 
 export const createChat = async ({
   userId,
@@ -83,13 +84,26 @@ export const fetchChat = async ({
 };
 
 export const fetchUserChats = async ({
-  userId,
+  userEmail,
 }: {
-  userId: string;
+  userEmail: string;
 }): Promise<TServerActionResult | undefined> => {
   try {
     await connectToDB();
 
+    // Find user by email
+    const user = await UserModel.findOne({ email: userEmail });
+    if (!user) {
+      handleActionError(
+        `Could not find a user for provided email ${userEmail}`,
+        null,
+        true
+      );
+    }
+
+    const userId = user._id;
+
+    // Find chats, populate person
     const chats = await ChatModel.find({ user: userId }).populate({
       path: 'person',
       model: PersonModel,
@@ -100,7 +114,10 @@ export const fetchUserChats = async ({
     return {
       success: true,
       // data: JSON.stringify(chats),
-      data: chats,
+      data: {
+        userId: userId.toString(),
+        chats,
+      },
     };
   } catch (err: any) {
     console.log('err', err);
