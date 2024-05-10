@@ -12,7 +12,7 @@ const ErrorDialog = ({ error, onReset }: TErrorProps) => {
   const router = useRouter();
 
   return (
-    <div className="error flex w-full flex-col items-center px-4 py-20">
+    <div className="error w-full max-width-[420px] flex flex-col items-center px-4 py-20 m-auto">
       <h2>Oops!</h2>
       <p className="mt-4">{error?.message || 'Something went wrong.'}</p>
       <div className="mt-8 flex flex-wrap max-xs:gap-4 gap-8">

@@ -20,7 +20,10 @@ import SignOutIcon from '@/public/assets/ui/sign-out.svg';
 import { User } from 'next-auth';
 
 type TMenuProps = {
-  user: User | undefined;
+  user: {
+    name?: string;
+    email?: string;
+  };
 };
 
 const MainMenu = ({ user }: TMenuProps) => {

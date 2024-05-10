@@ -2,11 +2,7 @@
 // See https://nextjs.org/docs/app/building-your-application/routing/error-handling
 'use client';
 
-import { useRouter } from 'next/navigation';
-
-import { Button } from '@/components/ui/button';
-import ErrorComponent from '@/components/shared/error-dialog';
-// import { useEffect } from 'react';
+import ErrorDialog from '@/components/shared/error-dialog';
 
 export default function Error({
   error,
@@ -15,10 +11,5 @@ export default function Error({
   error: Error & { digest?: string };
   reset: () => void;
 }) {
-  // useEffect(() => {
-  //   // Log the error to an error reporting service
-  //   console.error(error.message);
-  // }, [error]);
-
-  return <ErrorComponent error={error} onReset={reset} />;
+  return <ErrorDialog error={error} onReset={reset} />;
 }
