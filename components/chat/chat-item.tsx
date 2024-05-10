@@ -19,7 +19,7 @@ const ChatItem = ({ chatId, title, person, personName }: TChatItemProps) => {
     router.push(chatPath);
   };
   return (
-    <li
+    <div
       className={cn('chat-item flex items-center', {
         active: isActive,
       })}
@@ -33,11 +33,11 @@ const ChatItem = ({ chatId, title, person, personName }: TChatItemProps) => {
         <div className="chat-item_name font-bold elipsis">
           {title || personName}
         </div>
-        <div className="chat-item_status text-sm elipsis opacity-50 mt-0.5">
+        <div className="chat-item_status text-sm elipsis opacity-60 mt-0.5">
           {person.status}
         </div>
       </div>
-    </li>
+    </div>
   );
 };
 

@@ -39,7 +39,7 @@
 
 .chat-list,
 .chat-details {
-  @apply text-foreground2 bg-gradient-to-b from-background2 to-background2/20 cursor-default transition-colors;
+  @apply text-foreground2 bg-background2 cursor-default transition-colors;
 }
 
 /* Chat List */
@@ -49,6 +49,7 @@
 }
 
 .chat-list_items {
+  height: calc(100dvh - var(--topbar-h));
   gap: 1px;
 }
 
@@ -115,16 +116,16 @@
 }
 
 .chat-message_content {
-  @apply cursor-default transition-colors leading-6;
+  @apply py-4 px-6 text-sm leading-6 rounded-[32px] cursor-default transition-colors;
+}
+
+.chat-message.role-ai .chat-message_content {
+  @apply bg-card text-card-foreground sm:mr-10;
 }
 
 .chat-message.role-hm .chat-message_content {
   @apply bg-card2 text-card2-foreground ml-[4.5rem];
   border-bottom-right-radius: 0;
-}
-
-.chat-message.role-ai .chat-message_content {
-  @apply bg-card text-card-foreground sm:mr-10;
 }
 
 .chat-message .avatar {

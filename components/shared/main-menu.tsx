@@ -14,7 +14,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { useTheme } from '@/lib/hooks/useTheme';
-import SunIcon from '@/public/assets/ui/sun.svg';
+import LightbulbIcon from '@/public/assets/ui/lightbulb.svg';
 import MoonIcon from '@/public/assets/ui/moon.svg';
 import SignOutIcon from '@/public/assets/ui/sign-out.svg';
 import { User } from 'next-auth';
@@ -47,7 +47,7 @@ const MainMenu = ({ user }: TMenuProps) => {
     theme === 'light' ? (
       <MoonIcon className="menu-icon" />
     ) : (
-      <SunIcon className="menu-icon" />
+      <LightbulbIcon className="menu-icon" />
     );
 
   return (

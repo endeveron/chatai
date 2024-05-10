@@ -62,8 +62,8 @@ const config = {
           foreground: 'hsl(var(--card-foreground) / <alpha-value>)',
         },
         card2: {
-          DEFAULT: 'hsl(var(--chat-message) / <alpha-value>)',
-          foreground: 'hsl(var(--chat-message-foreground) / <alpha-value>)',
+          DEFAULT: 'hsl(var(--card2) / <alpha-value>)',
+          foreground: 'hsl(var(--card2-foreground) / <alpha-value>)',
         },
         topbar: {
           DEFAULT: 'hsl(var(--topbar) / <alpha-value>)',
