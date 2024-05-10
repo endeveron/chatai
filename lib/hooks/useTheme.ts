@@ -1,16 +1,12 @@
-import { useCallback, useEffect, useState } from 'react';
-
-const DEFAULT_THEME = 'light';
-// const html = document.documentElement;
+import { useCallback } from 'react';
 
 /**
  * Allows for toggling between light and dark themes, saving the selected theme to local storage, and updating the HTML tag classes accordingly.
  *
- * @returns - {theme, toggleTheme, initTheme}
+ * @returns - { initTheme, toggleTheme }
  */
 export const useTheme = () => {
-  // const [theme, setTheme] = useState(DEFAULT_THEME);
-
+  // Switch the list of html tag classes
   const updateHTMLClassName = (theme: string) => {
     // Check the list
     const isHtmlDark = document.documentElement.classList.contains('dark');
@@ -27,7 +23,6 @@ export const useTheme = () => {
   };
 
   const initTheme = useCallback(() => {
-    console.log('Init theme');
     const lsTheme = localStorage.getItem('theme');
     if (lsTheme) {
       updateHTMLClassName(lsTheme);
@@ -43,8 +38,6 @@ export const useTheme = () => {
     // Save to local storage
     localStorage.setItem('theme', newTheme);
   };
-
-  // Switch the list of html tag classes
 
   return { initTheme, toggleTheme };
 };

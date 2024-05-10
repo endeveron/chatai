@@ -11,13 +11,13 @@ type TErrorProps = {
 const ErrorDialog = ({ error, onReset }: TErrorProps) => {
   const router = useRouter();
 
-  console.log('ERR', error);
-
   return (
-    <div className="error w-full max-width-[420px] flex flex-col items-center px-4 py-20 m-auto">
-      <h2>Oops!</h2>
-      <p className="mt-4">{error?.message || 'Something went wrong.'}</p>
-      <div className="mt-8 flex flex-wrap max-xs:gap-4 gap-8">
+    <div className="card rounded-xl w-full max-w-[420px] flex flex-col items-center p-8 m-auto">
+      <h2 className="cursor-default">Oops!</h2>
+      <p className="!mt-5 text-sm">
+        {error?.message || 'Something went wrong.'}
+      </p>
+      <div className="mt-7 flex flex-wrap max-xs:gap-4 gap-8">
         <Button
           onClick={
             // Attempt to recover by trying to re-render the segment

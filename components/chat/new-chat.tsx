@@ -44,8 +44,6 @@ const NewChat = ({ userId, isSingle, people }: TCreateChatProps) => {
     // Create chat
     try {
       setPending(true);
-
-      // TODO: fix 'Failed to compile. Cannot get final name for export ...' error if calling server action
       const res = await createChat({
         userId,
         title: values.title,
@@ -69,7 +67,6 @@ const NewChat = ({ userId, isSingle, people }: TCreateChatProps) => {
     if (isSingle) return;
 
     setPerson(personInitValue);
-    // router.push(CHAT_LIST_PATH);
     router.back();
   };
 

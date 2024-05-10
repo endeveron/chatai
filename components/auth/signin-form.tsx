@@ -115,7 +115,7 @@ const SignInForm = (props: TSignInFormProps) => {
             Create an account
           </Link>
         </div>
-        <FormLoading isPending={isPending} />
+        <FormLoading loadigIconClassName="-mt-10" isPending={isPending} />
       </form>
     </Form>
   );

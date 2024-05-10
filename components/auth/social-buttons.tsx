@@ -1,13 +1,13 @@
 'use client';
 
 import { signIn } from 'next-auth/react';
-import { useEffect, useState, useTransition } from 'react';
+import { useState } from 'react';
 
+import FormLoading from '@/components/shared/form-loading';
 import { Button } from '@/components/ui/button';
+import { useErrorHandler } from '@/lib/hooks/error';
 import { SocialProvider } from '@/lib/types/auth.types';
 import { DEFAULT_SIGNIN_REDIRECT } from '@/routes';
-import { useErrorHandler } from '@/lib/hooks/error';
-import { cn } from '@/lib/utils';
 
 type TSocialButtonsProps = {};
 
@@ -28,11 +28,7 @@ const SocialButtons = (props: TSocialButtonsProps) => {
   };
 
   return (
-    <div
-      className={cn('social-buttons flex flex-col gap-4', {
-        'inactive opacity-40 transition-opacity': isPending,
-      })}
-    >
+    <div className="social-buttons relative flex flex-col gap-4">
       <p className="text-center text-sm text-muted-foreground">or</p>
       <Button
         onClick={() => handleClick(SocialProvider.google)}
@@ -41,6 +37,7 @@ const SocialButtons = (props: TSocialButtonsProps) => {
       >
         Sign In with Google
       </Button>
+      <FormLoading isPending={isPending} />
     </div>
   );
 };

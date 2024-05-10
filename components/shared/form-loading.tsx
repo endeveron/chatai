@@ -5,9 +5,10 @@ import { cn } from '@/lib/utils';
 
 type TFormLoadingProps = {
   isPending: boolean;
+  loadigIconClassName?: string;
 };
 
-const FormLoading = ({ isPending }: TFormLoadingProps) => {
+const FormLoading = ({ isPending, loadigIconClassName }: TFormLoadingProps) => {
   return (
     <div
       className={cn(
@@ -17,9 +18,7 @@ const FormLoading = ({ isPending }: TFormLoadingProps) => {
         }
       )}
     >
-      <div className="form-loading_icon-wrapper">
-        <LoadingIcon className="-my-6" />
-      </div>
+      <LoadingIcon className={cn(loadigIconClassName)} />
     </div>
   );
 };

@@ -115,7 +115,7 @@
 }
 
 .chat-message_content {
-  @apply py-4 px-6 text-sm leading-6 rounded-[32px] cursor-default transition-colors;
+  @apply py-4 px-6 text-sm rounded-[32px] cursor-default transition-colors;
 }
 
 .chat-message.role-ai .chat-message_content {

@@ -134,7 +134,7 @@ const OnboardingForm = ({ userObjId }: TOnboardingFormProps) => {
         >
           Create an account
         </Button>
-        <FormLoading isPending={isPending} />
+        <FormLoading loadigIconClassName="-mt-10" isPending={isPending} />
       </form>
     </Form>
   );
