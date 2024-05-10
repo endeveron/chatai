@@ -288,10 +288,6 @@
     display: none;
   }
 
-  .chat-notification {
-    @apply flex flex-col items-center justify-center w-full text-muted-foreground cursor-default opacity-70;
-  }
-
   .people-list_wrapper {
     @apply px-0;
   }
@@ -302,6 +298,46 @@
 
   .new-chat.single .people-list_wrapper {
     width: calc(100dvw - 16px);
+  }
+
+  /* Chat Notification */
+
+  .chat-notification {
+    @apply relative overflow-hidden flex flex-col items-center justify-center w-full cursor-default opacity-65;
+  }
+
+  .chat-notification__bg {
+    position: absolute;
+    inline-size: 631px;
+    block-size: 329px;
+    background: radial-gradient(
+      hsl(240, 10%, 20%),
+      hsla(240, 10%, 20%, 0.5) 30%,
+      hsla(240, 10%, 20%, 0) 85%,
+      hsla(240, 10%, 20%, 0)
+    );
+    mask: url(/assets/images/dotmask.svg) center center / cover;
+    mask-repeat: no-repeat;
+    /* mask-size: 100% 100%; */
+  }
+
+  .dark .chat-notification__bg {
+    background: radial-gradient(
+      hsl(0, 0%, 85%),
+      hsla(0, 0%, 85%, 0.5) 30%,
+      hsla(240, 8%, 20%, 0) 85%,
+      hsla(0, 0%, 85%, 0)
+    );
+  }
+
+  .chat-notification__label {
+    @apply absolute m-0 p-2 text-muted-foreground bg-background transition-colors;
+    inset-block-start: 50%;
+    inset-inline-start: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    inline-size: max-content;
+    max-inline-size: 90vw;
   }
 }
 

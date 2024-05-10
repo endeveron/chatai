@@ -204,23 +204,9 @@
     transform: rotateY(180deg);
   }
 
-  /* TEMP */
-
-  .avatar_emotion {
-    display: none;
-  }
-  .chat-message .avatar_emotion {
-    display: block;
-    position: absolute;
-    opacity: 0;
-    bottom: -1.25rem;
-    left: 50%;
-    transform: translate(-50%);
-    will-change: opacity;
-    transition: opacity 0.2s ease-in-out;
-  }
-  .chat-message .avatar:hover .avatar_emotion {
-    opacity: 0.7;
+  /* For the text-overflow: ellipsis */
+  .scroll-area > div {
+    display: block !important;
   }
 }
 

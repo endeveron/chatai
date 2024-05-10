@@ -31,7 +31,6 @@ const Avatar = ({
           // priority
         />
       </div>
-      <div className="avatar_emotion text-xs">{emotion}</div>
     </div>
   );
 };

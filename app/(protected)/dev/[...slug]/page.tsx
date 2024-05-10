@@ -95,7 +95,9 @@ export default async function Page({ params }: { params: { slug: string } }) {
 
         {/* Select chat notification */}
         {!chatItem && userChats.length > 0 && (
-          <div className="chat-notification">No chat selected</div>
+          <div className="chat-notification">
+            Select a chat to view messages
+          </div>
         )}
 
         {/* Chat details component */}

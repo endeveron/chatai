@@ -15,7 +15,6 @@ const ScrollArea = React.forwardRef<
   >
     <ScrollAreaPrimitive.Viewport
       className="scroll-area h-full w-full rounded-[inherit]"
-      style={{ display: 'block' }} // Important for text ellisis ...
       ref={ref}
     >
       {children}
