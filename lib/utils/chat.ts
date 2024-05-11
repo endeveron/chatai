@@ -101,17 +101,12 @@ const serializeChatHistory = (chatHistory: any) => {
  */
 const performQuestionAnswering = async (input: any) => {
   const messageMemory = input.messageMemory;
+  let chatHistory = input.chatHistory;
   let newQuestion = input.question;
 
-  // Get chat history
-  const savedMemory = await messageMemory.loadMemoryVariables({});
-  const hasHistory = savedMemory.chatHistory.length > 0;
-  const chatHistoryArr = hasHistory ? savedMemory.chatHistory : [];
-  const chatHistoryLength = chatHistoryArr?.length;
+  const chatHistoryLength = chatHistory?.length;
 
-  console.log('[performQuestionAnswering]: chatHistoryArr', chatHistoryArr);
-
-  // Log number of messages in chat history
+  console.log('[performQuestionAnswering]: chatHistory', chatHistory);
   console.log(
     `[performQuestionAnswering]: messages in history: ${chatHistoryLength}`
   );
@@ -120,9 +115,9 @@ const performQuestionAnswering = async (input: any) => {
   const serializedDocs = formatDocumentsAsString(input.context);
 
   // Split the long chat history to summarize old messages
-  if (chatHistoryLength > 14) {
-    const oldMessages = chatHistoryArr.slice(0, -2);
-    const recentMessages = chatHistoryArr.slice(-2);
+  if (chatHistory && chatHistoryLength > 14) {
+    const oldMessages = chatHistory.slice(0, -2);
+    const recentMessages = chatHistory.slice(-2);
 
     // Sort the old messages content
     let humanChatHistoryArr: string[] = [];
@@ -157,8 +152,8 @@ const performQuestionAnswering = async (input: any) => {
   }
 
   // Parse chat history array to a string
-  const chatHistoryString = chatHistoryArr.length
-    ? serializeChatHistory(chatHistoryArr)
+  const chatHistoryString = chatHistory
+    ? serializeChatHistory(chatHistory)
     : '';
 
   if (chatHistoryString) {
@@ -215,6 +210,9 @@ export const createChainForPerson = async ({
   // Initialize a retriever wrapper around the vector store
   const retriever = vectorStore.asRetriever();
 
+  // Get messages history from the buffer memory
+  const messageMemory = await getMessageMemory(chatId);
+
   // Create the main cain
   const chain = RunnableSequence.from([
     {
@@ -222,13 +220,19 @@ export const createChainForPerson = async ({
       question: (input) => input.question,
       // Fetch relevant context based on the question
       context: async (input) => retriever.getRelevantDocuments(input.question),
+      // Fetch the chat history
+      chatHistory: async () => {
+        const savedMemory = await messageMemory.loadMemoryVariables({});
+        const hasHistory = savedMemory.chatHistory.length > 0;
+        return hasHistory ? savedMemory.chatHistory : null;
+      },
       // Add person data
       person: () => ({
         instructions: person.instructions,
         name: person.name,
       }),
       // Get messages history from the buffer memory
-      messageMemory: async () => await getMessageMemory(chatId),
+      messageMemory: () => messageMemory,
     },
     performQuestionAnswering,
   ]);
