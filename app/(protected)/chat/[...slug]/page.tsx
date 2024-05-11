@@ -29,7 +29,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
 
   let userEmail = session.user.email!;
   let urlParam1 = params.slug[0] || ChatUrlParam.list; // 'list' | 'new' | chat object id
-  let urlParam2 = params.slug[1];
+  // let urlParam2 = params.slug[1];
 
   let chatId = '';
   let isNewChat = false;
@@ -64,30 +64,30 @@ export default async function Page({ params }: { params: { slug: string } }) {
 
   if (chatId) {
     // Fetch chat messages
-    const messagesResult = await fetchChatMessages({ chatId });
-    if (messagesResult?.success) {
-      messages = JSON.parse(messagesResult.data);
-    } else {
-      console.log('Could not fetch chat messages.');
+    const messagesRes = await fetchChatMessages({ chatId });
+    if (!messagesRes?.success) {
+      throw new Error(
+        messagesRes?.error.message || 'Could not fetch chat messages.'
+      );
     }
+    messages = JSON.parse(messagesRes.data);
   }
 
   // Fetch a list of people, display a new chat component
   if (urlParam1 === ChatUrlParam.new) {
-    // Fetch a list of people
     const peopleRes = await fetchPeople();
-    if (peopleRes?.success) {
-      const fetchedPeople = peopleRes.data;
-
-      if (fetchedPeople.length) {
-        isNewChat = true;
-      }
-
-      // Parse people data
-      people = fetchedPeople.map(parseChatPersonData);
-    } else {
-      console.log('Could not fetch people data.');
+    if (!peopleRes?.success) {
+      throw new Error(
+        peopleRes?.error.message || 'Could not fetch people data.'
+      );
     }
+    const fetchedPeople = peopleRes.data;
+    if (fetchedPeople.length) {
+      isNewChat = true;
+    }
+
+    // Parse people data
+    people = fetchedPeople.map(parseChatPersonData);
   }
 
   // Configure chat items
