@@ -156,15 +156,15 @@ const performQuestionAnswering = async (input: any) => {
     ? serializeChatHistory(chatHistory)
     : null;
 
-  if (chatHistoryString) {
-    // Invoke the chain to generate a new question
-    const { text } = await questionGeneratorChain.invoke({
-      chatHistory: chatHistoryString,
-      context: serializedDocs,
-      question: input.question,
-    });
-    newQuestion = text;
-  }
+  // if (chatHistoryString) {
+  //   // Invoke the chain to generate a new question
+  //   const { text } = await questionGeneratorChain.invoke({
+  //     chatHistory: chatHistoryString,
+  //     context: serializedDocs,
+  //     question: input.question,
+  //   });
+  //   newQuestion = text;
+  // }
 
   // Create the main chain
   const mainChain = createMainChain({
