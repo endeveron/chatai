@@ -373,7 +373,10 @@ export const askAI = async (
     };
 
     // Create a chain for the person
-    const chainRes = await createChainForPerson(personData);
+    const chainRes = await createChainForPerson({
+      chatId: humanMessageData.chatId,
+      person: personData,
+    });
     if (!chainRes.chain) {
       return handleActionError(
         chainRes.error || 'Could not create vector store'

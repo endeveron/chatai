@@ -99,21 +99,21 @@ const serializeChatHistory = (chatHistory: any) => {
  * context, chat history, and question generation chains.
  */
 const performQuestionAnswering = async (input: any) => {
+  const chatId = input.chat.chatId;
   let newQuestion = input.question;
   let chatHistory = input.chatHistory;
-  let chatHistoryLength = chatHistory?.length;
+  const chatHistoryLength = chatHistory?.length;
+
+  console.log('[performQuestionAnswering]: chatId', chatId);
 
   // Log number of messages in chat history
   chatHistoryLength && console.log(`Messages in history: ${chatHistoryLength}`);
-
-  // // Log chat history
-  // chatHistory && console.log(`chatHistory: ${chatHistoryString}`);
 
   // Serialize context into strings
   const serializedDocs = formatDocumentsAsString(input.context);
 
   // Get buffer memory
-  const messageMemory = getMessageMemory();
+  const messageMemory = getMessageMemory(chatId);
 
   // Split the long chat history to summarize old messages
   if (chatHistory && chatHistoryLength > 14) {
@@ -192,9 +192,13 @@ const performQuestionAnswering = async (input: any) => {
   };
 };
 
-export const createChainForPerson = async (
-  person: TPerson & { name: string }
-) => {
+export const createChainForPerson = async ({
+  chatId,
+  person,
+}: {
+  chatId: string;
+  person: TPerson & { name: string };
+}) => {
   // Get a vector store for the person
   const vectorStore = await getVectorStoreForPerson(person);
   if (!vectorStore) return { error: 'Could not create a vector store' };
@@ -203,7 +207,7 @@ export const createChainForPerson = async (
   const retriever = vectorStore.asRetriever();
 
   // Get buffer memory
-  const messageMemory = getMessageMemory();
+  const messageMemory = getMessageMemory(chatId);
 
   // Create the main cain
   const chain = RunnableSequence.from([
@@ -219,7 +223,9 @@ export const createChainForPerson = async (
       },
       // Fetch relevant context based on the question
       context: async (input) => retriever.getRelevantDocuments(input.question),
-      // Add a person data
+      // Ad chat id
+      chat: () => ({ chatId }),
+      // Add person data
       person: () => ({
         instructions: person.instructions,
         name: person.name,

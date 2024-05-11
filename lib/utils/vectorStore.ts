@@ -37,7 +37,7 @@ export const getPersonDocuments = async ({
     (text: string) => new Document({ pageContent: text })
   );
 
-  // Save docs to a local map
+  // Save docs to documentMap
   documentMap.set(personKey, documents);
 
   return documents;
