@@ -5,8 +5,11 @@ import { BufferMemory } from 'langchain/memory';
 const messageMemoryMap = new Map<string, BufferMemory>();
 // let messageMemory: BufferMemory;
 
-export const getMessageMemory = (chatId: string) => {
+export const getMessageMemory = async (chatId: string) => {
   const memoryFromMap = messageMemoryMap.get(chatId);
+
+  console.log('[getMessageMemory]: memoryFromMap', memoryFromMap);
+
   if (memoryFromMap) return memoryFromMap;
   // if (messageMemory) return messageMemory;
 
@@ -24,6 +27,8 @@ export const getMessageMemory = (chatId: string) => {
     returnMessages: true, // Return as a list of messages. By default, they are returned as a single string.
     // chatHistory, // Store chat history in db
   });
+
+  console.log('[getMessageMemory]: new messageMemory', messageMemory);
 
   // Save chat messages memory to messageMemoryMap
   messageMemoryMap.set(chatId, messageMemory);

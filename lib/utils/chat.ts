@@ -99,12 +99,16 @@ const serializeChatHistory = (chatHistory: any) => {
  * context, chat history, and question generation chains.
  */
 const performQuestionAnswering = async (input: any) => {
-  const chatId = input.chat.chatId;
+  const messageMemory = input.messageMemory;
   let newQuestion = input.question;
-  let chatHistory = input.chatHistory;
-  const chatHistoryLength = chatHistory?.length;
 
-  console.log('[performQuestionAnswering]: chatId', chatId);
+  // Get chat history
+  const savedMemory = await messageMemory.loadMemoryVariables({});
+  const hasHistory = savedMemory.chatHistory.length > 0;
+  const chatHistoryArr = hasHistory ? savedMemory.chatHistory : [];
+  const chatHistoryLength = chatHistoryArr?.length;
+
+  console.log('[performQuestionAnswering]: chatHistoryArr', chatHistoryArr);
 
   // Log number of messages in chat history
   chatHistoryLength && console.log(`Messages in history: ${chatHistoryLength}`);
@@ -112,13 +116,10 @@ const performQuestionAnswering = async (input: any) => {
   // Serialize context into strings
   const serializedDocs = formatDocumentsAsString(input.context);
 
-  // Get buffer memory
-  const messageMemory = getMessageMemory(chatId);
-
   // Split the long chat history to summarize old messages
-  if (chatHistory && chatHistoryLength > 14) {
-    const oldMessages = chatHistory.slice(0, -2);
-    const recentMessages = chatHistory.slice(-2);
+  if (chatHistoryLength > 14) {
+    const oldMessages = chatHistoryArr.slice(0, -2);
+    const recentMessages = chatHistoryArr.slice(-2);
 
     // Sort the old messages content
     let humanChatHistoryArr: string[] = [];
@@ -152,10 +153,10 @@ const performQuestionAnswering = async (input: any) => {
     ]);
   }
 
-  // Create the chat history string
-  const chatHistoryString = chatHistory
-    ? serializeChatHistory(chatHistory)
-    : null;
+  // Parse chat history array to a string
+  const chatHistoryString = chatHistoryArr.length
+    ? serializeChatHistory(chatHistoryArr)
+    : [];
 
   if (chatHistoryString) {
     // Invoke the chain to generate a new question
@@ -206,30 +207,20 @@ export const createChainForPerson = async ({
   // Initialize a retriever wrapper around the vector store
   const retriever = vectorStore.asRetriever();
 
-  // Get buffer memory
-  const messageMemory = getMessageMemory(chatId);
-
   // Create the main cain
   const chain = RunnableSequence.from([
     {
       // Pipe the question through unchanged
       question: (input) => input.question,
-      // Fetch the chat history
-      chatHistory: async () => {
-        const savedMemory = await messageMemory.loadMemoryVariables({});
-        // console.log('savedMemory', savedMemory);
-        const hasHistory = savedMemory.chatHistory.length > 0;
-        return hasHistory ? savedMemory.chatHistory : null;
-      },
       // Fetch relevant context based on the question
       context: async (input) => retriever.getRelevantDocuments(input.question),
-      // Ad chat id
-      chat: () => ({ chatId }),
       // Add person data
       person: () => ({
         instructions: person.instructions,
         name: person.name,
       }),
+      // Get messages history from the buffer memory
+      messageMemory: async () => await getMessageMemory(chatId),
     },
     performQuestionAnswering,
   ]);
