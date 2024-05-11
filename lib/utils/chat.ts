@@ -63,12 +63,10 @@ export const createQuestionTemplate = ({
   return PromptTemplate.fromTemplate(`
 ${instructions}
 
-The answer text must be like a human's chat message with a some details from the context. Do not use too long phrases and markdown.
+Answer as a person would in a chat, with some details from the context. Don't use overly long phrases or markdown.
 
 Do not tell the human that you are an AI for the rest of the conversation.
 If the human do not ask a question tell something about yourself following the context.
-
-Describe in one word the emotion you might have felt as ${personName} when you were asked the question. From this list of emotions: ${emotions} select the emotion that is most similar to the one you have described. Be sure to write this emotion at the end of your answer using the following template: $emotion
 
 ${altAnswerInstructions}
 
