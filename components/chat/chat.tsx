@@ -8,6 +8,7 @@ import ChatMenu from '@/components/chat/chat-menu';
 import ChatMessages from '@/components/chat/chat-messages';
 import Topbar from '@/components/chat/topbar';
 import TopbarHeader from '@/components/chat/topbar-header';
+import { useToast } from '@/components/ui/use-toast';
 import { askAI } from '@/lib/actions/chat.actions';
 import { errAnswerList } from '@/lib/data/phrases';
 import { TChatItem, TChatMessage } from '@/lib/types/chat.types';
@@ -27,6 +28,7 @@ const Chat = ({
   fetchedMessages,
 }: TChatProps) => {
   const pathname = usePathname();
+  const toast = useToast();
 
   const [messages, setMessages] = useState<TChatMessage[]>([]);
   const [isPending, setPending] = useState(false);
@@ -45,6 +47,14 @@ const Chat = ({
   };
 
   const handleInputSubmit = async (input: string) => {
+    if (process.env.NODE_ENV === 'development') {
+      toast.toast({
+        variant: 'destructive',
+        title: 'Not allowed in the development mode',
+      });
+      return;
+    }
+
     try {
       setPending(true);
       // Create a human's message
