@@ -106,21 +106,18 @@ const performQuestionAnswering = async (input: any) => {
   // Get chat history
   const savedMemory = await messageMemory.loadMemoryVariables({});
   const hasHistory = savedMemory.chatHistory.length > 0;
-  const chatHistoryArr = hasHistory ? savedMemory.chatHistory : [];
-  const chatHistoryLength = chatHistoryArr?.length;
+  const chatHistory = hasHistory ? savedMemory.chatHistory : null;
+  const chatHistoryLength = chatHistory?.length;
 
-  // Log number of messages in chat history
-  console.log(
-    `[performQuestionAnswering]: messages in history: ${chatHistoryLength}`
-  );
+  console.log(`[performQA]: messages in history: ${chatHistoryLength}`);
 
   // Serialize context into strings
   const serializedDocs = formatDocumentsAsString(input.context);
 
   // Split the long chat history to summarize old messages
   if (chatHistoryLength > 14) {
-    const oldMessages = chatHistoryArr.slice(0, -2);
-    const recentMessages = chatHistoryArr.slice(-2);
+    const oldMessages = chatHistory.slice(0, -2);
+    const recentMessages = chatHistory.slice(-2);
 
     // Sort the old messages content
     let humanChatHistoryArr: string[] = [];
@@ -155,9 +152,9 @@ const performQuestionAnswering = async (input: any) => {
   }
 
   // Parse chat history array to a string
-  const chatHistoryString = chatHistoryArr.length
-    ? serializeChatHistory(chatHistoryArr)
-    : '';
+  const chatHistoryString = chatHistory
+    ? serializeChatHistory(chatHistory)
+    : null;
 
   if (chatHistoryString) {
     // Invoke the chain to generate a new question
@@ -169,17 +166,15 @@ const performQuestionAnswering = async (input: any) => {
     newQuestion = text;
   }
 
-  // console.log(
-  //   '[performQuestionAnswering]: chatHistoryString',
-  //   chatHistoryString
-  // );
-  console.log('[performQuestionAnswering]: question', newQuestion);
-
   // Create the main chain
   const mainChain = createMainChain({
     personInstructions: input.person.instructions,
     personName: input.person.name,
   });
+
+  console.log('[performQA]: chatHistory', chatHistoryString);
+  console.log('[performQA]: context', serializedDocs);
+  console.log('[performQA]: question', newQuestion);
 
   // Ask AI using the main chain
   const response = await mainChain.invoke({
