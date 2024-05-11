@@ -1,5 +1,7 @@
 :root {
   --bar-h: 64px;
+  --person-card-w: 188px;
+  --avatar: 56px;
 }
 
 @media only screen and (min-height: 768px) {
@@ -11,7 +13,6 @@
 :root {
   --topbar-h: var(--bar-h);
   --chat-input-h: var(--bar-h);
-  --avatar: 56px;
 }
 
 .topbar {
@@ -215,13 +216,17 @@
 }
 
 .person-card_image {
-  @apply shrink-0 rounded-xl w-36 h-44 overflow-hidden;
+  @apply rounded-xl w-36 h-44 overflow-hidden;
   transform: translateY(-1.25rem);
 }
 
 .person-card_content {
   @apply flex flex-col items-center gap-2 px-2 pb-4;
   transform: translateY(-0.25rem);
+}
+
+.person-card_content > div {
+  @apply w-44 px-3 elipsis text-center;
 }
 
 .person-card_description {

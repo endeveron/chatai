@@ -52,7 +52,6 @@ const PersonCard = ({
       <div className="person-card_content">
         <div className="person-card_title font-bold">{title}</div>
         <div className="person-card_description">{status}</div>
-        {/* <div className="person-card_bio">{bio}</div> */}
       </div>
     </div>
   );
