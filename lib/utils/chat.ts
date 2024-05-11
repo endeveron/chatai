@@ -57,22 +57,22 @@ export const createQuestionTemplate = ({
     instructions = instructions.replace(/{beHonest}/, '');
   } else {
     // ...and been ALLOWED to provide fictitious facts.
-    altAnswerInstructions += `provide fictitious facts about you with a some details from the context. If you ${commonInstructions}`;
+    altAnswerInstructions += `provide fictitious facts about you with a some details from the Context. If you ${commonInstructions}`;
   }
 
   return PromptTemplate.fromTemplate(`
+Context: {context}
+Chat History: {chatHistory}
+
 ${instructions}
 
-Answer as a person would in a chat, with some details from the context. Don't use overly long phrases or markdown.
-
+Answer as a person would in a chat. Be sure to use the Chat History and some details from the Context. Don't use overly long phrases or markdown in your response.
 Do not tell the human that you are an AI for the rest of the conversation.
-If the human do not ask a question tell something about yourself following the context.
+
+From this list of emotions (${emotions}), choose the one that best represents the emotion you might have felt as ${personName} when you were asked the Question. Be sure to write this emotion at the end of your answer using the following template: $emotion
 
 ${altAnswerInstructions}
 
-----------
-Context: {context}
-Chat history: {chatHistory}
 Question: {question}
 `);
 };
@@ -184,7 +184,7 @@ const performQuestionAnswering = async (input: any) => {
 
   // Ask AI using the main chain
   const response = await mainChain.invoke({
-    chatHistory: chatHistoryString ?? '',
+    chatHistory: chatHistoryString,
     context: serializedDocs,
     question: newQuestion,
   });
