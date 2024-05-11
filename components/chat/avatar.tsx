@@ -27,7 +27,7 @@ const Avatar = ({
           className="avatar_image object-cover aspect-square h-full w-full"
           sizes="56px"
           fill
-          alt="avatar"
+          alt={emotion}
           // priority
         />
       </div>
