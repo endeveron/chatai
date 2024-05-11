@@ -69,7 +69,7 @@ ${instructions}
 Answer as a person would in a chat. Be sure to use the Chat History and some details from the Context. Don't use overly long phrases or markdown in your response.
 Do not tell the human that you are an AI for the rest of the conversation.
 
-From this list of emotions (${emotions}), choose the one that best represents the emotion you might have felt as ${personName} when you were asked the Question. Be sure to write this emotion at the end of your answer using the following template: $emotion
+From this list of emotions (${emotions}), choose exactly the one that best represents the emotion you might have felt as ${personName} when you were asked the Question. Be sure to write this emotion at the end of your answer using the following template: $emotion
 
 ${altAnswerInstructions}
 
@@ -101,12 +101,15 @@ const serializeChatHistory = (chatHistory: any) => {
  */
 const performQuestionAnswering = async (input: any) => {
   const messageMemory = input.messageMemory;
-  let chatHistory = input.chatHistory;
   let newQuestion = input.question;
 
-  const chatHistoryLength = chatHistory?.length;
+  // Get chat history
+  const savedMemory = await messageMemory.loadMemoryVariables({});
+  const hasHistory = savedMemory.chatHistory.length > 0;
+  const chatHistoryArr = hasHistory ? savedMemory.chatHistory : [];
+  const chatHistoryLength = chatHistoryArr?.length;
 
-  console.log('[performQuestionAnswering]: chatHistory', chatHistory);
+  // Log number of messages in chat history
   console.log(
     `[performQuestionAnswering]: messages in history: ${chatHistoryLength}`
   );
@@ -115,9 +118,9 @@ const performQuestionAnswering = async (input: any) => {
   const serializedDocs = formatDocumentsAsString(input.context);
 
   // Split the long chat history to summarize old messages
-  if (chatHistory && chatHistoryLength > 14) {
-    const oldMessages = chatHistory.slice(0, -2);
-    const recentMessages = chatHistory.slice(-2);
+  if (chatHistoryLength > 14) {
+    const oldMessages = chatHistoryArr.slice(0, -2);
+    const recentMessages = chatHistoryArr.slice(-2);
 
     // Sort the old messages content
     let humanChatHistoryArr: string[] = [];
@@ -152,8 +155,8 @@ const performQuestionAnswering = async (input: any) => {
   }
 
   // Parse chat history array to a string
-  const chatHistoryString = chatHistory
-    ? serializeChatHistory(chatHistory)
+  const chatHistoryString = chatHistoryArr.length
+    ? serializeChatHistory(chatHistoryArr)
     : '';
 
   if (chatHistoryString) {
@@ -166,10 +169,11 @@ const performQuestionAnswering = async (input: any) => {
     newQuestion = text;
   }
 
-  console.log(
-    '[performQuestionAnswering]: chatHistoryString',
-    chatHistoryString
-  );
+  // console.log(
+  //   '[performQuestionAnswering]: chatHistoryString',
+  //   chatHistoryString
+  // );
+  console.log('[performQuestionAnswering]: question', newQuestion);
 
   // Create the main chain
   const mainChain = createMainChain({
@@ -210,9 +214,6 @@ export const createChainForPerson = async ({
   // Initialize a retriever wrapper around the vector store
   const retriever = vectorStore.asRetriever();
 
-  // Get messages history from the buffer memory
-  const messageMemory = await getMessageMemory(chatId);
-
   // Create the main cain
   const chain = RunnableSequence.from([
     {
@@ -220,19 +221,13 @@ export const createChainForPerson = async ({
       question: (input) => input.question,
       // Fetch relevant context based on the question
       context: async (input) => retriever.getRelevantDocuments(input.question),
-      // Fetch the chat history
-      chatHistory: async () => {
-        const savedMemory = await messageMemory.loadMemoryVariables({});
-        const hasHistory = savedMemory.chatHistory.length > 0;
-        return hasHistory ? savedMemory.chatHistory : null;
-      },
       // Add person data
       person: () => ({
         instructions: person.instructions,
         name: person.name,
       }),
       // Get messages history from the buffer memory
-      messageMemory: () => messageMemory,
+      messageMemory: async () => await getMessageMemory(chatId),
     },
     performQuestionAnswering,
   ]);
