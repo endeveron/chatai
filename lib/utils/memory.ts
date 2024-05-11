@@ -5,9 +5,6 @@ import { BufferMemory } from 'langchain/memory';
 
 export const getMessageMemory = async (chatId: string) => {
   const memoryFromMap = messageMemoryMap.get(chatId);
-
-  console.log('[getMessageMemory]: memoryFromMap', memoryFromMap);
-
   if (memoryFromMap) return memoryFromMap;
 
   // // Initialize chat history
@@ -24,8 +21,6 @@ export const getMessageMemory = async (chatId: string) => {
     returnMessages: true, // Return as a list of messages. By default, they are returned as a single string.
     // chatHistory, // Store chat history in db
   });
-
-  console.log('[getMessageMemory]: new messageMemory', messageMemory);
 
   // Save chat messages memory to messageMemoryMap
   messageMemoryMap.set(chatId, messageMemory);
