@@ -29,6 +29,7 @@ export const emotionList = [
   'amazed',
   'amused',
   'confident',
+  'confused',
   'doubt',
   'dreamy',
   'excited',

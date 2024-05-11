@@ -39,6 +39,8 @@ export const createMainChain = ({
     personInstructions,
   });
 
+  console.log('[createMainChain]: questionTemplate', questionTemplate);
+
   return new LLMChain({
     llm: llm,
     prompt: questionTemplate,

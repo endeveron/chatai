@@ -68,8 +68,7 @@ The answer text must be like a human's chat message with a some details from the
 Do not tell the human that you are an AI for the rest of the conversation.
 If the human do not ask a question tell something about yourself following the context.
 
-Be sure to choose an emotion from this list of emotions: [${emotions}] that best matches the emotion you could experience as a ${personName} when you asked the question. 
-Be sure to write this emotion at the end of your answer using the following template: $emotion
+Describe in one word the emotion you might have felt as ${personName} when you were asked the question. From this list of emotions: ${emotions} select the emotion that is most similar to the one you have described. Be sure to write this emotion at the end of your answer using the following template: $emotion
 
 ${altAnswerInstructions}
 
@@ -162,7 +161,7 @@ const performQuestionAnswering = async (input: any) => {
   // Parse chat history array to a string
   const chatHistoryString = chatHistoryArr.length
     ? serializeChatHistory(chatHistoryArr)
-    : [];
+    : '';
 
   if (chatHistoryString) {
     // Invoke the chain to generate a new question
@@ -178,11 +177,6 @@ const performQuestionAnswering = async (input: any) => {
     '[performQuestionAnswering]: chatHistoryString',
     chatHistoryString
   );
-  console.log(
-    '[performQuestionAnswering]: instructions',
-    input.person.instructions
-  );
-  console.log('[performQuestionAnswering]: name', input.person.name);
 
   // Create the main chain
   const mainChain = createMainChain({
