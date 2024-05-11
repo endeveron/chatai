@@ -2,7 +2,7 @@ import { type ClassValue, clsx } from 'clsx';
 import { customAlphabet } from 'nanoid';
 import { twMerge } from 'tailwind-merge';
 
-import { names } from '@/lib/data/names';
+import { names } from '@/lib/data/person';
 import { Gender } from '@/lib/types/person.types';
 
 export function cn(...inputs: ClassValue[]) {

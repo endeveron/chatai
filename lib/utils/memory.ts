@@ -1,9 +1,7 @@
+import { messageMemoryMap } from '@/lib/data/maps';
 import { BufferMemory } from 'langchain/memory';
 // import { MongoDBChatMessageHistory } from '@langchain/mongodb';
 // import { nanoid } from '@/lib/utils';
-
-const messageMemoryMap = new Map<string, BufferMemory>();
-// let messageMemory: BufferMemory;
 
 export const getMessageMemory = async (chatId: string) => {
   const memoryFromMap = messageMemoryMap.get(chatId);
@@ -11,7 +9,6 @@ export const getMessageMemory = async (chatId: string) => {
   console.log('[getMessageMemory]: memoryFromMap', memoryFromMap);
 
   if (memoryFromMap) return memoryFromMap;
-  // if (messageMemory) return messageMemory;
 
   // // Initialize chat history
   // const chatHistory = new MongoDBChatMessageHistory({

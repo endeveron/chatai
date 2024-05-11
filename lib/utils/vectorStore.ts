@@ -1,12 +1,10 @@
+import { Document } from '@langchain/core/documents';
 import { GoogleGenerativeAIEmbeddings } from '@langchain/google-genai';
 import { MemoryVectorStore } from 'langchain/vectorstores/memory';
 
+import { documentMap, vectorStoreMap } from '@/lib/data/maps';
 import { PersonKey, TPerson } from '@/lib/types/person.types';
-import { Document } from '@langchain/core/documents';
 // import { RecursiveCharacterTextSplitter } from 'langchain/text_splitter';
-
-const vectorStoreMap = new Map<PersonKey, MemoryVectorStore>();
-const documentMap = new Map<PersonKey, Document[]>();
 
 export const getPersonDocuments = async ({
   personKey,

@@ -10,7 +10,7 @@ import Topbar from '@/components/chat/topbar';
 import TopbarHeader from '@/components/chat/topbar-header';
 import { useToast } from '@/components/ui/use-toast';
 import { askAI } from '@/lib/actions/chat.actions';
-import { errAnswerList } from '@/lib/data/phrases';
+import { errAnswerList } from '@/lib/data/person';
 import { TChatItem, TChatMessage } from '@/lib/types/chat.types';
 import { MessageRole } from '@/lib/types/person.types';
 import { getRandom } from '@/lib/utils';

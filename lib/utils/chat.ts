@@ -5,8 +5,12 @@ import { ChatMessageHistory } from 'langchain/memory';
 import { formatDocumentsAsString } from 'langchain/util/document';
 import { ObjectId } from 'mongoose';
 
-import { emotionList, emotions } from '@/lib/data/emotions';
-import { altAnswerList, errAnswerList } from '@/lib/data/phrases';
+import {
+  altAnswerList,
+  emotionList,
+  emotions,
+  errAnswerList,
+} from '@/lib/data/person';
 import {
   MessageRole,
   TPerson,
