@@ -217,7 +217,7 @@ const performQuestionAnswering = async (input: any) => {
   };
 };
 
-export const createChainForPersonDev = async ({
+export const createChainForPerson = async ({
   chatId,
   person,
 }: {

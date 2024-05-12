@@ -15,7 +15,6 @@ import {
 import { TServerActionResult } from '@/lib/types/common.types';
 import { MessageRole } from '@/lib/types/person.types';
 import { createChainForPerson, extractEmotionFromText } from '@/lib/utils/chat';
-import { createChainForPersonDev } from '@/lib/utils/chat';
 import { handleActionError } from '@/lib/utils/error';
 import PersonModel from '@/lib/models/person.model';
 import UserModel from '@/lib/models/user.model';
@@ -350,7 +349,7 @@ export const askAI = async (
     };
 
     // Create a chain for the person
-    const chainRes = await createChainForPersonDev({
+    const chainRes = await createChainForPerson({
       chatId: humanMessageData.chatId,
       person: personData,
     });
