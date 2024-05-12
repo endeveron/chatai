@@ -7,6 +7,7 @@ import {
   summarizeChatHistoryTemplate,
 } from '@/lib/data/prompts';
 import { createQuestionTemplate } from '@/lib/utils/chat';
+import { logger } from '@/lib/utils/logger';
 
 // Create a llm model
 export const llm = new ChatGoogleGenerativeAI(llmConfig);
@@ -29,15 +30,24 @@ export const summarizeChatHistoryChain = new LLMChain({
 export const createMainChain = ({
   personName,
   personInstructions,
-}: {
+  history,
+}: // chatHistory,
+{
   personName: string;
   personInstructions: string;
+  history: string;
 }) => {
   // Configure the question template
   const questionTemplate = createQuestionTemplate({
     personName,
     personInstructions,
+    history,
   });
+
+  logger.b(
+    '[createMainChain]: questionTemplate',
+    questionTemplate.template.toString()
+  );
 
   return new LLMChain({
     llm: llm,

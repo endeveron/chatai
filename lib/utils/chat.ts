@@ -24,6 +24,7 @@ import {
 } from '@/lib/utils/llm';
 import { getMessageMemory } from '@/lib/utils/memory';
 import { getVectorStoreForPerson } from '@/lib/utils/vectorStore';
+import { logger } from '@/lib/utils/logger';
 
 /**
  * Generates a template for a question prompt that includes
@@ -32,48 +33,49 @@ import { getVectorStoreForPerson } from '@/lib/utils/vectorStore';
 export const createQuestionTemplate = ({
   personName,
   personInstructions,
+  history,
 }: {
   personName: string;
   personInstructions: string;
+  history: string;
 }) => {
-  // Get an alternate answer to a difficult question
-  const altAnswer = getRandom(altAnswerList);
-  const commonInstructions = `don't understand the question, use the following answer: ${altAnswer}`;
-  let altAnswerInstructions = `If you don't have enough information from the context `;
-
   // Add the person's name to the instructions
   let instructions = personInstructions.replace(/{personName}/g, personName);
 
   // Add guidelines about honesty. Find a honesty keyword `{beHonest}`
+  let honestyInstructions = '';
   const beHonest = personInstructions.includes('{beHonest}');
 
-  // Instructions for the case when AI doesn't understand the question,
-  // doesn't have enouth info to answer the question...
+  // If AI doesn't have enouth info to answer the question...
   if (beHonest) {
-    // ...and is NOT ALLOWED to provide fictitious facts.
-    altAnswerInstructions += `or ${commonInstructions}`;
-
-    // Remove the keyword `{beHonest}` from the instructions
+    // ...and is NOT ALLOWED to provide fake information.
+    // Just remove the keyword `{beHonest}` from the instructions.
     instructions = instructions.replace(/{beHonest}/, '');
   } else {
     // ...and been ALLOWED to provide fictitious facts.
-    altAnswerInstructions += `provide fictitious facts about you with a some details from the context. If you ${commonInstructions}`;
+    honestyInstructions += `
+If you don't have enough information from the context, you allowed to provide fictitious information.
+`;
   }
 
+  // Include the additional context from conversation history
+  const historyContext = history
+    ? `Use following information as a context:
+${history}
+`
+    : '';
+
   return PromptTemplate.fromTemplate(`
-${instructions}
+${instructions} Keep up the conversation as ${personName} would in a chat, using the provided context.
 
-Keep up the conversation and answer the human's questions if you asked. Be sure to use the conversation history and some details from the context as ${personName} would in a chat. 
-
-Don't use overly long phrases or markdown in your response.
-Do not tell the human that you are an AI for the rest of the conversation.
+Don't use overly long phrases or markdown in your response. Do not tell the human that you are an AI for the rest of the conversation.
 
 From this list of emotions (${emotions}), choose exactly the one that best represents the emotion you might have felt as ${personName} when you were asked the Question. Be sure to write this emotion at the end of your answer using the following template: $emotion
+${honestyInstructions}
+${historyContext}
+---------
 
-${altAnswerInstructions}
-
-Conversation history: {chatHistory}
-Context: {context}
+Context: {context} 
 Question: {question}
 `);
 };
@@ -101,22 +103,30 @@ const serializeChatHistory = (chatHistory: any) => {
  * context, chat history, and question generation chains.
  */
 const performQuestionAnswering = async (input: any) => {
-  const messageMemory = input.messageMemory;
-  let newQuestion = input.question;
+  let question = input.question;
 
-  // Get chat history
-  const savedMemory = await messageMemory.loadMemoryVariables({});
-  const hasHistory = savedMemory.chatHistory.length > 0;
-  const chatHistory = hasHistory ? savedMemory.chatHistory : null;
+  logger.g('\n\nNew question\n');
+
+  // Get the messages saved in the buffer memory
+  const messagesMemory = await input.data.messagesMemory.loadMemoryVariables(
+    {}
+  );
+
+  logger.b('[performQA]: messagesMemory', messagesMemory);
+
+  const hasHistory = messagesMemory.chatHistory.length > 0;
+  const chatHistory = hasHistory ? messagesMemory.chatHistory : null;
   const chatHistoryLength = chatHistory?.length;
 
-  console.log(`[performQA]: messages in history: ${chatHistoryLength}`);
+  chatHistoryLength &&
+    console.log(`[performQA]: messages in history: ${chatHistoryLength}`);
 
   // Serialize context into strings
   const serializedDocs = formatDocumentsAsString(input.context);
+  const context = serializedDocs.replace(/\r?\n|\r/g, ' ');
 
   // Split the long chat history to summarize old messages
-  if (chatHistoryLength > 14) {
+  if (chatHistoryLength > 11) {
     const oldMessages = chatHistory.slice(0, -2);
     const recentMessages = chatHistory.slice(-2);
 
@@ -144,8 +154,8 @@ const performQuestionAnswering = async (input: any) => {
     console.log(`Chat summary for AI: ${aiChatHistorySummary}`);
 
     // Update the chat history in the memory buffer
-    messageMemory.chatHistory.clear();
-    messageMemory.chatHistory = new ChatMessageHistory([
+    input.data.messagesMemory.chatHistory.clear();
+    input.data.messagesMemory.chatHistory = new ChatMessageHistory([
       new HumanMessage(humanChatHistoryString), // Last 4 messages by human
       new AIMessage(aiChatHistorySummary), // Summary of AI messages
       ...recentMessages, // The recent pair of messages (Human, AI)
@@ -157,46 +167,57 @@ const performQuestionAnswering = async (input: any) => {
     ? serializeChatHistory(chatHistory)
     : null;
 
-  // if (chatHistoryString) {
-  //   // Invoke the chain to generate a new question
-  //   const { text } = await questionGeneratorChain.invoke({
-  //     chatHistory: chatHistoryString,
-  //     context: serializedDocs,
-  //     question: input.question,
-  //   });
-  //   newQuestion = text;
-  // }
+  // Rephrase the question if the chat history includes 8 messages
+  if (chatHistoryLength > 7 && chatHistoryString) {
+    // Invoke the chain to generate a new question
+    const { text: newQuestion } = await questionGeneratorChain.invoke({
+      chatHistory: chatHistoryString,
+      question: input.question,
+    });
+    question = newQuestion;
+  }
 
-  // Create the main chain
+  logger.b('[performQA]: chatHistory', chatHistoryString);
+  logger.b('[performQA]: context', context);
+  logger.y('\n[performQA]: question', question);
+
   const mainChain = createMainChain({
-    personInstructions: input.person.instructions,
-    personName: input.person.name,
+    personInstructions: input.data.person.instructions,
+    personName: input.data.person.name,
+    history: chatHistoryString,
   });
-
-  console.log('[performQA]: chatHistory', chatHistoryString);
-  console.log('[performQA]: context', serializedDocs);
-  console.log('[performQA]: question', newQuestion);
 
   // Ask AI using the main chain
-  const response = await mainChain.invoke({
-    chatHistory: chatHistoryString,
-    context: serializedDocs,
-    question: newQuestion,
+  const { text } = await mainChain.invoke({
+    // chatHistory: chatHistoryString,
+    context: context,
+    question,
   });
 
-  // Save chat history in the memory
-  await messageMemory.saveContext(
+  // Get an alternate answer if not provided
+  const answer = text ? text : getRandom(altAnswerList);
+
+  logger.y('[performQA]: answer\n', answer);
+
+  // Save the pair of messages to the buffer memory
+  await input.data.messagesMemory.saveContext(
     { question: input.question },
-    { text: response.text }
+    { answer: answer }
   );
+  // try { } catch (err: any) {
+  // console.error(
+  //   `[performQA]: Could not save the messages to the buffer memory`,
+  //    err
+  //   );
+  // }
 
   return {
-    result: response.text,
+    result: answer,
     sourceDocuments: input.context,
   };
 };
 
-export const createChainForPerson = async ({
+export const createChainForPersonDev = async ({
   chatId,
   person,
 }: {
@@ -210,20 +231,23 @@ export const createChainForPerson = async ({
   // Initialize a retriever wrapper around the vector store
   const retriever = vectorStore.asRetriever();
 
+  // Get messages history from the buffer memory
+  const messagesMemory = await getMessageMemory(chatId);
+
   // Create the main cain
   const chain = RunnableSequence.from([
     {
-      // Pipe the question through unchanged
+      // Pass the question through unchanged
       question: (input) => input.question,
       // Fetch relevant context based on the question
       context: async (input) => retriever.getRelevantDocuments(input.question),
-      // Add person data
-      person: () => ({
-        instructions: person.instructions,
-        name: person.name,
+      data: () => ({
+        person: {
+          name: person.name,
+          instructions: person.instructions,
+        },
+        messagesMemory,
       }),
-      // Get messages history from the buffer memory
-      messageMemory: async () => await getMessageMemory(chatId),
     },
     performQuestionAnswering,
   ]);

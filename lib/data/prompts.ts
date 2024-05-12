@@ -10,5 +10,5 @@ export const questionGeneratorTemplate = PromptTemplate.fromTemplate(`
 Given the chat history and a follow up question, rephrase the follow up question to be a standalone question.
 ----------
 Chat history: {chatHistory}
-Follow up question: {question}
+Question: {question}
 `);

@@ -46,14 +46,15 @@ const Chat = ({
     return errorMessage;
   };
 
+  // DEV
   const handleInputSubmit = async (input: string) => {
-    if (process.env.NODE_ENV === 'development') {
-      toast.toast({
-        variant: 'destructive',
-        title: 'Not allowed in the development mode',
-      });
-      return;
-    }
+    // if (process.env.NODE_ENV === 'development') {
+    //   toast.toast({
+    //     variant: 'destructive',
+    //     title: 'Not allowed in the development mode',
+    //   });
+    //   return;
+    // }
 
     try {
       setPending(true);
@@ -68,13 +69,25 @@ const Chat = ({
       // Add them to the local messages (optimistic update)
       setMessages((msgs) => [...msgs, humanMessage]);
 
-      // Get answer from AI
+      // DEV
       const res = await askAI(humanMessage);
       if (!res?.success) {
         console.log(res?.error.message || 'Could not get answer from AI.');
         const errorMessage = createErrorMessage();
         setMessages((msgs) => [...msgs, errorMessage]);
       }
+
+      if (res?.success) {
+        console.log('res.data', res.data);
+      }
+
+      // // Get answer from AI
+      // const res = await askAI(humanMessage);
+      // if (!res?.success) {
+      //   console.log(res?.error.message || 'Could not get answer from AI.');
+      //   const errorMessage = createErrorMessage();
+      //   setMessages((msgs) => [...msgs, errorMessage]);
+      // }
       // else { console.log('askAI res', res.data) }; // { emotion, message }
     } catch (err: any) {
       console.log(err);

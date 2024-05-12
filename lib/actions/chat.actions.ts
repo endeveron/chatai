@@ -15,9 +15,11 @@ import {
 import { TServerActionResult } from '@/lib/types/common.types';
 import { MessageRole } from '@/lib/types/person.types';
 import { createChainForPerson, extractEmotionFromText } from '@/lib/utils/chat';
+import { createChainForPersonDev } from '@/lib/utils/chat';
 import { handleActionError } from '@/lib/utils/error';
 import PersonModel from '@/lib/models/person.model';
 import UserModel from '@/lib/models/user.model';
+import { logger } from '@/lib/utils/logger';
 
 export const createChat = async ({
   userId,
@@ -325,39 +327,14 @@ export const askAI = async (
     // Fetch a chat object to get a person
     const chatRes = await fetchChat({ chatId: humanMessageData.chatId });
     if (!chatRes?.success) {
-      return handleActionError('Could not fetch a chat');
+      return handleActionError('Could not fetch a chat', null);
     }
     const person = chatRes.data.person;
     const personName = chatRes.data.personName;
-
-    // fetchChat chatRes.data
-    // title,
-    // personName,
-    // person:
-    //   _id,
-    //   title,
-    //   gender,
-    //   avatarKey,
-    //   personKey,
-    //   status,
-    //   bio,
-    //   avatarBlur,
-
-    // fetchPersonDataForLLM personRes.data
-    //   _id: person._id,
-    //   title: person.title,
-    //   gender: person.gender,
-    //   avatarKey: person.avatarKey,
-    //   personKey: person.personKey,
-    //   status: person.status,
-    //   bio: person.bio,
-    //   instructions: person.instructions,
-    //   context: person.context,
-
     const personId = person._id;
 
     if (!personId) {
-      return handleActionError('Invalid person ID');
+      return handleActionError('Invalid person ID', null);
     }
 
     // Fetch the instructions and context for LLM
@@ -373,13 +350,13 @@ export const askAI = async (
     };
 
     // Create a chain for the person
-    const chainRes = await createChainForPerson({
+    const chainRes = await createChainForPersonDev({
       chatId: humanMessageData.chatId,
       person: personData,
     });
     if (!chainRes.chain) {
       return handleActionError(
-        chainRes.error || 'Could not create vector store'
+        chainRes.error || 'Could not create a chain for the person'
       );
     }
 

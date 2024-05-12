@@ -12,7 +12,7 @@ const ErrorDialog = ({ error, onReset }: TErrorProps) => {
   const router = useRouter();
 
   return (
-    <div className="card rounded-xl w-full max-w-[420px] flex flex-col items-center p-8 m-auto">
+    <div className="error-dialog card rounded-xl w-full max-w-xl flex flex-col items-center p-8 m-auto">
       <h2 className="cursor-default">Oops!</h2>
       <p className="!mt-5 text-sm">
         {error?.message || 'Something went wrong.'}

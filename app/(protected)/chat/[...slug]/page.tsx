@@ -65,12 +65,14 @@ export default async function Page({ params }: { params: { slug: string } }) {
   if (chatId) {
     // Fetch chat messages
     const messagesRes = await fetchChatMessages({ chatId });
-    if (!messagesRes?.success) {
-      throw new Error(
-        messagesRes?.error.message || 'Could not fetch chat messages.'
-      );
+    // if (!messagesRes?.success) {
+    //   throw new Error(
+    //     messagesRes?.error.message || 'Could not fetch chat messages.'
+    //   );
+    // }
+    if (messagesRes?.success) {
+      messages = JSON.parse(messagesRes.data);
     }
-    messages = JSON.parse(messagesRes.data);
   }
 
   // Fetch a list of people, display a new chat component
