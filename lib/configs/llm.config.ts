@@ -4,7 +4,7 @@ import { HarmBlockThreshold, HarmCategory } from '@google/generative-ai';
 
 export const llmConfig = {
   modelName: 'gemini-pro',
-  maxOutputTokens: 50,
+  maxOutputTokens: 100,
   temperature: 0.8,
   safetySettings: [
     {
