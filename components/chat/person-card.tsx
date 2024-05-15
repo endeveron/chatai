@@ -2,10 +2,10 @@
 
 import Image from 'next/image';
 
-import { TPersonChatData, TSelectPerson } from '@/lib/types/person.types';
+import { TPersonCardData, TSelectPerson } from '@/lib/types/person.types';
 import { cn } from '@/lib/utils';
 
-type TPersonCardProps = TPersonChatData<string> & {
+type TPersonCardProps = TPersonCardData & {
   currentPersonId: string;
   onSelect: (person: TSelectPerson) => void;
 };
@@ -15,11 +15,8 @@ const PersonCard = ({
   title,
   gender,
   avatarKey,
-  personKey,
-  bio,
   status,
   imgBlur,
-  avatarBlur,
   currentPersonId,
   onSelect,
 }: TPersonCardProps) => {
@@ -45,13 +42,13 @@ const PersonCard = ({
           className="object-cover w-full h-auto"
           sizes="144px"
           fill
-          alt={bio}
+          alt={title}
           // priority
         />
       </div>
       <div className="person-card_content">
-        <div className="person-card_title font-bold">{title}</div>
-        <div className="person-card_description">{status}</div>
+        <div className="person-card_title font-bold elipsis">{title}</div>
+        <div className="person-card_description elipsis">{status}</div>
       </div>
     </div>
   );

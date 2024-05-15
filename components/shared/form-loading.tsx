@@ -18,7 +18,9 @@ const FormLoading = ({ isPending, loadigIconClassName }: TFormLoadingProps) => {
         }
       )}
     >
-      <LoadingIcon className={cn(loadigIconClassName)} />
+      <div className={cn(loadigIconClassName)}>
+        <LoadingIcon />
+      </div>
     </div>
   );
 };

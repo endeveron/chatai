@@ -5,7 +5,7 @@ import { TWithChildren } from '@/lib/types/common.types';
 
 import '@/styles/globals.css';
 import '@/styles/layout.css';
-import { cn } from '@/lib/utils';
+
 import ThemeInit from '@/components/shared/theme-init';
 
 const font = Mulish({
@@ -22,11 +22,7 @@ const Layout = async ({ children, isAlignCenter }: TLayoutProps) => {
     // <html lang="en" className="dark">
     <html lang="en">
       <body className={font.className}>
-        <div
-          className={cn('layout', {
-            'align-center': isAlignCenter,
-          })}
-        >
+        <div className="layout">
           {children}
           <Toaster />
           <ThemeInit />

@@ -2,7 +2,7 @@ import NextAuth from 'next-auth';
 
 import authConfig from '@/lib/configs/auth.config';
 import {
-  DEFAULT_SIGNIN_REDIRECT,
+  DEFAULT_REDIRECT,
   apiAuthPrefix,
   authRoutes,
   publicRoutes,
@@ -23,9 +23,9 @@ export default auth((req) => {
   // Allow the api next-auth routes (start with `api/auth`).
   if (isApiAuthRoute) return;
 
-  // If the user is signed in on an auth route, redirect to `DEFAULT_SIGNIN_REDIRECT`.
+  // If the user is signed in on an auth route, redirect to `DEFAULT_REDIRECT`.
   if (isSignedIn && isAuthRoute) {
-    return Response.redirect(new URL(DEFAULT_SIGNIN_REDIRECT, nextUrl));
+    return Response.redirect(new URL(DEFAULT_REDIRECT, nextUrl));
   }
 
   // Allow routes from the `authRoutes` list.

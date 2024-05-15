@@ -18,3 +18,8 @@ export type TUser = {
   image?: string;
   provider?: SocialProvider;
 };
+
+export type TUserData = {
+  name: string;
+  email: string;
+};

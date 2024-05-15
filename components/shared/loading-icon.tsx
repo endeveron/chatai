@@ -1,7 +1,7 @@
 'use client';
 
+import Typing from '@/components/chat/typing';
 import { cn } from '@/lib/utils';
-import LoadIcon from '@/public/assets/ui/loading.svg';
 
 type TLoadingIconProps = {
   className?: string;
@@ -10,7 +10,7 @@ type TLoadingIconProps = {
 const LoadingIcon = ({ className }: TLoadingIconProps) => {
   return (
     <div className={cn('loading-icon', className)}>
-      <LoadIcon />
+      <Typing />
     </div>
   );
 };

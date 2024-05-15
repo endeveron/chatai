@@ -23,7 +23,7 @@ import { onboardUser } from '@/lib/actions/user.actions';
 import { useErrorHandler } from '@/lib/hooks/error';
 import { TOnboardingSchema, onboardingSchema } from '@/lib/schemas/auth';
 import { cn } from '@/lib/utils';
-import { DEFAULT_SIGNIN_REDIRECT } from '@/routes';
+import { DEFAULT_REDIRECT } from '@/routes';
 
 type TOnboardingFormProps = {
   userObjId: string;
@@ -57,7 +57,7 @@ const OnboardingForm = ({ userObjId }: TOnboardingFormProps) => {
 
       // If success redirect to sign-in
       if (res?.success) {
-        router.replace(DEFAULT_SIGNIN_REDIRECT);
+        router.replace(DEFAULT_REDIRECT);
         return;
       }
 
@@ -134,7 +134,7 @@ const OnboardingForm = ({ userObjId }: TOnboardingFormProps) => {
         >
           Create an account
         </Button>
-        <FormLoading loadigIconClassName="-mt-10" isPending={isPending} />
+        <FormLoading loadigIconClassName="-mt-14" isPending={isPending} />
       </form>
     </Form>
   );

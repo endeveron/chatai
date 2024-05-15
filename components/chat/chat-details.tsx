@@ -1,8 +1,8 @@
 import Topbar from '@/components/chat/topbar';
-import { TChatItem } from '@/lib/types/chat.types';
+import { TChatData } from '@/lib/types/chat.types';
 import Image from 'next/image';
 
-type TChatDetailsProps = TChatItem & {};
+type TChatDetailsProps = TChatData & {};
 
 const ChatDetails = async ({ person }: TChatDetailsProps) => {
   if (!person) return null;

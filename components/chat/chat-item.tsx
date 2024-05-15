@@ -8,7 +8,7 @@ import { cn } from '@/lib/utils';
 
 type TChatItemProps = TChatItem & {};
 
-const ChatItem = ({ chatId, title, person, personName }: TChatItemProps) => {
+const ChatItem = ({ chatId, title, person }: TChatItemProps) => {
   const router = useRouter();
   const path = usePathname();
 
@@ -31,7 +31,7 @@ const ChatItem = ({ chatId, title, person, personName }: TChatItemProps) => {
       </div>
       <div className="flex flex-col ml-4 min-w-0">
         <div className="chat-item_name font-bold elipsis">
-          {title || personName}
+          {title || person.name}
         </div>
         <div className="chat-item_status text-sm elipsis opacity-60 mt-0.5">
           {person.status}

@@ -7,14 +7,12 @@
 }
 
 .layout {
-  overflow: hidden;
+  @apply relative;
 }
 
 .layout,
 main {
-  min-height: 100dvh;
-  display: flex;
-  align-items: stretch;
+  @apply min-h-dvh flex items-stretch;
 }
 
 .layout.align-center {
@@ -36,9 +34,9 @@ main {
 }
 
 @media only screen and (min-width: 480px) {
-  .layout {
+  /* .layout {
     overflow: visible;
-  }
+  } */
 }
 
 @media only screen and (min-width: 600px) {

@@ -302,24 +302,24 @@ export const createErrorChatMessage = async ({
   return errorMessage;
 };
 
-/**
- * Converts the `_id` property of a person object from an `ObjectId` type to a string type in TypeScript.
- *
- * @param person object of type `TPersonChatData<ObjectId>`.
- * @returns a new object of type `TPersonChatData<string>`.
- */
-export const parseChatPersonData = (
-  person: TPersonChatData<ObjectId>
-): TPersonChatData<string> => {
-  return {
-    _id: person._id.toString(),
-    title: person.title,
-    gender: person.gender,
-    avatarKey: person.avatarKey,
-    personKey: person.personKey,
-    status: person.status,
-    bio: person.bio,
-    avatarBlur: person.avatarBlur,
-    imgBlur: person.imgBlur,
-  };
-};
+// /**
+//  * Converts the `_id` property of a person object from an `ObjectId` type to a string type in TypeScript.
+//  *
+//  * @param person object of type `TPersonChatData<ObjectId>`.
+//  * @returns a new object of type `TPersonChatData<string>`.
+//  */
+// export const parseChatPersonData = (
+//   person: TPersonChatData<ObjectId>
+// ): TPersonChatData<string> => {
+//   return {
+//     _id: person._id.toString(),
+//     title: person.title,
+//     gender: person.gender,
+//     avatarKey: person.avatarKey,
+//     personKey: person.personKey,
+//     status: person.status,
+//     bio: person.bio,
+//     avatarBlur: person.avatarBlur,
+//     imgBlur: person.imgBlur,
+//   };
+// };

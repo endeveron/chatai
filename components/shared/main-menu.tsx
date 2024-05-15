@@ -17,9 +17,10 @@ import LightbulbIcon from '@/public/assets/ui/lightbulb.svg';
 import MoonIcon from '@/public/assets/ui/moon.svg';
 import SignOutIcon from '@/public/assets/ui/sign-out.svg';
 import { User } from 'next-auth';
+import { TUserData } from '@/lib/types/user.types';
 
 type TMenuProps = {
-  user: User | undefined;
+  user: TUserData;
 };
 
 const MainMenu = ({ user }: TMenuProps) => {

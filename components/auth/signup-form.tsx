@@ -85,7 +85,7 @@ const SignUpForm = (props: TSignUpFormProps) => {
             Already have an account ?
           </Link>
         </div>
-        <FormLoading loadigIconClassName="-mt-10" isPending={isPending} />
+        <FormLoading loadigIconClassName="-mt-14" isPending={isPending} />
       </form>
     </Form>
   );

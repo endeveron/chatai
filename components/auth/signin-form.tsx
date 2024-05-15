@@ -77,9 +77,6 @@ const SignInForm = (props: TSignInFormProps) => {
               <FormControl>
                 <Input {...field} />
               </FormControl>
-              {/* <FormDescription>
-                  This is your public display name.
-                </FormDescription> */}
               <FormMessage />
             </FormItem>
           )}
@@ -115,7 +112,7 @@ const SignInForm = (props: TSignInFormProps) => {
             Create an account
           </Link>
         </div>
-        <FormLoading loadigIconClassName="-mt-10" isPending={isPending} />
+        <FormLoading loadigIconClassName="-mt-20" isPending={isPending} />
       </form>
     </Form>
   );

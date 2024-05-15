@@ -1,41 +1,35 @@
 import { auth } from '@/auth';
-import ChatItem from '@/components/chat/chat-item';
-import NewChatButton from '@/components/chat/new-chat-btn';
-import Topbar from '@/components/chat/topbar';
-import MainMenu from '@/components/shared/main-menu';
-import { ScrollArea } from '@/components/ui/scroll-area';
+import ChatListClient from '@/components/chat/chat-list-client';
+import { fetchUserChats } from '@/lib/actions/chat.actions';
 import { TChatItem } from '@/lib/types/chat.types';
 
-type TChatListProps = {
-  items: TChatItem[];
-};
+type TChatListProps = {};
 
-const ChatList = async ({ items }: TChatListProps) => {
-  if (!items.length) return null;
-
+const ChatList = async (props: TChatListProps) => {
   const session = await auth();
+  if (!session?.user) return null;
 
-  return (
-    <div className="chat-list">
-      <Topbar>
-        <MainMenu user={session?.user} />
-        <div className="w-full flex justify-center">
-          <NewChatButton />
-        </div>
-      </Topbar>
-      <ScrollArea className="chat-list_items">
-        {items.map((c) => (
-          <ChatItem
-            chatId={c.chatId}
-            title={c.title}
-            person={c.person}
-            personName={c.personName}
-            key={c.chatId}
-          />
-        ))}
-      </ScrollArea>
-    </div>
-  );
+  let userName = session.user.name!;
+  let userEmail = session.user.email!;
+  let chats: TChatItem[] = [];
+
+  // Fetch user's chats
+  const userChatsRes = await fetchUserChats({ userEmail });
+  // console.log('userChatsRes', userChatsRes);
+  if (!userChatsRes?.success) {
+    throw new Error(
+      userChatsRes?.error.message || 'Could not fetch user chats.'
+    );
+  }
+  chats = userChatsRes.data;
+  if (!chats.length) return null;
+
+  const user = {
+    name: userName,
+    email: userEmail,
+  };
+
+  return <ChatListClient items={chats} user={user} />;
 };
 
 export default ChatList;

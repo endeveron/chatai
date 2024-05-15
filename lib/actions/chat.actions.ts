@@ -4,11 +4,16 @@ import { ObjectId } from 'mongoose';
 import { revalidatePath } from 'next/cache';
 
 import { fetchPersonDataForLLM } from '@/lib/actions/person.actions';
+import { fetchUserByEmail } from '@/lib/actions/user.actions';
 import { connectToDB } from '@/lib/db';
 import ChatModel from '@/lib/models/chat.model';
 import MessageModel from '@/lib/models/message.model';
+import PersonModel from '@/lib/models/person.model';
+import UserModel from '@/lib/models/user.model';
 import {
+  TChat,
   TChatMessage,
+  TChatMessageDb,
   TCreateChatArgs,
   TCreateMessageArgs,
 } from '@/lib/types/chat.types';
@@ -16,9 +21,7 @@ import { TServerActionResult } from '@/lib/types/common.types';
 import { MessageRole } from '@/lib/types/person.types';
 import { createChainForPerson, extractEmotionFromText } from '@/lib/utils/chat';
 import { handleActionError } from '@/lib/utils/error';
-import PersonModel from '@/lib/models/person.model';
-import UserModel from '@/lib/models/user.model';
-import { logger } from '@/lib/utils/logger';
+import { sleep } from '@/lib/utils';
 
 export const createChat = async ({
   userId,
@@ -52,37 +55,120 @@ export const createChat = async ({
 
 export const fetchChat = async ({
   chatId,
+  userEmail,
 }: {
   chatId: ObjectId | string;
+  userEmail: string;
 }): Promise<TServerActionResult | undefined> => {
   try {
     await connectToDB();
 
+    // Get user object id
+    const user = await fetchUserByEmail(userEmail);
+    if (!user?.success) {
+      return handleActionError('Could not find the user', null, true);
+    }
+
     // Find a chat by id
-    const chat = await ChatModel.findById(chatId).populate({
-      path: 'person',
-      model: PersonModel,
-      select: '_id title gender avatarKey personKey status bio avatarBlur',
-    });
+    const chat = await ChatModel.findById(chatId)
+      .populate({
+        path: 'person',
+        model: PersonModel,
+        select:
+          'id title gender avatarKey personKey status bio avatarBlur imgBlur',
+      })
+      .populate({
+        path: 'messages',
+        model: MessageModel,
+        select: 'content emotion role timestamp',
+      });
+
     if (!chat) {
+      return handleActionError('Could not find a chat');
+    }
+
+    if (chat.user.toString() !== user.data.id) {
       return handleActionError(
-        'Could not find a chat for the provided id',
-        null
+        'User with te provided email is not allowed to fetch this chat',
+        null,
+        true
       );
     }
+
+    const parsedMessages: TChatMessage[] = chat.messages.map(
+      (m: TChatMessageDb) => ({
+        chatId,
+        content: m.content,
+        role: m.role,
+        timestamp: m.timestamp,
+        emotion: m.emotion,
+      })
+    );
+
+    const person = chat.person;
 
     return {
       success: true,
       data: {
-        title: chat.title,
-        person: chat.person,
-        personName: chat.personName,
+        title: chat.title || chat.personName,
+        person: {
+          _id: person._id.toString(),
+          title: person.title,
+          name: chat.personName,
+          gender: person.gender,
+          avatarKey: person.avatarKey,
+          avatarBlur: person.avatarBlur,
+          imgBlur: person.imgBlur,
+          personKey: person.personKey,
+          status: person.status,
+          bio: person.bio,
+        },
+        messages: parsedMessages,
       },
     };
   } catch (err: any) {
     return handleActionError('Could not fetch chat', err);
   }
 };
+
+// /**
+//  * Fetches chat messages for a given chat ID from a database and returns them as a JSON string.
+//  *
+//  * @returns a Promise that resolves to a `TServerActionResult` object or `undefined`.
+//  */
+// export const fetchChat = async ({
+//   chatId,
+//   userEmail,
+// }: {
+//   chatId: ObjectId | string;
+//   userEmail: string;
+// }): Promise<TServerActionResult | undefined> => {
+//   try {
+//     await connectToDB();
+
+//     // Get user object id
+//     const user = await fetchUserByEmail(userEmail);
+
+//     // Find a chat by id
+//     const chat = await ChatModel.findById(chatId).populate('messages');
+//     if (!chat) {
+//       return handleActionError(
+//         'Could not find a chat for the provided id',
+//         null
+//       );
+//     }
+
+//     // Get chat messages array
+//     const messages = chat.messages;
+
+//     return {
+//       success: true,
+//       data: JSON.stringify(messages),
+//     };
+//   } catch (err: any) {
+//     return handleActionError('Could not fetch chat messages', err);
+//   }
+// };
 
 export const fetchUserChats = async ({
   userEmail,
@@ -96,29 +182,34 @@ export const fetchUserChats = async ({
     const user = await UserModel.findOne({ email: userEmail });
     if (!user) {
       handleActionError(
-        `Could not find a user for provided email ${userEmail}`,
-        null,
-        true
+        `Could not find a user for provided email ${userEmail}`
       );
     }
 
     const userId = user._id;
 
     // Find chats, populate person
-    const chats = await ChatModel.find({ user: userId }).populate({
+    const fetchedChats = await ChatModel.find({ user: userId }).populate({
       path: 'person',
       model: PersonModel,
-      select:
-        '_id title gender avatarKey personKey status bio avatarBlur imgBlur',
+      select: 'status avatarBlur avatarKey',
     });
+
+    // Configure output data
+    const chats = fetchedChats.map((c) => ({
+      chatId: c._id.toString(),
+      title: c.title || c.personName,
+      person: {
+        name: c.personName,
+        status: c.person.status,
+        avatarBlur: c.person.avatarBlur,
+        avatarKey: c.person.avatarKey,
+      },
+    }));
 
     return {
       success: true,
-      // data: JSON.stringify(chats),
-      data: {
-        userId: userId.toString(),
-        chats,
-      },
+      data: chats,
     };
   } catch (err: any) {
     console.log('err', err);
@@ -269,41 +360,6 @@ export const createChatMessage = async ({
 };
 
 /**
- * Fetches chat messages for a given chat ID from a database and returns them as a JSON string.
- *
- * @returns a Promise that resolves to a `TServerActionResult` object or `undefined`.
- */
-// TODO: remove it
-export const fetchChatMessages = async ({
-  chatId,
-}: {
-  chatId: ObjectId | string;
-}): Promise<TServerActionResult | undefined> => {
-  try {
-    await connectToDB();
-
-    // Find a chat by id
-    const chat = await ChatModel.findById(chatId).populate('messages');
-    if (!chat) {
-      return handleActionError(
-        'Could not find a chat for the provided id',
-        null
-      );
-    }
-
-    // Get chat messages array
-    const messages = chat.messages;
-
-    return {
-      success: true,
-      data: JSON.stringify(messages),
-    };
-  } catch (err: any) {
-    return handleActionError('Could not fetch chat messages', err);
-  }
-};
-
-/**
  * Calls a LLM API to generate a response based on the human input.
  * Saves the conversation messages in a database.
  *
@@ -323,35 +379,36 @@ export const askAI = async (
     // Get a path prop
     const { path, ...humanMessageData } = humanMessage;
 
-    // Fetch a chat object to get a person
-    const chatRes = await fetchChat({ chatId: humanMessageData.chatId });
-    if (!chatRes?.success) {
-      return handleActionError('Could not fetch a chat', null);
-    }
-    const person = chatRes.data.person;
-    const personName = chatRes.data.personName;
-    const personId = person._id;
-
-    if (!personId) {
-      return handleActionError('Invalid person ID', null);
-    }
-
-    // Fetch the instructions and context for LLM
-    const personRes = await fetchPersonDataForLLM(personId);
+    // Fetch a person
+    const personRes = await fetchPersonDataForLLM({
+      chatId: humanMessageData.chatId,
+    });
     if (!personRes?.success) {
-      return handleActionError('Could not fetch a person data');
+      return handleActionError('Could not fetch the person', null);
     }
+    // const personName = chatRes.data.personName;
+    // const personId = person._id;
 
-    // Add person name from a chat object
-    const personData = {
-      name: personName,
-      ...personRes.data,
-    };
+    // if (!personId) {
+    //   return handleActionError('Invalid person ID', null);
+    // }
+
+    // // Fetch the instructions and context for LLM
+    // const personRes = await fetchPersonDataForLLM(personId);
+    // if (!personRes?.success) {
+    //   return handleActionError('Could not fetch a person data');
+    // }
+
+    // // Add person name from a chat object
+    // const personData = {
+    //   name: personName,
+    //   ...person,
+    // };
 
     // Create a chain for the person
     const chainRes = await createChainForPerson({
       chatId: humanMessageData.chatId,
-      person: personData,
+      person: personRes.data,
     });
     if (!chainRes.chain) {
       return handleActionError(

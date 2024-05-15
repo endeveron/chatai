@@ -8,7 +8,7 @@ import { cn } from '@/lib/utils';
 
 type TChatItemProps = TChatItem & {};
 
-const ChatItemDev = ({ chatId, title, person, personName }: TChatItemProps) => {
+const ChatItemDev = ({ chatId, title, person }: TChatItemProps) => {
   const router = useRouter();
   const path = usePathname();
 
@@ -34,9 +34,7 @@ const ChatItemDev = ({ chatId, title, person, personName }: TChatItemProps) => {
         <Avatar avatarKey={person.avatarKey} avatarBlur={person.avatarBlur} />
       </div>
       <div className="flex flex-col ml-4 min-w-0">
-        <div className="chat-item_name font-bold elipsis">
-          {title || personName}
-        </div>
+        <div className="chat-item_name font-bold elipsis">{title}</div>
         <div className="chat-item_status text-sm elipsis opacity-60 mt-0.5">
           {person.status}
         </div>

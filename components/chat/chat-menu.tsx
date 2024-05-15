@@ -12,7 +12,7 @@ import { clearChat as clear, deleteChat } from '@/lib/actions/chat.actions';
 import { useErrorHandler } from '@/lib/hooks/error';
 import CleanIcon from '@/public/assets/ui/clean.svg';
 import DeleteIcon from '@/public/assets/ui/delete.svg';
-import { CHAT_LIST_PATH } from '@/routes';
+import { DEFAULT_REDIRECT } from '@/routes';
 
 type TChatMenuProps = {
   clearChat: {
@@ -54,7 +54,7 @@ const ChatMenu = ({ clearChat }: TChatMenuProps) => {
       }
 
       // Navigate to chat list page
-      router.push(CHAT_LIST_PATH);
+      router.push(DEFAULT_REDIRECT);
     } catch (err: any) {
       console.log(err);
       toastError(err);

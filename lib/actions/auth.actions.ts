@@ -19,7 +19,7 @@ import { TServerActionResult } from '@/lib/types/common.types';
 import { TUser, UserRole } from '@/lib/types/user.types';
 import { handleActionError } from '@/lib/utils/error';
 import { createVerificationEmail, sendEmail } from '@/lib/utils/nodemailer';
-import { DEFAULT_SIGNIN_REDIRECT } from '@/routes';
+import { DEFAULT_REDIRECT } from '@/routes';
 
 const baseUrl = process.env.BASE_URL as string;
 const jwtAuthKey = process.env.JWT_KEY as string;
@@ -265,7 +265,7 @@ export const signIn = async ({
     await nextSignIn('credentials', {
       email,
       password,
-      redirectTo: DEFAULT_SIGNIN_REDIRECT,
+      redirectTo: DEFAULT_REDIRECT,
     });
     return { success: true };
   } catch (err: any) {

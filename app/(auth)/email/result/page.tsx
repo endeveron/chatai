@@ -1,7 +1,7 @@
 import { redirect } from 'next/navigation';
 
 import { verifyEmailToken } from '@/lib/actions/auth.actions';
-import { DEFAULT_SIGNIN_REDIRECT } from '@/routes';
+import { DEFAULT_REDIRECT } from '@/routes';
 
 type TPageProps = {
   searchParams: {
@@ -33,7 +33,7 @@ const Page = async ({ searchParams }: TPageProps) => {
     throw new Error('Unable to verify email token.');
   }
 
-  if (res.data === 'created') redirect(DEFAULT_SIGNIN_REDIRECT);
+  if (res.data === 'created') redirect(DEFAULT_REDIRECT);
   if (res.data === 'onboard') redirect(`/onboarding?t=${userObjId}`);
 };
 

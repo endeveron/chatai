@@ -34,6 +34,10 @@ export type TPersonChatData<PersonId> = TPersonBaseData & {
   _id: PersonId;
 };
 
+export type TPersonCardData = Omit<TPersonBaseData, 'bio' | 'avatarBlur'> & {
+  _id: string;
+};
+
 export enum PersonKey {
   artFuture = 'artFuture',
   devJourney = 'devJourney',

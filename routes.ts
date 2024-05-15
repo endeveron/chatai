@@ -1,10 +1,9 @@
-import { ChatUrlParam } from '@/lib/types/chat.types';
-
 /**
  * An array of routes that are accessible to the public.
  * These routes do not require authentication.
  */
-export const publicRoutes: string[] = ['/'];
+// export const publicRoutes: string[] = ['/'];
+export const publicRoutes: string[] = [];
 
 /**
  * An array of routes that are used for authentication.
@@ -25,14 +24,9 @@ export const authRoutes: string[] = [
 export const apiAuthPrefix: string = '/api/auth';
 
 /**
- * Path: '/chat/list'
- */
-export const CHAT_LIST_PATH = `/chat/${ChatUrlParam.list}`;
-
-/**
  * Default redirect path after user signed in.
  */
-export const DEFAULT_SIGNIN_REDIRECT = CHAT_LIST_PATH;
+export const DEFAULT_REDIRECT = '/';
 
 /**
  * Default redirect path after user signed out.

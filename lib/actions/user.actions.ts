@@ -85,27 +85,53 @@ export const onboardUser = async ({
 };
 
 /**
- * Retrieves a user from the database by their ID.
+ * Retrieves a user from the database by their email.
  *
- * @param {ObjectId | string} userObjId user._id, a mongoDb ObjectId prop of the user object.
+ * @param {string} email user's email address.
  * @returns a Promise that resolves to a `TServerActionResult` object or `undefined`.
  */
-export const getUserById = async (
-  userObjId: ObjectId | string
+export const fetchUserByEmail = async (
+  email: string
 ): Promise<TServerActionResult | undefined> => {
   try {
     await connectToDB();
 
-    const user = await UserModel.findById(userObjId);
+    const user = await UserModel.findOne({ email: email }).select('id');
     if (!user) {
-      handleActionError('Invalid user ID', null, true);
+      return handleActionError('Could not find a user for the provided email');
     }
 
     return {
       success: true,
-      data: { user },
+      data: user,
     };
   } catch (err: any) {
-    return handleActionError('Could not get user', err);
+    return handleActionError('Could not fetch user', err);
   }
 };
+
+// /**
+//  * Retrieves a user from the database by their ID.
+//  *
+//  * @param {ObjectId | string} userObjId user._id, a mongoDb ObjectId prop of the user object.
+//  * @returns a Promise that resolves to a `TServerActionResult` object or `undefined`.
+//  */
+// export const getUserById = async (
+//   userObjId: ObjectId | string
+// ): Promise<TServerActionResult | undefined> => {
+//   try {
+//     await connectToDB();
+
+//     const user = await UserModel.findById(userObjId);
+//     if (!user) {
+//       handleActionError('Invalid user ID', null, true);
+//     }
+
+//     return {
+//       success: true,
+//       data: { user },
+//     };
+//   } catch (err: any) {
+//     return handleActionError('Could not get user', err);
+//   }
+// };

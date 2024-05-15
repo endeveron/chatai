@@ -179,8 +179,7 @@
   }
 
   .icon,
-  .action-icon,
-  .loading-icon {
+  .action-icon {
     @apply text-icon;
   }
 
@@ -188,8 +187,8 @@
     @apply cursor-pointer opacity-40 hover:opacity-100 transition-opacity;
   }
 
-  .loading-icon {
-    animation: rotating 0.5s linear infinite;
+  .loading {
+    animation: fade-in 1s ease both;
   }
 
   .menu-icon {
@@ -208,21 +207,56 @@
   .scroll-area > div {
     display: block !important;
   }
+
+  /* Typing */
+
+  .typing {
+    @apply flex items-center;
+  }
+
+  .typing_circle {
+    @apply w-2 h-2 rounded-xl bg-middletone;
+    animation: pulse 1s ease-in-out infinite both;
+    animation-delay: 0.4s;
+  }
+
+  .typing_circle:not(:first-child) {
+    @apply ml-2;
+  }
+
+  .typing_circle:nth-child(2) {
+    animation-delay: 0.6s;
+  }
+
+  .typing_circle:nth-child(3) {
+    animation-delay: 0.8s;
+  }
 }
 
 @keyframes rotating {
   from {
-    -ms-transform: rotate(0deg);
-    -moz-transform: rotate(0deg);
-    -webkit-transform: rotate(0deg);
-    -o-transform: rotate(0deg);
     transform: rotate(0deg);
   }
   to {
-    -ms-transform: rotate(360deg);
-    -moz-transform: rotate(360deg);
-    -webkit-transform: rotate(360deg);
-    -o-transform: rotate(360deg);
     transform: rotate(360deg);
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    scale: 0;
+  }
+  50% {
+    scale: 1;
   }
 }

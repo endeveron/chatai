@@ -1,5 +1,4 @@
 import type { Metadata, Viewport } from 'next';
-import Layout from '@/components/shared/layout';
 
 import '@/styles/auth.css';
 
@@ -12,10 +11,10 @@ export const metadata: Metadata = {
   description: '',
 };
 
-export default function RootLayout({
+export default function AuthLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return <Layout isAlignCenter={true}>{children}</Layout>;
+  return <main className="flex items-center justify-center">{children}</main>;
 }

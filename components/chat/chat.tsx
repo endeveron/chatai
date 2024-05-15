@@ -11,21 +11,19 @@ import TopbarHeader from '@/components/chat/topbar-header';
 import { useToast } from '@/components/ui/use-toast';
 import { askAI } from '@/lib/actions/chat.actions';
 import { errAnswerList } from '@/lib/data/person';
-import { TChatItem, TChatMessage } from '@/lib/types/chat.types';
+import { TChatData, TChatMessage } from '@/lib/types/chat.types';
 import { MessageRole } from '@/lib/types/person.types';
 import { getRandom } from '@/lib/utils';
-import { CHAT_LIST_PATH } from '@/routes';
 
-type TChatProps = TChatItem & {
-  fetchedMessages: TChatMessage[];
+type TChatProps = TChatData & {
+  chatId: string;
 };
 
 const Chat = ({
   chatId,
   title,
   person,
-  personName,
-  fetchedMessages,
+  messages: fetchedMessages,
 }: TChatProps) => {
   const pathname = usePathname();
   const toast = useToast();
@@ -46,7 +44,6 @@ const Chat = ({
     return errorMessage;
   };
 
-  // DEV
   const handleInputSubmit = async (input: string) => {
     // if (process.env.NODE_ENV === 'development') {
     //   toast.toast({
@@ -69,7 +66,6 @@ const Chat = ({
       // Add them to the local messages (optimistic update)
       setMessages((msgs) => [...msgs, humanMessage]);
 
-      // DEV
       const res = await askAI(humanMessage);
       if (!res?.success) {
         console.log(res?.error.message || 'Could not get answer from AI.');
@@ -105,7 +101,7 @@ const Chat = ({
   return (
     <section className="chat">
       <Topbar>
-        <TopbarHeader title={title || personName} navPath={CHAT_LIST_PATH}>
+        <TopbarHeader title={title} navPath="/">
           <ChatMenu
             clearChat={{ show: !!messages.length, chatId, path: pathname }}
           />

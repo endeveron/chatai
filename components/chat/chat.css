@@ -49,6 +49,10 @@
   align-items: stretch;
 }
 
+.chat-list.new-chat {
+  display: none;
+}
+
 .chat-list_items {
   height: calc(100dvh - var(--topbar-h));
 }
@@ -57,10 +61,7 @@
 
 .chat-item {
   @apply select-none transition-colors mt-0.5;
-  padding-right: var(--gap);
-  padding-left: var(--gap);
-  padding-top: var(--gap-1-2);
-  padding-bottom: var(--gap-1-2);
+  padding: var(--gap);
 }
 
 .chat-item.active {
@@ -120,7 +121,7 @@
 }
 
 .chat-message.role-ai .chat-message_content {
-  @apply bg-card text-card-foreground sm:mr-10;
+  @apply bg-card text-card-foreground sm:mr-10 rounded-tl-none;
 }
 
 .chat-message.role-hm .chat-message_content {
@@ -164,13 +165,14 @@
 
 .new-chat {
   @apply items-center;
+  max-width: 100dvw;
 }
 
 .new-chat .topbar {
   align-self: stretch;
 }
 
-.new-chat.single .topbar-header {
+.new-chat .topbar-header {
   @apply justify-center;
 }
 
@@ -195,6 +197,7 @@
 
 .people-list_wrapper {
   @apply w-full pb-2 my-4 px-2;
+  /* max-width: 100dvw; */
   max-width: fit-content;
 }
 
@@ -226,51 +229,22 @@
 }
 
 .person-card_content > div {
-  @apply w-44 px-3 elipsis text-center;
+  @apply w-44 px-3 text-center;
 }
 
 .person-card_description {
   @apply text-sm opacity-70;
 }
 
-/* Typing */
-
-.typing {
-  @apply flex items-center;
-}
-
-.typing_circle {
-  @apply w-2 h-2 rounded-xl bg-middletone;
-  animation: pulse 1s ease-in-out infinite both;
-}
-
-.typing_circle:not(:first-child) {
-  @apply ml-2;
-}
-
-.typing_circle:nth-child(2) {
-  animation-delay: 0.2s;
-}
-
-.typing_circle:nth-child(3) {
-  animation-delay: 0.4s;
-}
-
 @media only screen and (min-height: 768px) {
-  .chat-item {
-    padding-top: var(--gap);
-    padding-bottom: var(--gap);
-  }
-
   .chat-input form {
     transform: translateY(-0.25rem);
   }
 }
 
 @media only screen and (max-width: 479px) {
-  .translate-chat-xs,
-  .translate-new-chat-xs {
-    transform: translateX(-100dvw);
+  .chat-list.chat-xs {
+    display: none;
   }
 }
 
@@ -288,21 +262,8 @@
     width: 100%;
   }
 
-  .chat .navback,
-  .new-chat .navback {
+  .chat .navback {
     display: none;
-  }
-
-  .people-list_wrapper {
-    @apply px-0;
-  }
-
-  .new-chat:not(.single) .people-list_wrapper {
-    width: calc(100dvw - 196px);
-  }
-
-  .new-chat.single .people-list_wrapper {
-    width: calc(100dvw - 16px);
   }
 
   /* Chat Notification */
@@ -368,10 +329,6 @@
     min-width: 280px;
   }
 
-  .new-chat:not(.single) .people-list_wrapper {
-    width: calc(100dvw - 296px);
-  }
-
   .new-chat-button {
     @apply px-10;
   }
@@ -391,6 +348,22 @@
 }
 
 @media only screen and (min-width: 1280px) {
+  .chat-list.new-chat {
+    display: flex;
+  }
+
+  .chat-list.new-chat .chat-item {
+    width: 280px;
+  }
+
+  .new-chat .navback {
+    display: none;
+  }
+
+  .new-chat .people-list_wrapper {
+    width: calc(100dvw - 296px);
+  }
+
   .chat-details {
     width: 280px;
     min-width: 280px;
@@ -409,15 +382,5 @@
 
   .chat-details:hover .chat-details_image {
     opacity: 100;
-  }
-}
-
-@keyframes pulse {
-  0%,
-  100% {
-    scale: 0;
-  }
-  50% {
-    scale: 1;
   }
 }

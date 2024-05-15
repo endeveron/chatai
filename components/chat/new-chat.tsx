@@ -12,10 +12,10 @@ import { useErrorHandler } from '@/lib/hooks/error';
 import { TCreateChatSchema } from '@/lib/schemas/chat';
 import {
   Gender,
-  TPersonChatData,
+  TPersonCardData,
   TSelectPerson,
 } from '@/lib/types/person.types';
-import { cn, getRandomName } from '@/lib/utils';
+import { getRandomName } from '@/lib/utils';
 
 const personInitValue: TSelectPerson = {
   _id: '',
@@ -24,11 +24,10 @@ const personInitValue: TSelectPerson = {
 
 type TCreateChatProps = {
   userId: string;
-  people: TPersonChatData<string>[];
-  isSingle: boolean;
+  people: TPersonCardData[];
 };
 
-const NewChat = ({ userId, isSingle, people }: TCreateChatProps) => {
+const NewChat = ({ userId, people }: TCreateChatProps) => {
   const router = useRouter();
   const { toastError } = useErrorHandler();
 
@@ -64,23 +63,14 @@ const NewChat = ({ userId, isSingle, people }: TCreateChatProps) => {
   };
 
   const handleFormCancel = () => {
-    if (isSingle) return;
-
     setPerson(personInitValue);
     router.back();
   };
 
   return (
-    <section
-      className={cn('new-chat', {
-        single: isSingle,
-      })}
-    >
+    <section className="new-chat">
       <Topbar>
-        <TopbarHeader
-          title="New Chat"
-          navPath={isSingle ? '' : '-1'}
-        ></TopbarHeader>
+        <TopbarHeader title="New Chat" navPath="/"></TopbarHeader>
       </Topbar>
 
       <h3 className="pt-4">Choose an AI person</h3>

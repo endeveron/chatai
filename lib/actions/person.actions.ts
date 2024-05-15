@@ -5,8 +5,9 @@ import { ObjectId } from 'mongoose';
 import { connectToDB } from '@/lib/db';
 import PersonModel from '@/lib/models/person.model';
 import { TServerActionResult } from '@/lib/types/common.types';
-import { TPerson } from '@/lib/types/person.types';
+import { TPerson, TPersonCardData } from '@/lib/types/person.types';
 import { handleActionError } from '@/lib/utils/error';
+import ChatModel from '@/lib/models/chat.model';
 
 export const createPerson = async ({
   gender,
@@ -43,40 +44,45 @@ export const createPerson = async ({
   }
 };
 
-/**
- * Fetches a person from a database based on either an objectId or a person value.
- *
- * @returns a Promise that resolves to a `TServerActionResult` object or `undefined`.
- */
-export const fetchPersonDataForLLM = async (
-  _id: ObjectId
-): Promise<TServerActionResult | undefined> => {
-  if (!_id) {
-    return handleActionError('Invalid object ID');
-  }
-
+export const fetchPersonDataForLLM = async ({
+  chatId,
+}: {
+  chatId: ObjectId | string;
+}): Promise<TServerActionResult | undefined> => {
   try {
     await connectToDB();
 
-    const person = await PersonModel.findById(_id).select(
-      'instructions context'
-    );
-    if (!person) {
-      return {
-        success: false,
-        error: { message: 'Could not fetch person' },
-      };
+    // Find a chat by id
+    const chat = await ChatModel.findById(chatId).populate({
+      path: 'person',
+      model: PersonModel,
+      select:
+        '_id title gender avatarKey personKey status bio instructions context',
+    });
+
+    if (!chat) {
+      return handleActionError(
+        'Could not find a chat for the provided chat id'
+      );
     }
 
     return {
       success: true,
       data: {
-        instructions: person.instructions,
-        context: person.context,
+        _id: chat.person._id.toString(),
+        name: chat.personName,
+        title: chat.person.title,
+        status: chat.person.status,
+        gender: chat.person.gender,
+        bio: chat.person.bio,
+        personKey: chat.person.personKey,
+        avatarKey: chat.person.avatarKey,
+        instructions: chat.person.instructions,
+        context: chat.person.context,
       },
     };
   } catch (err: any) {
-    return handleActionError('Could not fetch person', err);
+    return handleActionError('Could not fetch chat', err);
   }
 };
 
@@ -92,13 +98,22 @@ export const fetchPeople = async (): Promise<
     await connectToDB();
 
     const people = await PersonModel.find().select(
-      '_id title gender avatarKey personKey status bio imgBlur avatarBlur'
+      '_id title gender avatarKey personKey status imgBlur'
     );
+
+    const peopleData: TPersonCardData[] = people.map((p) => ({
+      _id: p._id.toString(),
+      title: p.title,
+      gender: p.gender,
+      avatarKey: p.avatarKey,
+      personKey: p.personKey,
+      status: p.status,
+      imgBlur: p.imgBlur,
+    }));
 
     return {
       success: true,
-      // data: JSON.stringify(people),
-      data: people,
+      data: peopleData,
     };
   } catch (err: any) {
     return handleActionError('Could not get person', err);

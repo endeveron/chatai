@@ -7,7 +7,7 @@ import FormLoading from '@/components/shared/form-loading';
 import { Button } from '@/components/ui/button';
 import { useErrorHandler } from '@/lib/hooks/error';
 import { SocialProvider } from '@/lib/types/auth.types';
-import { DEFAULT_SIGNIN_REDIRECT } from '@/routes';
+import { DEFAULT_REDIRECT } from '@/routes';
 
 type TSocialButtonsProps = {};
 
@@ -19,7 +19,7 @@ const SocialButtons = (props: TSocialButtonsProps) => {
     try {
       setPending(true);
       await signIn(provider, {
-        callbackUrl: DEFAULT_SIGNIN_REDIRECT,
+        callbackUrl: DEFAULT_REDIRECT,
       });
     } catch (err: any) {
       toastError(err);

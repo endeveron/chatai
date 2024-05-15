@@ -4,13 +4,12 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
 import { Button } from '@/components/ui/button';
-import { ChatUrlParam } from '@/lib/types/chat.types';
 
 type TNewChatButtonProps = {};
 
 const NewChatButton = (props: TNewChatButtonProps) => {
   const pathname = usePathname();
-  const href = `/chat/${ChatUrlParam.new}`;
+  const href = `/chat`;
 
   if (pathname === href) return null;
 

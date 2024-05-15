@@ -1,4 +1,9 @@
-import { MessageRole, TPersonChatData } from '@/lib/types/person.types';
+import {
+  AvatarKey,
+  MessageRole,
+  TPersonBaseData,
+  TPersonChatData,
+} from '@/lib/types/person.types';
 import { ObjectId } from 'mongoose';
 
 export type TBaseChatMessage = {
@@ -9,6 +14,7 @@ export type TBaseChatMessage = {
 };
 
 export type TChatMessageDb = TBaseChatMessage & {
+  _id: ObjectId;
   chatId: ObjectId;
 };
 
@@ -22,16 +28,27 @@ export type TChat = {
   title: string;
   person: ObjectId;
   personName: string;
+  messages: TChatMessageDb[];
+};
+
+export type TChatData = {
+  title: string;
+  person: TPersonBaseData & {
+    _id: string;
+    name: string;
+  };
   messages: TChatMessage[];
 };
 
-export type TChatData = Omit<TChat, 'person'> & {
-  person: TPersonChatData<ObjectId>;
-};
-
-export type TChatItem = Omit<TChat, '_id' | 'user' | 'person' | 'messages'> & {
+export type TChatItem = {
   chatId: string;
-  person: TPersonChatData<string>;
+  title: string;
+  person: {
+    name: string;
+    status: string;
+    avatarBlur: string;
+    avatarKey: AvatarKey;
+  };
 };
 
 export type TCreateChatArgs = {
@@ -47,9 +64,3 @@ export type TCreateMessageArgs = Pick<TChatMessage, 'content' | 'role'> & {
   path?: string;
   emotion?: string;
 };
-
-export enum ChatUrlParam {
-  list = 'list',
-  new = 'new',
-  details = 'details',
-}

@@ -1,19 +1,18 @@
-import Layout from '@/components/shared/layout';
-import type { Metadata, Viewport } from 'next';
+import ChatList from '@/components/chat/chat-list';
 
-export const viewport: Viewport = {
-  interactiveWidget: 'resizes-content',
-};
+import '@/components/chat/chat.css';
 
-export const metadata: Metadata = {
-  title: 'Chat AI',
-  description: '',
-};
-
-export default function RootLayout({
-  children,
-}: Readonly<{
+export default function HomeLayout({
+  children, // will be a page or nested layout
+}: {
   children: React.ReactNode;
-}>) {
-  return <Layout>{children}</Layout>;
+}) {
+  return (
+    <>
+      {<ChatList />}
+
+      {/* Chat | NewChat components */}
+      {children}
+    </>
+  );
 }

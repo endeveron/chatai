@@ -17,7 +17,7 @@ const ChatLitDev = async ({ items }: TChatListProps) => {
 
   return (
     <div className="chat-list">
-      <Topbar>
+      {/* <Topbar>
         <MainMenu user={session?.user} />
         <div className="w-full flex justify-center">
           <NewChatButton />
@@ -33,7 +33,7 @@ const ChatLitDev = async ({ items }: TChatListProps) => {
             key={c.chatId}
           />
         ))}
-      </ScrollArea>
+      </ScrollArea> */}
     </div>
   );
 };
