@@ -18,7 +18,6 @@ import {
 } from '@/lib/types/chat.types';
 import { TServerActionResult } from '@/lib/types/common.types';
 import { MessageRole } from '@/lib/types/person.types';
-import { sleep } from '@/lib/utils';
 import { createChainForPerson, extractEmotionFromText } from '@/lib/utils/chat';
 import { handleActionError } from '@/lib/utils/error';
 
@@ -131,45 +130,6 @@ export const fetchChat = async ({
     return handleActionError('Could not fetch chat', err);
   }
 };
-
-// /**
-//  * Fetches chat messages for a given chat ID from a database and returns them as a JSON string.
-//  *
-//  * @returns a Promise that resolves to a `TServerActionResult` object or `undefined`.
-//  */
-// export const fetchChat = async ({
-//   chatId,
-//   userEmail,
-// }: {
-//   chatId: ObjectId | string;
-//   userEmail: string;
-// }): Promise<TServerActionResult | undefined> => {
-//   try {
-//     await connectToDB();
-
-//     // Get user object id
-//     const user = await fetchUserByEmail(userEmail);
-
-//     // Find a chat by id
-//     const chat = await ChatModel.findById(chatId).populate('messages');
-//     if (!chat) {
-//       return handleActionError(
-//         'Could not find a chat for the provided id',
-//         null
-//       );
-//     }
-
-//     // Get chat messages array
-//     const messages = chat.messages;
-
-//     return {
-//       success: true,
-//       data: JSON.stringify(messages),
-//     };
-//   } catch (err: any) {
-//     return handleActionError('Could not fetch chat messages', err);
-//   }
-// };
 
 export const fetchUserChats = async ({
   userEmail,

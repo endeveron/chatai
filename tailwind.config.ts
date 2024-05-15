@@ -31,8 +31,8 @@ const config = {
         middletone: 'hsl(var(--middletone) / <alpha-value>)',
         background: 'hsl(var(--background) / <alpha-value>)',
         foreground: 'hsl(var(--foreground) / <alpha-value>)',
-        background2: 'hsl(var(--background-secondary) / <alpha-value>)',
-        foreground2: 'hsl(var(--foreground-secondary) / <alpha-value>)',
+        background2: 'hsl(var(--background2) / <alpha-value>)',
+        foreground2: 'hsl(var(--foreground2) / <alpha-value>)',
         primary: {
           DEFAULT: 'hsl(var(--primary) / <alpha-value>)',
           foreground: 'hsl(var(--primary-foreground) / <alpha-value>)',

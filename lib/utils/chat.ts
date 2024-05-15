@@ -60,15 +60,11 @@ ${history}
     : '';
 
   return PromptTemplate.fromTemplate(`
-${instructions} Keep up the conversation as ${personName} would in a chat, using the provided context.
-
-Don't use overly long phrases or markdown in your response. Do not tell the human that you are an AI for the rest of the conversation.
-
+${instructions} Keep up the conversation using the provided context in a natural, human-like manner as ${personName} would in a chat. Don't use overly long phrases or markdown in your response. Do not tell the human that you are an AI for the rest of the conversation.
 From this list of emotions (${emotions}), choose exactly the one that best represents the emotion you might have felt as ${personName} when you were asked the Question. Be sure to write this emotion at the end of your answer using the following template: $emotion
 ${honestyInstructions}
 ${historyContext}
----------
-
+---
 Context: {context} 
 Question: {question}
 `);

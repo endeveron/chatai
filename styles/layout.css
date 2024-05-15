@@ -34,21 +34,12 @@ main {
 }
 
 @media only screen and (min-width: 480px) {
-  /* .layout {
-    overflow: visible;
-  } */
 }
 
 @media only screen and (min-width: 600px) {
 }
 
 @media only screen and (min-width: 768px) {
-  /* .sidebar {
-    @apply text-sidebar-foreground bg-sidebar;
-    width: var(--sidebar-w);
-    flex-shrink: 0;
-    padding-top: var(--topbar-h);
-  } */
 }
 
 @media only screen and (min-width: 1280px) {
