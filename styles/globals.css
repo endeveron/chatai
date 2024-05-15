@@ -50,7 +50,7 @@
     --button-border: 240 10% 92%;
     --input: 240 10% 80%;
     --ring: 240 10% 4%;
-    --middletone: 240 10% 70%;
+    --middletone: 240 10% 25%;
 
     --radius: 0.5rem;
   }
@@ -100,7 +100,7 @@
     --button-border: 240 8% 25%;
     --input: 240 8% 25%;
     --ring: 240 8% 84%;
-    --middletone: 240 8% 55%;
+    --middletone: 240 8% 75%;
   }
 }
 

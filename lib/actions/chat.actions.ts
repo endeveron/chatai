@@ -11,7 +11,6 @@ import MessageModel from '@/lib/models/message.model';
 import PersonModel from '@/lib/models/person.model';
 import UserModel from '@/lib/models/user.model';
 import {
-  TChat,
   TChatMessage,
   TChatMessageDb,
   TCreateChatArgs,
@@ -19,9 +18,9 @@ import {
 } from '@/lib/types/chat.types';
 import { TServerActionResult } from '@/lib/types/common.types';
 import { MessageRole } from '@/lib/types/person.types';
+import { sleep } from '@/lib/utils';
 import { createChainForPerson, extractEmotionFromText } from '@/lib/utils/chat';
 import { handleActionError } from '@/lib/utils/error';
-import { sleep } from '@/lib/utils';
 
 export const createChat = async ({
   userId,
@@ -62,6 +61,8 @@ export const fetchChat = async ({
 }): Promise<TServerActionResult | undefined> => {
   try {
     await connectToDB();
+
+    await sleep(5000);
 
     // Get user object id
     const user = await fetchUserByEmail(userEmail);
