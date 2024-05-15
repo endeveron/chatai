@@ -3,7 +3,6 @@ import { PromptTemplate } from '@langchain/core/prompts';
 import { RunnableSequence } from '@langchain/core/runnables';
 import { ChatMessageHistory } from 'langchain/memory';
 import { formatDocumentsAsString } from 'langchain/util/document';
-import { ObjectId } from 'mongoose';
 
 import {
   altAnswerList,
@@ -11,11 +10,7 @@ import {
   emotions,
   errAnswerList,
 } from '@/lib/data/person';
-import {
-  MessageRole,
-  TPerson,
-  TPersonChatData,
-} from '@/lib/types/person.types';
+import { MessageRole, TPerson } from '@/lib/types/person.types';
 import { getRandom } from '@/lib/utils';
 import {
   createMainChain,
@@ -24,7 +19,6 @@ import {
 } from '@/lib/utils/llm';
 import { getMessageMemory } from '@/lib/utils/memory';
 import { getVectorStoreForPerson } from '@/lib/utils/vectorStore';
-import { logger } from '@/lib/utils/logger';
 
 /**
  * Generates a template for a question prompt that includes
@@ -105,14 +99,14 @@ const serializeChatHistory = (chatHistory: any) => {
 const performQuestionAnswering = async (input: any) => {
   let question = input.question;
 
-  logger.g('\n\nNew question\n');
+  // logger.g('\n\nNew question\n');
 
   // Get the messages saved in the buffer memory
   const messagesMemory = await input.data.messagesMemory.loadMemoryVariables(
     {}
   );
 
-  logger.b('[performQA]: messagesMemory', messagesMemory);
+  // logger.b('[performQA]: messagesMemory', messagesMemory);
 
   const hasHistory = messagesMemory.chatHistory.length > 0;
   const chatHistory = hasHistory ? messagesMemory.chatHistory : null;
@@ -177,9 +171,9 @@ const performQuestionAnswering = async (input: any) => {
     question = newQuestion;
   }
 
-  logger.b('[performQA]: chatHistory', chatHistoryString);
-  logger.b('[performQA]: context', context);
-  logger.y('\n[performQA]: question', question);
+  // logger.b('[performQA]: chatHistory', chatHistoryString);
+  // logger.b('[performQA]: context', context);
+  // logger.y('\n[performQA]: question', question);
 
   const mainChain = createMainChain({
     personInstructions: input.data.person.instructions,
@@ -197,19 +191,13 @@ const performQuestionAnswering = async (input: any) => {
   // Get an alternate answer if not provided
   const answer = text ? text : getRandom(altAnswerList);
 
-  logger.y('[performQA]: answer\n', answer);
+  // logger.y('[performQA]: answer\n', answer);
 
   // Save the pair of messages to the buffer memory
   await input.data.messagesMemory.saveContext(
     { question: input.question },
     { answer: answer }
   );
-  // try { } catch (err: any) {
-  // console.error(
-  //   `[performQA]: Could not save the messages to the buffer memory`,
-  //    err
-  //   );
-  // }
 
   return {
     result: answer,

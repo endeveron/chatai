@@ -1,25 +1,12 @@
-import mongoose from 'mongoose';
-
 import { auth } from '@/auth';
-import { fetchChat } from '@/lib/actions/chat.actions';
-import {
-  TChat,
-  TChatData,
-  TChatItem,
-  TChatMessage,
-} from '@/lib/types/chat.types';
-import { cn } from '@/lib/utils';
 
-import Chat from '@/components/chat/chat';
-import ChatDetails from '@/components/chat/chat-details';
 import NewChat from '@/components/chat/new-chat';
-import { TPersonCardData, TPersonChatData } from '@/lib/types/person.types';
+import Loading from '@/components/shared/loading-fragment';
 import { fetchPeople } from '@/lib/actions/person.actions';
 import { fetchUserByEmail } from '@/lib/actions/user.actions';
-import Loading from '@/components/shared/loading-fragment';
+import { TPersonCardData } from '@/lib/types/person.types';
 
 // Do not use edge runtime. See: https://mongoosejs.com/docs/nextjs.html
-// export const runtime = 'edge';
 
 export default async function Page() {
   const session = await auth();

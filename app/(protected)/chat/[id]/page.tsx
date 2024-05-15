@@ -6,8 +6,8 @@ import ChatDetails from '@/components/chat/chat-details';
 import { fetchChat } from '@/lib/actions/chat.actions';
 import { TChatData } from '@/lib/types/chat.types';
 
-// Do not use edge runtime. See: https://mongoosejs.com/docs/nextjs.html
-// export const runtime = 'edge';
+// Do not use edge runtime.
+export const revalidate = 3600; // 1 hour
 
 export default async function Page({ params }: { params: { id: string } }) {
   const session = await auth();

@@ -62,7 +62,7 @@ export const fetchChat = async ({
   try {
     await connectToDB();
 
-    await sleep(5000);
+    // await sleep(5000);
 
     // Get user object id
     const user = await fetchUserByEmail(userEmail);
