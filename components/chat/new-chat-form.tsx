@@ -40,9 +40,7 @@ const NewChatForm = (props: TCreateChatProps) => {
     form.reset();
   };
 
-  const optionalEl = (
-    <span className="ml-2 text-muted-foreground">(optional)</span>
-  );
+  const optionalEl = <span className="ml-2 text-muted">(optional)</span>;
 
   return (
     <Form {...form}>

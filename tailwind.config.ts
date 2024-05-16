@@ -23,16 +23,14 @@ const config = {
         sm: ['0.875rem', '1.25rem'],
       },
       colors: {
-        icon: 'hsl(var(--icon) / <alpha-value>)',
-        border: 'hsl(var(--border) / <alpha-value>)',
-        btnborder: 'hsl(var(--button-border) / <alpha-value>)',
-        input: 'hsl(var(--input) / <alpha-value>)',
-        ring: 'hsl(var(--ring) / <alpha-value>)',
-        middletone: 'hsl(var(--middletone) / <alpha-value>)',
-        background: 'hsl(var(--background) / <alpha-value>)',
-        foreground: 'hsl(var(--foreground) / <alpha-value>)',
-        background2: 'hsl(var(--background2) / <alpha-value>)',
-        foreground2: 'hsl(var(--foreground2) / <alpha-value>)',
+        card: {
+          DEFAULT: 'hsl(var(--card) / <alpha-value>)',
+          foreground: 'hsl(var(--card-foreground) / <alpha-value>)',
+        },
+        brand: {
+          DEFAULT: 'hsl(var(--brand) / <alpha-value>)',
+          foreground: 'hsl(var(--brand-foreground) / <alpha-value>)',
+        },
         primary: {
           DEFAULT: 'hsl(var(--primary) / <alpha-value>)',
           foreground: 'hsl(var(--primary-foreground) / <alpha-value>)',
@@ -41,42 +39,29 @@ const config = {
           DEFAULT: 'hsl(var(--secondary) / <alpha-value>)',
           foreground: 'hsl(var(--secondary-foreground) / <alpha-value>)',
         },
-        destructive: {
-          DEFAULT: 'hsl(var(--destructive) / <alpha-value>)',
-          foreground: 'hsl(var(--destructive-foreground) / <alpha-value>)',
-        },
-        muted: {
-          DEFAULT: 'hsl(var(--muted) / <alpha-value>)',
-          foreground: 'hsl(var(--muted-foreground) / <alpha-value>)',
-        },
-        accent: {
-          DEFAULT: 'hsl(var(--accent) / <alpha-value>)',
-          foreground: 'hsl(var(--accent-foreground) / <alpha-value>)',
-        },
         popover: {
           DEFAULT: 'hsl(var(--popover) / <alpha-value>)',
+          focus: 'hsl(var(--popover-focus) / <alpha-value>)',
           foreground: 'hsl(var(--popover-foreground) / <alpha-value>)',
         },
-        card: {
-          DEFAULT: 'hsl(var(--card) / <alpha-value>)',
-          foreground: 'hsl(var(--card-foreground) / <alpha-value>)',
+        success: {
+          DEFAULT: 'hsl(var(--success) / <alpha-value>)',
+          foreground: 'hsl(var(--success-foreground) / <alpha-value>)',
         },
-        card2: {
-          DEFAULT: 'hsl(var(--card2) / <alpha-value>)',
-          foreground: 'hsl(var(--card2-foreground) / <alpha-value>)',
+        error: {
+          DEFAULT: 'hsl(var(--error) / <alpha-value>)',
+          foreground: 'hsl(var(--error-foreground) / <alpha-value>)',
         },
-        topbar: {
-          DEFAULT: 'hsl(var(--topbar) / <alpha-value>)',
-          foreground: 'hsl(var(--topbar-foreground) / <alpha-value>)',
-        },
-        sidebar: {
-          DEFAULT: 'hsl(var(--sidebar) / <alpha-value>)',
-          foreground: 'hsl(var(--sidebar-foreground) / <alpha-value>)',
-        },
-        inverse: {
-          DEFAULT: 'hsl(var(--inverse) / <alpha-value>)',
-          foreground: 'hsl(var(--inverse-foreground) / <alpha-value>)',
-        },
+
+        background: 'hsl(var(--background) / <alpha-value>)',
+        foreground: 'hsl(var(--foreground) / <alpha-value>)',
+        topbar: 'hsl(var(--topbar) / <alpha-value>)',
+        sidebar: 'hsl(var(--sidebar) / <alpha-value>)',
+        muted: 'hsl(var(--muted) / <alpha-value>)',
+        border: 'hsl(var(--border) / <alpha-value>)',
+        icon: 'hsl(var(--icon) / <alpha-value>)',
+        ring: 'hsl(var(--ring) / <alpha-value>)',
+        loading: 'hsl(var(--loading) / <alpha-value>)',
       },
       borderRadius: {
         lg: 'var(--radius)',

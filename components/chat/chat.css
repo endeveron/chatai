@@ -16,7 +16,7 @@
 }
 
 .topbar {
-  @apply bg-topbar/35 transition-colors;
+  @apply bg-topbar/35 dark:bg-topbar/10 transition-colors;
   height: var(--topbar-h);
 }
 
@@ -40,7 +40,7 @@
 
 .chat-list,
 .chat-details {
-  @apply text-foreground2 bg-background2 cursor-default transition-colors;
+  @apply bg-sidebar cursor-default transition-colors;
 }
 
 /* Chat List */
@@ -65,7 +65,7 @@
 }
 
 .chat-item.active {
-  @apply bg-popover/80 transition-colors;
+  @apply bg-background transition-colors;
 }
 
 .chat-item:not(.active) {
@@ -73,7 +73,7 @@
 }
 
 .chat-item:not(.active):hover {
-  @apply bg-popover/55;
+  @apply bg-background/70;
 }
 
 .chat-item_avatar .avatar {
@@ -125,7 +125,7 @@
 }
 
 .chat-message.role-hm .chat-message_content {
-  @apply bg-card2 text-card2-foreground ml-[4.5rem];
+  @apply bg-brand text-brand-foreground ml-[4.5rem];
   border-bottom-right-radius: 0;
 }
 
@@ -215,7 +215,7 @@
 }
 
 .person-card.selected {
-  @apply bg-inverse text-inverse-foreground cursor-default;
+  @apply bg-primary text-primary-foreground cursor-default;
 }
 
 .person-card_image {
@@ -297,7 +297,7 @@
   }
 
   .chat-notification__label {
-    @apply absolute m-0 p-2 text-muted-foreground bg-background transition-colors;
+    @apply absolute m-0 p-2 text-muted bg-background transition-colors;
     inset-block-start: 50%;
     inset-inline-start: 50%;
     transform: translate(-50%, -50%);

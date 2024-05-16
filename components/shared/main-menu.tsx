@@ -66,7 +66,7 @@ const MainMenu = ({ user }: TMenuProps) => {
             <>
               <div className="main-menu_user-data cursor-default px-4 pt-4 pb-2">
                 <div className="text-lg font-bold">{user.name}</div>
-                <div className="text-sm text-muted-foreground">
+                <div className="text-sm text-secondary-foreground">
                   {user.email}
                 </div>
               </div>

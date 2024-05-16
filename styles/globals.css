@@ -4,103 +4,79 @@
 
 /* Colors */
 
+:root {
+  --hue: 210;
+}
+
 @layer base {
   :root {
-    --background: 210 10% 96%;
-    --foreground: 210 10% 4%;
+    --card: var(--hue) 0% 100%; /* card, AI's chat message */
+    --card-foreground: var(--hue) 5% 10%; /* main text */
 
-    --background2: 210 10% 92%;
-    --foreground2: 210 10% 10%;
+    --brand: var(--hue) 75% 90%; /* human's chat message */
+    --brand-foreground: var(--hue) 75% 10%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 210 10% 5%;
+    --primary: var(--hue) 15% 10%; /* button primary */
+    --primary-foreground: var(--hue) 5% 95%;
 
-    --card2: 210 75% 90%;
-    --card2-foreground: 0 0% 0%;
+    --secondary: var(--hue) 2% 98%; /* button secondary */
+    --secondary-foreground: var(--hue) 10% 65%;
 
-    --topbar: 0 0% 100%;
-    --topbar-foreground: 210 10% 0%;
+    --popover: var(--hue) 0% 100%; /* dropdown menu */
+    --popover-foreground: var(--hue) 5% 45%;
+    --popover-focus: var(--hue) 5% 97%;
 
-    --sidebar: 210 10% 20%;
-    --sidebar-foreground: 210 10% 95%;
+    --success: 154 85% 75%;
+    --success-foreground: 154 85% 65%;
 
-    --popover: 210 10% 100%;
-    --popover-foreground: 210 10% 4%;
+    --error: 347 85% 95%;
+    --error-foreground: 347 85% 55%;
 
-    --primary: 210 10% 10%;
-    --primary-foreground: 0 10% 98%;
-
-    --secondary: 210 10% 98%;
-    --secondary-foreground: 210 10% 10%;
-
-    --muted: 210 6% 96%;
-    --muted-foreground: 210 6% 50%;
-
-    --accent: 210 10% 96%;
-    --accent-foreground: 210 10% 10%;
-
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 98%;
-
-    --inverse: 210 10% 10%;
-    --inverse-foreground: 0 0% 98%;
-
-    --icon: 210 10% 20%;
-    --border: 210 10% 80%;
-    --button-border: 210 10% 92%;
-    --input: 210 10% 80%;
-    --ring: 210 10% 4%;
-    --middletone: 210 10% 25%;
+    --background: var(--hue) 5% 97%; /* body */
+    --foreground: var(--hue) 5% 10%; /* main text */
+    --topbar: var(--hue) 0% 100%; /* .35 */
+    --sidebar: var(--hue) 10% 92%; /* sidebar */
+    --muted: var(--hue) 10% 75%;
+    --border: var(--hue) 10% 80%;
+    --icon: var(--hue) 10% 50%;
+    --ring: var(--hue) 10% 4%;
+    --loading: var(--hue) 10% 25%;
 
     --radius: 0.5rem;
   }
 
   .dark {
-    --background: 210 8% 10%;
-    --foreground: 0 0% 98%;
+    --card: var(--hue) 10% 17%; /* card, AI's chat message */
+    --card-foreground: var(--hue) 5% 90%; /* main text */
 
-    --background2: 210 8% 5%;
-    --foreground2: 210 8% 85%;
+    --brand: var(--hue) 50% 20%; /* human's chat message */
+    --brand-foreground: var(--hue) 5% 95%;
 
-    --card: 210 8% 15%;
-    --card-foreground: 210 8% 85%;
+    --primary: var(--hue) 5% 95%; /* button primary */
+    --primary-foreground: var(--hue) 0% 0%;
 
-    --card2: 210 45% 15%;
-    --card2-foreground: 210 8% 90%;
+    --secondary: var(--hue) 8% 20%; /* button secondary */
+    --secondary-foreground: var(--hue) 8% 65%;
 
-    --topbar: 210 8% 20%;
-    --topbar-foreground: 210 8% 90%;
+    --popover: var(--hue) 8% 20%; /* dropdown menu */
+    --popover-foreground: var(--hue) 8% 85%;
+    --popover-focus: var(--hue) 8% 25%;
 
-    --sidebar: 210 8% 20%;
-    --sidebar-foreground: 210 8% 95%;
+    --success: 154 85% 55%;
+    --success-foreground: 154 65% 80%;
 
-    --popover: 210 8% 12%;
-    --popover-foreground: 210 8% 90%;
+    --error: 347 85% 75%;
+    --error-foreground: 347 80% 100%;
 
-    --primary: 0 0% 98%;
-    --primary-foreground: 210 8% 8%;
-
-    --secondary: 210 8% 16%;
-    --secondary-foreground: 210 8% 85%;
-
-    --muted: 210 6% 16%;
-    --muted-foreground: 210 6% 60%;
-
-    --accent: 210 8% 16%;
-    --accent-foreground: 210 8% 98%;
-
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 0 0% 98%;
-
-    --inverse: 210 5% 96%;
-    --inverse-foreground: 210 8% 4%;
-
-    --icon: 210 8% 75%;
-    --border: 210 8% 16%;
-    --button-border: 210 8% 25%;
-    --input: 210 8% 22%;
-    --ring: 210 8% 84%;
-    --middletone: 210 8% 75%;
+    --background: var(--hue) 10% 10%; /* body */
+    --foreground: var(--hue) 5% 90%; /* main text */
+    --topbar: var(--hue) 10% 90%; /* .35 */
+    --sidebar: var(--hue) 5% 5%; /* sidebar */
+    --muted: var(--hue) 5% 45%;
+    --border: var(--hue) 5% 25%;
+    --icon: var(--hue) 5% 75%;
+    --ring: var(--hue) 5% 45%;
+    --loading: var(--hue) 10% 75%;
   }
 }
 
@@ -167,7 +143,7 @@
   }
 
   .inactive {
-    @apply !pointer-events-none !text-muted-foreground;
+    @apply !pointer-events-none !text-muted;
   }
 
   .inactive button {
@@ -192,7 +168,7 @@
   }
 
   .menu-icon {
-    @apply mr-4 text-muted-foreground/60;
+    @apply mr-4 text-muted;
   }
 
   .card {
@@ -215,7 +191,7 @@
   }
 
   .typing_circle {
-    @apply w-2 h-2 rounded-xl bg-middletone;
+    @apply w-2 h-2 rounded-xl bg-loading;
     animation: pulse 1s ease-in-out infinite both;
     animation-delay: 0.4s;
   }

@@ -20,6 +20,7 @@ import { TServerActionResult } from '@/lib/types/common.types';
 import { MessageRole } from '@/lib/types/person.types';
 import { createChainForPerson, extractEmotionFromText } from '@/lib/utils/chat';
 import { handleActionError } from '@/lib/utils/error';
+import { sleep } from '@/lib/utils';
 
 export const createChat = async ({
   userId,
@@ -61,7 +62,7 @@ export const fetchChat = async ({
   try {
     await connectToDB();
 
-    // await sleep(5000);
+    await sleep(5000);
 
     // Get user object id
     const user = await fetchUserByEmail(userEmail);

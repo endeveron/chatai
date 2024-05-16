@@ -29,7 +29,7 @@ const SocialButtons = (props: TSocialButtonsProps) => {
 
   return (
     <div className="social-buttons relative flex flex-col gap-4">
-      <p className="text-center text-sm text-muted-foreground">or</p>
+      <p className="text-center text-sm text-secondary-foreground">or</p>
       <Button
         onClick={() => handleClick(SocialProvider.google)}
         type="button"

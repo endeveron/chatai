@@ -9,7 +9,7 @@
 }
 
 .auth-form_link {
-  @apply mt-2 mb-1 text-center text-sm text-muted-foreground hover:text-foreground;
+  @apply mt-2 mb-1 text-center text-sm text-secondary-foreground hover:text-foreground;
 }
 
 .form-control-with-icon input {

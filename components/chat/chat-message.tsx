@@ -29,7 +29,7 @@ const ChatMessage = ({
   const handleContentClick = () => {
     copy(content);
     toast.toast({
-      title: 'Message text copied to clipboard',
+      title: 'Message text copied to the clipboard',
       duration: 3000,
     });
   };
