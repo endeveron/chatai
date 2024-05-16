@@ -1,19 +1,45 @@
 import type { Metadata, Viewport } from 'next';
-import Layout from '@/components/shared/layout';
+import { Mulish } from 'next/font/google';
 
-export const viewport: Viewport = {
-  interactiveWidget: 'resizes-content',
-};
+import { ThemeProvider } from '@/components/ui/theme-provider';
+import { Toaster } from '@/components/ui/toaster';
 
 export const metadata: Metadata = {
   title: 'Chat AI',
   description: '',
 };
 
+export const viewport: Viewport = {
+  interactiveWidget: 'resizes-content',
+};
+
+import '@/styles/globals.css';
+import '@/styles/layout.css';
+
+const font = Mulish({
+  weight: ['400', '500', '600', '700'],
+  subsets: ['cyrillic', 'latin'],
+});
+
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return <Layout>{children}</Layout>;
+  return (
+    <html lang="en" suppressHydrationWarning>
+      <body className={font.className}>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="light"
+          // enableSystem
+        >
+          <div className="layout">
+            {children}
+            <Toaster />
+          </div>
+        </ThemeProvider>
+      </body>
+    </html>
+  );
 }

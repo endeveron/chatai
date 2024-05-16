@@ -16,7 +16,7 @@
 }
 
 .topbar {
-  @apply bg-topbar/35 dark:bg-topbar/10 transition-colors;
+  @apply bg-topbar/20 transition-colors;
   height: var(--topbar-h);
 }
 
@@ -297,7 +297,7 @@
   }
 
   .chat-notification__label {
-    @apply absolute m-0 p-2 text-muted bg-background transition-colors;
+    @apply absolute m-0 p-2 text-secondary-foreground bg-background transition-colors;
     inset-block-start: 50%;
     inset-inline-start: 50%;
     transform: translate(-50%, -50%);

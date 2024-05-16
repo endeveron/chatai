@@ -3,11 +3,11 @@
 import { ObjectId } from 'mongoose';
 
 import { connectToDB } from '@/lib/db';
+import ChatModel from '@/lib/models/chat.model';
 import PersonModel from '@/lib/models/person.model';
 import { TServerActionResult } from '@/lib/types/common.types';
 import { TPerson, TPersonCardData } from '@/lib/types/person.types';
 import { handleActionError } from '@/lib/utils/error';
-import ChatModel from '@/lib/models/chat.model';
 
 export const createPerson = async ({
   gender,

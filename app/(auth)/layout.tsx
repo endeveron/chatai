@@ -1,10 +1,6 @@
-import type { Metadata, Viewport } from 'next';
+import type { Metadata } from 'next';
 
 import '@/styles/auth.css';
-
-export const viewport: Viewport = {
-  interactiveWidget: 'resizes-content',
-};
 
 export const metadata: Metadata = {
   title: 'Authentication | Chat AI',

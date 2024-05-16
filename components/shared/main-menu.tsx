@@ -1,6 +1,7 @@
 'use client';
 
 import { signOut } from 'next-auth/react';
+import { useTheme } from 'next-themes';
 import { useEffect, useState } from 'react';
 
 import LoadingIcon from '@/components/shared/loading-icon';
@@ -12,7 +13,6 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { useTheme } from '@/lib/hooks/useTheme';
 import LightbulbIcon from '@/public/assets/ui/lightbulb.svg';
 import MoonIcon from '@/public/assets/ui/moon.svg';
 import SignOutIcon from '@/public/assets/ui/sign-out.svg';
@@ -24,24 +24,20 @@ type TMenuProps = {
 };
 
 const MainMenu = ({ user }: TMenuProps) => {
-  const { toggleTheme } = useTheme();
+  const { setTheme, theme } = useTheme();
   const [signoutPending, setSignoutPending] = useState(false);
-  const [theme, setTheme] = useState('');
+
+  console.log('theme', theme);
 
   const handleToggleTheme = () => {
-    toggleTheme();
-    setTheme((prev) => (prev === 'light' ? 'dark' : 'light'));
+    const newTheme = theme === 'light' ? 'dark' : 'light';
+    setTheme(newTheme);
   };
 
   const handleSignOut = () => {
     setSignoutPending(true);
     signOut();
   };
-
-  useEffect(() => {
-    const lsTheme = localStorage.getItem('theme');
-    setTheme(lsTheme || 'light');
-  }, []);
 
   const themeIcon =
     theme === 'light' ? (
@@ -81,7 +77,7 @@ const MainMenu = ({ user }: TMenuProps) => {
           <DropdownMenuSeparator />
           <DropdownMenuItem onClick={handleToggleTheme}>
             {themeIcon}
-            {theme === 'light' ? 'Dark' : 'Light'} Mode
+            {theme === 'light' ? 'Dark' : 'Light'} Theme
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>

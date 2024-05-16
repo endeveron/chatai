@@ -5,26 +5,26 @@
 /* Colors */
 
 :root {
-  --hue: 210;
+  --hue: 215;
 }
 
 @layer base {
   :root {
     --card: var(--hue) 0% 100%; /* card, AI's chat message */
-    --card-foreground: var(--hue) 5% 10%; /* main text */
+    --card-foreground: var(--hue) 10% 10%; /* main text */
 
     --brand: var(--hue) 75% 90%; /* human's chat message */
     --brand-foreground: var(--hue) 75% 10%;
 
-    --primary: var(--hue) 15% 10%; /* button primary */
-    --primary-foreground: var(--hue) 5% 95%;
+    --primary: var(--hue) 10% 10%; /* button primary */
+    --primary-foreground: var(--hue) 10% 95%;
 
-    --secondary: var(--hue) 2% 98%; /* button secondary */
+    --secondary: var(--hue) 10% 99%; /* button secondary */
     --secondary-foreground: var(--hue) 10% 65%;
 
     --popover: var(--hue) 0% 100%; /* dropdown menu */
-    --popover-foreground: var(--hue) 5% 45%;
-    --popover-focus: var(--hue) 5% 97%;
+    --popover-foreground: var(--hue) 10% 45%;
+    --popover-focus: var(--hue) 10% 97%;
 
     --success: 154 85% 75%;
     --success-foreground: 154 85% 65%;
@@ -32,13 +32,13 @@
     --error: 347 85% 95%;
     --error-foreground: 347 85% 55%;
 
-    --background: var(--hue) 5% 97%; /* body */
-    --foreground: var(--hue) 5% 10%; /* main text */
-    --topbar: var(--hue) 0% 100%; /* .35 */
+    --background: var(--hue) 10% 97%; /* body */
+    --foreground: var(--hue) 10% 10%; /* main text */
+    --topbar: var(--hue) 0% 100%; /* .2 */
     --sidebar: var(--hue) 10% 92%; /* sidebar */
-    --muted: var(--hue) 10% 75%;
-    --border: var(--hue) 10% 80%;
-    --icon: var(--hue) 10% 50%;
+    --muted: var(--hue) 5% 75%;
+    --border: var(--hue) 8% 80%;
+    --icon: var(--hue) 10% 40%;
     --ring: var(--hue) 10% 4%;
     --loading: var(--hue) 10% 25%;
 
@@ -46,8 +46,8 @@
   }
 
   .dark {
-    --card: var(--hue) 10% 17%; /* card, AI's chat message */
-    --card-foreground: var(--hue) 5% 90%; /* main text */
+    --card: var(--hue) 5% 15%; /* card, AI's chat message */
+    --card-foreground: var(--hue) 5% 85%; /* main text */
 
     --brand: var(--hue) 50% 20%; /* human's chat message */
     --brand-foreground: var(--hue) 5% 95%;
@@ -55,12 +55,12 @@
     --primary: var(--hue) 5% 95%; /* button primary */
     --primary-foreground: var(--hue) 0% 0%;
 
-    --secondary: var(--hue) 8% 20%; /* button secondary */
+    --secondary: var(--hue) 5% 17%; /* button secondary */
     --secondary-foreground: var(--hue) 8% 65%;
 
-    --popover: var(--hue) 8% 20%; /* dropdown menu */
-    --popover-foreground: var(--hue) 8% 85%;
-    --popover-focus: var(--hue) 8% 25%;
+    --popover: var(--hue) 5% 15%; /* dropdown menu */
+    --popover-foreground: var(--hue) 5% 85%;
+    --popover-focus: var(--hue) 7% 19%;
 
     --success: 154 85% 55%;
     --success-foreground: 154 65% 80%;
@@ -68,15 +68,15 @@
     --error: 347 85% 75%;
     --error-foreground: 347 80% 100%;
 
-    --background: var(--hue) 10% 10%; /* body */
+    --background: var(--hue) 5% 10%; /* body */
     --foreground: var(--hue) 5% 90%; /* main text */
-    --topbar: var(--hue) 10% 90%; /* .35 */
+    --topbar: var(--hue) 5% 20%; /* .2 */
     --sidebar: var(--hue) 5% 5%; /* sidebar */
     --muted: var(--hue) 5% 45%;
-    --border: var(--hue) 5% 25%;
+    --border: var(--hue) 5% 20%;
     --icon: var(--hue) 5% 75%;
     --ring: var(--hue) 5% 45%;
-    --loading: var(--hue) 10% 75%;
+    --loading: var(--hue) 5% 75%;
   }
 }
 
