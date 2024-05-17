@@ -21,8 +21,8 @@ const ChatList = async (props: TChatListProps) => {
       userChatsRes?.error.message || 'Could not fetch user chats.'
     );
   }
+  // The `chats` data must be returned to process the redirection to a new chat
   chats = userChatsRes.data;
-  if (!chats.length) return null;
 
   const user = {
     name: userName,

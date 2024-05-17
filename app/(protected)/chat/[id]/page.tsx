@@ -26,12 +26,12 @@ export default async function Page({ params }: { params: { id: string } }) {
 
   // Fetch chat data
   const chatRes = await fetchChat({ chatId, userEmail });
-  if (chatRes?.success) {
-    chatData = {
-      chatId,
-      ...chatRes.data,
-    };
-  }
+  if (!chatRes?.success) return null;
+
+  chatData = {
+    chatId,
+    ...chatRes.data,
+  };
 
   return (
     <main className="relative">

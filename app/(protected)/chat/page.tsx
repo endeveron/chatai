@@ -33,6 +33,9 @@ export default async function Page() {
     people = peopleRes.data;
   }
 
+  // TODO: fetch the user's chats. Pass the `hasChats` prop to NewChat.
+  // Disable the navback button if the user doesn't have chats
+
   return (
     <main className="relative">
       {people ? <NewChat userId={userId} people={people} /> : <Loading />}

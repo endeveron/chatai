@@ -23,7 +23,6 @@ import { onboardUser } from '@/lib/actions/user.actions';
 import { useErrorHandler } from '@/lib/hooks/error';
 import { TOnboardingSchema, onboardingSchema } from '@/lib/schemas/auth';
 import { cn } from '@/lib/utils';
-import { DEFAULT_REDIRECT } from '@/routes';
 
 type TOnboardingFormProps = {
   userObjId: string;

@@ -1,6 +1,6 @@
 'use client';
 
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 
 import ChatItem from '@/components/chat/chat-item';
 import NewChatButton from '@/components/chat/new-chat-btn';
@@ -18,6 +18,12 @@ type TChatListClientProps = {
 
 const ChatListClient = ({ items, user }: TChatListClientProps) => {
   const pathname = usePathname();
+  const router = useRouter();
+
+  if (items.length === 0) {
+    router.push('/chat');
+  }
+
   const isChat = pathname.includes('chat');
   const isNewChat = pathname === '/chat';
 
