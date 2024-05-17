@@ -57,7 +57,7 @@ const OnboardingForm = ({ userObjId }: TOnboardingFormProps) => {
 
       // If success redirect to sign-in
       if (res?.success) {
-        router.replace(DEFAULT_REDIRECT);
+        router.replace('/sign-in?redirectTo=chat');
         return;
       }
 

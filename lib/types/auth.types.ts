@@ -18,7 +18,9 @@ export type TCredentials = {
   password: string;
 };
 
-export type TSignInArgs = TCredentials;
+export type TSignInArgs = TCredentials & {
+  redirectTo?: string;
+};
 
 export type TSignInSocialArgs = {
   provider: SocialProvider;

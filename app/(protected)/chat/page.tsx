@@ -8,6 +8,7 @@ import { TPersonCardData } from '@/lib/types/person.types';
 
 // Do not use edge runtime. See: https://mongoosejs.com/docs/nextjs.html
 
+// Page route: '/chat'
 export default async function Page() {
   const session = await auth();
   if (!session?.user) return null;

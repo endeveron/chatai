@@ -11,24 +11,25 @@ export const useErrorHandler = () => {
    */
   const toastError = (err: any) => {
     if (!err) return;
-    let title = 'Oops!';
-    let description = null;
+    let title = 'Oops! ';
 
     if (err?.message) {
       // Handle a default error object
-      description = err.message;
+      title += err.message;
     } else if (err?.success === false && err?.error?.message) {
       // Handle an error from server action
-      description = err.error.message;
+      title += err.error.message;
     } else if (typeof err === 'string') {
       // Handle a custom error message
-      description = err;
+      title += err;
+    } else {
+      title += 'An error occured';
     }
 
     toast.toast({
       variant: 'destructive',
       title,
-      description,
+      // description,
       // duration: 10000,
     });
   };

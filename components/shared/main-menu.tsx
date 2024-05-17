@@ -27,8 +27,6 @@ const MainMenu = ({ user }: TMenuProps) => {
   const { setTheme, theme } = useTheme();
   const [signoutPending, setSignoutPending] = useState(false);
 
-  console.log('theme', theme);
-
   const handleToggleTheme = () => {
     const newTheme = theme === 'light' ? 'dark' : 'light';
     setTheme(newTheme);

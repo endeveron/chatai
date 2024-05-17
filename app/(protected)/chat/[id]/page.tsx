@@ -7,8 +7,8 @@ import { fetchChat } from '@/lib/actions/chat.actions';
 import { TChatData } from '@/lib/types/chat.types';
 
 // Do not use edge runtime.
-export const revalidate = 3600; // 1 hour
 
+// Page route: '/chat/[id]'
 export default async function Page({ params }: { params: { id: string } }) {
   const session = await auth();
   if (!session?.user) return null;

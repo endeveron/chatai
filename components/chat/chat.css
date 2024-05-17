@@ -219,7 +219,7 @@
 }
 
 .person-card_image {
-  @apply rounded-xl w-36 h-44 overflow-hidden;
+  @apply rounded-xl w-36 h-44 text-muted overflow-hidden;
   transform: translateY(-1.25rem);
 }
 
@@ -373,7 +373,7 @@
   }
 
   .chat-details_image {
-    opacity: 0.85;
+    @apply text-muted opacity-85;
   }
 
   :root.dark .chat-details_image {

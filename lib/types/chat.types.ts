@@ -29,6 +29,10 @@ export type TChat = {
   person: ObjectId;
   personName: string;
   messages: TChatMessageDb[];
+  tokens?: {
+    input: number;
+    output: number;
+  };
 };
 
 export type TChatData = {

@@ -1,7 +1,7 @@
 'use server';
 
 import { ObjectId } from 'mongoose';
-import { revalidatePath } from 'next/cache';
+import { revalidatePath, unstable_cache } from 'next/cache';
 
 import { fetchPersonDataForLLM } from '@/lib/actions/person.actions';
 import { fetchUserByEmail } from '@/lib/actions/user.actions';
@@ -18,7 +18,11 @@ import {
 } from '@/lib/types/chat.types';
 import { TServerActionResult } from '@/lib/types/common.types';
 import { MessageRole } from '@/lib/types/person.types';
-import { createChainForPerson, extractEmotionFromText } from '@/lib/utils/chat';
+import {
+  calculateLLMTokens,
+  createChainForPerson,
+  extractEmotionFromText,
+} from '@/lib/utils/chat';
 import { handleActionError } from '@/lib/utils/error';
 
 export const createChat = async ({
@@ -37,6 +41,10 @@ export const createChat = async ({
       person: personId,
       personName,
       messages: [],
+      tokens: {
+        input: 0,
+        output: 0,
+      },
     });
 
     // Save the chat
@@ -51,83 +59,86 @@ export const createChat = async ({
   }
 };
 
-export const fetchChat = async ({
-  chatId,
-  userEmail,
-}: {
-  chatId: ObjectId | string;
-  userEmail: string;
-}): Promise<TServerActionResult | undefined> => {
-  try {
-    await connectToDB();
+export const fetchChat = unstable_cache(
+  async ({
+    chatId,
+    userEmail,
+  }: {
+    chatId: ObjectId | string;
+    userEmail: string;
+  }): Promise<TServerActionResult | undefined> => {
+    try {
+      await connectToDB();
 
-    // Get user object id
-    const user = await fetchUserByEmail(userEmail);
-    if (!user?.success) {
-      return handleActionError('Could not find the user', null, true);
-    }
+      // Get user object id
+      const user = await fetchUserByEmail(userEmail);
+      if (!user?.success) {
+        return handleActionError('Could not find the user', null, true);
+      }
 
-    // Find a chat by id
-    const chat = await ChatModel.findById(chatId)
-      .populate({
-        path: 'person',
-        model: PersonModel,
-        select:
-          'id title gender avatarKey personKey status bio avatarBlur imgBlur',
-      })
-      .populate({
-        path: 'messages',
-        model: MessageModel,
-        select: 'content emotion role timestamp',
-      });
+      // Find a chat by id
+      const chat = await ChatModel.findById(chatId)
+        .populate({
+          path: 'person',
+          model: PersonModel,
+          select:
+            'id title gender avatarKey personKey status bio avatarBlur imgBlur',
+        })
+        .populate({
+          path: 'messages',
+          model: MessageModel,
+          select: 'content emotion role timestamp',
+        });
 
-    if (!chat) {
-      return handleActionError('Could not find a chat');
-    }
+      if (!chat) {
+        return handleActionError('Could not find a chat');
+      }
 
-    if (chat.user.toString() !== user.data.id) {
-      return handleActionError(
-        'User with te provided email is not allowed to fetch this chat',
-        null,
-        true
+      if (chat.user.toString() !== user.data.id) {
+        return handleActionError(
+          'User with te provided email is not allowed to fetch this chat',
+          null,
+          true
+        );
+      }
+
+      const parsedMessages: TChatMessage[] = chat.messages.map(
+        (m: TChatMessageDb) => ({
+          chatId,
+          content: m.content,
+          role: m.role,
+          timestamp: m.timestamp,
+          emotion: m.emotion,
+        })
       );
-    }
 
-    const parsedMessages: TChatMessage[] = chat.messages.map(
-      (m: TChatMessageDb) => ({
-        chatId,
-        content: m.content,
-        role: m.role,
-        timestamp: m.timestamp,
-        emotion: m.emotion,
-      })
-    );
+      const person = chat.person;
 
-    const person = chat.person;
-
-    return {
-      success: true,
-      data: {
-        title: chat.title || chat.personName,
-        person: {
-          _id: person._id.toString(),
-          title: person.title,
-          name: chat.personName,
-          gender: person.gender,
-          avatarKey: person.avatarKey,
-          avatarBlur: person.avatarBlur,
-          imgBlur: person.imgBlur,
-          personKey: person.personKey,
-          status: person.status,
-          bio: person.bio,
+      return {
+        success: true,
+        data: {
+          title: chat.title || chat.personName,
+          person: {
+            _id: person._id.toString(),
+            title: person.title,
+            name: chat.personName,
+            gender: person.gender,
+            avatarKey: person.avatarKey,
+            avatarBlur: person.avatarBlur,
+            imgBlur: person.imgBlur,
+            personKey: person.personKey,
+            status: person.status,
+            bio: person.bio,
+          },
+          messages: parsedMessages,
         },
-        messages: parsedMessages,
-      },
-    };
-  } catch (err: any) {
-    return handleActionError('Could not fetch chat', err);
-  }
-};
+      };
+    } catch (err: any) {
+      return handleActionError('Could not fetch chat', err);
+    }
+  },
+  ['chat']
+);
 
 export const fetchUserChats = async ({
   userEmail,
@@ -204,6 +215,7 @@ export const clearChat = async ({
 
     // Update cache
     revalidatePath(path);
+    // revalidateTag('chat');
 
     return {
       success: true,
@@ -238,6 +250,7 @@ export const deleteChat = async ({
 
     // Update cache
     revalidatePath(path);
+    // revalidateTag('chat');
 
     return {
       success: true,
@@ -296,6 +309,7 @@ export const createChatMessage = async ({
 
     // Update cache
     path && revalidatePath(path);
+    // revalidateTag('chat');
 
     const parsedMessage: TChatMessage = {
       chatId: newMessage.chatId.toString(),
@@ -345,24 +359,6 @@ export const askAI = async (
     if (!personRes?.success) {
       return handleActionError('Could not fetch the person', null);
     }
-    // const personName = chatRes.data.personName;
-    // const personId = person._id;
-
-    // if (!personId) {
-    //   return handleActionError('Invalid person ID', null);
-    // }
-
-    // // Fetch the instructions and context for LLM
-    // const personRes = await fetchPersonDataForLLM(personId);
-    // if (!personRes?.success) {
-    //   return handleActionError('Could not fetch a person data');
-    // }
-
-    // // Add person name from a chat object
-    // const personData = {
-    //   name: personName,
-    //   ...person,
-    // };
 
     // Create a chain for the person
     const chainRes = await createChainForPerson({
@@ -417,5 +413,44 @@ export const askAI = async (
   } catch (err: any) {
     console.log('ERR', err);
     return handleActionError('Unable to ask ai', err);
+  }
+};
+
+export const saveTokensCountInDB = async ({
+  chatId,
+  instructionTokens,
+  question,
+  answer,
+}: {
+  chatId: string;
+  instructionTokens: number;
+  question: string;
+  answer: string;
+}) => {
+  const questionTokens = calculateLLMTokens(question);
+  const inputTokens = questionTokens + instructionTokens;
+  let outputTokens = answer ? calculateLLMTokens(answer) : 0;
+
+  try {
+    // Fetch the chat document
+    const chat = await ChatModel.findById(chatId);
+    if (!chat) {
+      console.error('[saveTokensCountInDB]: Could not find a chat.');
+      return;
+    }
+
+    // Update the tokens
+    const prevInput = chat.tokens.input || 0;
+    const prevOutput = chat.tokens.output || 0;
+    const newTokens = {
+      input: prevInput + inputTokens,
+      output: prevOutput + outputTokens,
+    };
+    chat.tokens = newTokens;
+    await chat.save();
+
+    console.log('[saveTokensCountInDB]: tokens', newTokens);
+  } catch (err: any) {
+    console.error(err);
   }
 };

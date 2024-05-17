@@ -259,13 +259,14 @@ export const signUp = async ({
 export const signIn = async ({
   email,
   password,
+  redirectTo,
 }: TSignInArgs): Promise<TServerActionResult | undefined> => {
   try {
     // Call the `auth.providers.Credentials.authorize` method (./auth.ts)
     await nextSignIn('credentials', {
       email,
       password,
-      redirectTo: DEFAULT_REDIRECT,
+      redirectTo: redirectTo ? `/${redirectTo}` : DEFAULT_REDIRECT,
     });
     return { success: true };
   } catch (err: any) {

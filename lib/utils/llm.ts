@@ -6,7 +6,7 @@ import {
   questionGeneratorTemplate,
   summarizeChatHistoryTemplate,
 } from '@/lib/data/prompts';
-import { createQuestionTemplate } from '@/lib/utils/chat';
+import { calculateLLMTokens, createQuestionTemplate } from '@/lib/utils/chat';
 import { logger } from '@/lib/utils/logger';
 
 // Create a llm model
@@ -44,13 +44,19 @@ export const createMainChain = ({
     history,
   });
 
-  logger.b(
-    '[createMainChain]: questionTemplate',
-    questionTemplate.template.toString()
-  );
+  // logger.b('[createMainChain]: question', questionTemplate.template);
 
-  return new LLMChain({
+  const questionTemplateStr = questionTemplate.template.toString();
+  const query = questionTemplateStr.concat(history);
+  const instructionTokens = calculateLLMTokens(query);
+
+  const chain = new LLMChain({
     llm: llm,
     prompt: questionTemplate,
   });
+
+  return {
+    chain,
+    instructionTokens,
+  };
 };

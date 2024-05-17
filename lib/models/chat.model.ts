@@ -19,6 +19,10 @@ const chatSchema = new Schema<TChat>({
       ref: 'Message',
     },
   ],
+  tokens: {
+    input: { type: Number },
+    output: { type: Number },
+  },
 });
 
 const ChatModel = models.Chat || model('Chat', chatSchema);

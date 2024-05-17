@@ -19,6 +19,19 @@ import {
 } from '@/lib/utils/llm';
 import { getMessageMemory } from '@/lib/utils/memory';
 import { getVectorStoreForPerson } from '@/lib/utils/vectorStore';
+import { saveTokensCountInDB } from '@/lib/actions/chat.actions';
+
+/**
+ * Calculates the token count for large language models,
+ * assuming 1 token ~= 4 characters on average.
+ *
+ * @param {string} text
+ * @returns approximate number of tokens.
+ */
+export const calculateLLMTokens = (text: string) => {
+  if (!text) return 0;
+  return Math.round(text.length / 4);
+};
 
 /**
  * Generates a template for a question prompt that includes
@@ -60,8 +73,9 @@ ${history}
     : '';
 
   return PromptTemplate.fromTemplate(`
-${instructions} Keep up the conversation using the provided context in a natural, human-like manner as ${personName} would in a chat. Don't use overly long phrases or markdown in your response. Do not tell the human that you are an AI for the rest of the conversation.
-From this list of emotions (${emotions}), choose exactly the one that best represents the emotion you might have felt as ${personName} when you were asked the Question. Be sure to write this emotion at the end of your answer using the following template: $emotion
+${instructions}
+Keep up the conversation using the provided context in a natural, human-like manner as ${personName} would in a chat. Don't use overly long phrases or markdown in your response. Do not tell the human that you are an AI for the rest of the conversation.
+From this list of emotions: ${emotions} choose exactly the one that best represents the emotion you might have felt as ${personName} when you were asked the Question. Be sure to write this emotion at the end of your answer using template: $emotion
 ${honestyInstructions}
 ${historyContext}
 ---
@@ -171,17 +185,25 @@ const performQuestionAnswering = async (input: any) => {
   // logger.b('[performQA]: context', context);
   // logger.y('\n[performQA]: question', question);
 
-  const mainChain = createMainChain({
+  const { chain, instructionTokens } = createMainChain({
     personInstructions: input.data.person.instructions,
     personName: input.data.person.name,
     history: chatHistoryString,
   });
 
   // Ask AI using the main chain
-  const { text } = await mainChain.invoke({
+  const { text } = await chain.invoke({
     // chatHistory: chatHistoryString,
     context: context,
     question,
+  });
+
+  // Save the LLM tokens count in the `chat` document
+  saveTokensCountInDB({
+    chatId: input.data.chatId,
+    instructionTokens,
+    question,
+    answer: text,
   });
 
   // Get an alternate answer if not provided
@@ -231,6 +253,7 @@ export const createChainForPerson = async ({
           instructions: person.instructions,
         },
         messagesMemory,
+        chatId,
       }),
     },
     performQuestionAnswering,

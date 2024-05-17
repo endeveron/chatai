@@ -63,7 +63,7 @@ export const emotionList = [
   'upset',
 ];
 
-export const emotions = emotionList.join(',');
+export const emotions = emotionList.join(', ');
 
 export const altAnswerList = [
   "That's an interesting question. I'm not sure I have the answer on hand.",

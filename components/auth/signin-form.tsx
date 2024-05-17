@@ -2,6 +2,7 @@
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
@@ -29,6 +30,7 @@ import { cn } from '@/lib/utils';
 type TSignInFormProps = {};
 
 const SignInForm = (props: TSignInFormProps) => {
+  const searchParams = useSearchParams();
   const { toastError } = useErrorHandler();
 
   const [isPending, setPending] = useState(false);
@@ -42,10 +44,13 @@ const SignInForm = (props: TSignInFormProps) => {
     },
   });
 
+  const redirectTo = searchParams.get('redirectTo') || undefined;
+
   const onSubmit = async (values: TSignInSchema) => {
     const signinData: TSignInArgs = {
       email: values.email,
       password: values.password,
+      redirectTo,
     };
 
     try {

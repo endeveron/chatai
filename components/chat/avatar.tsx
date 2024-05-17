@@ -19,7 +19,7 @@ const Avatar = ({
 
   return (
     <div className="avatar">
-      <div className="avatar_image-wrapper h-full overflow-hidden relative rounded-full bg-muted">
+      <div className="avatar_image-wrapper text-muted h-full overflow-hidden relative rounded-full bg-muted">
         <Image
           src={src}
           placeholder="blur"
