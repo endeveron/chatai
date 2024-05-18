@@ -10,6 +10,7 @@ import { TServerActionResult } from '@/lib/types/common.types';
 import { handleActionError } from '@/lib/utils/error';
 import mongoose, { ObjectId } from 'mongoose';
 import { TUser } from '@/lib/types/user.types';
+import ChatModel from '@/lib/models/chat.model';
 
 /**
  * Creates a new user in a database and returns the user's object ID.
@@ -88,10 +89,12 @@ export const onboardUser = async ({
  * Retrieves a user from the database by their email.
  *
  * @param {string} email user's email address.
+ * @param {boolean} checkHasChats check if the user has chats.
  * @returns a Promise that resolves to a `TServerActionResult` object or `undefined`.
  */
 export const fetchUserByEmail = async (
-  email: string
+  email: string,
+  checkHasChats?: boolean
 ): Promise<TServerActionResult | undefined> => {
   try {
     await connectToDB();
@@ -99,6 +102,17 @@ export const fetchUserByEmail = async (
     const user = await UserModel.findOne({ email: email }).select('id');
     if (!user) {
       return handleActionError('Could not find a user for the provided email');
+    }
+
+    if (checkHasChats) {
+      const userChats = await ChatModel.find({ user: user._id }).select('_id');
+      return {
+        success: true,
+        data: {
+          user,
+          hasChats: !!userChats.length,
+        },
+      };
     }
 
     return {

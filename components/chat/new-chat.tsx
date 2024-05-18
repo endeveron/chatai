@@ -25,9 +25,10 @@ const personInitValue: TSelectPerson = {
 type TCreateChatProps = {
   userId: string;
   people: TPersonCardData[];
+  isUserHasChats: boolean;
 };
 
-const NewChat = ({ userId, people }: TCreateChatProps) => {
+const NewChat = ({ userId, people, isUserHasChats }: TCreateChatProps) => {
   const router = useRouter();
   const { toastError } = useErrorHandler();
 
@@ -70,7 +71,10 @@ const NewChat = ({ userId, people }: TCreateChatProps) => {
   return (
     <section className="new-chat">
       <Topbar>
-        <TopbarHeader title="New Chat" navPath="/"></TopbarHeader>
+        <TopbarHeader
+          title="New Chat"
+          navPath={isUserHasChats ? '/' : ''}
+        ></TopbarHeader>
       </Topbar>
 
       <h3 className="pt-4">Choose an AI person</h3>

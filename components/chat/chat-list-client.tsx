@@ -20,12 +20,16 @@ const ChatListClient = ({ items, user }: TChatListClientProps) => {
   const pathname = usePathname();
   const router = useRouter();
 
-  if (items.length === 0) {
-    router.push('/chat');
-  }
-
   const isChat = pathname.includes('chat');
   const isNewChat = pathname === '/chat';
+
+  if (router && items.length === 0 && pathname !== '/chat')
+    router.push('/chat');
+
+  // New chat and the user has not chats
+  if (items.length === 0) {
+    return <MainMenu user={user} className="main-menu--fixed" />;
+  }
 
   return (
     <div
@@ -41,14 +45,16 @@ const ChatListClient = ({ items, user }: TChatListClientProps) => {
         </div>
       </Topbar>
       <ScrollArea className="chat-list_items">
-        {items.map((c) => (
-          <ChatItem
-            chatId={c.chatId}
-            title={c.title}
-            person={c.person}
-            key={c.chatId}
-          />
-        ))}
+        {items?.length
+          ? items.map((c) => (
+              <ChatItem
+                chatId={c.chatId}
+                title={c.title}
+                person={c.person}
+                key={c.chatId}
+              />
+            ))
+          : null}
       </ScrollArea>
     </div>
   );

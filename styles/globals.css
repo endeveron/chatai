@@ -13,7 +13,7 @@
     --card: var(--hue) 0% 100%; /* card, AI's chat message */
     --card-foreground: var(--hue) 10% 10%; /* main text */
 
-    --brand: var(--hue) 75% 90%; /* human's chat message */
+    --brand: 165 55% 85%; /* human's chat message */
     --brand-foreground: var(--hue) 75% 10%;
 
     --primary: var(--hue) 10% 10%; /* button primary */
@@ -49,7 +49,7 @@
     --card: var(--hue) 5% 15%; /* card, AI's chat message */
     --card-foreground: var(--hue) 5% 85%; /* main text */
 
-    --brand: var(--hue) 50% 20%; /* human's chat message */
+    --brand: 165 55% 20%; /* human's chat message */
     --brand-foreground: var(--hue) 5% 95%;
 
     --primary: var(--hue) 5% 95%; /* button primary */

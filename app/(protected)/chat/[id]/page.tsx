@@ -1,17 +1,19 @@
 import mongoose from 'mongoose';
+import { redirect } from 'next/navigation';
 
 import { auth } from '@/auth';
 import Chat from '@/components/chat/chat';
 import ChatDetails from '@/components/chat/chat-details';
 import { fetchChat } from '@/lib/actions/chat.actions';
 import { TChatData } from '@/lib/types/chat.types';
+import { DEFAULT_SIGNIN_REDIRECT } from '@/routes';
 
 // Do not use edge runtime.
 
 // Page route: '/chat/[id]'
 export default async function Page({ params }: { params: { id: string } }) {
   const session = await auth();
-  if (!session?.user) return null;
+  if (!session?.user) return redirect(DEFAULT_SIGNIN_REDIRECT);
 
   let chatData: TChatData | null = null;
   let userEmail = session.user.email!;

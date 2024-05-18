@@ -33,6 +33,16 @@ main {
   gap: var(--gap);
 }
 
+.main-menu--fixed {
+  @apply fixed top-7 left-4 z-10;
+}
+
+@media only screen and (max-height: 767px) {
+  .main-menu--fixed {
+    @apply top-5;
+  }
+}
+
 @media only screen and (min-width: 480px) {
 }
 

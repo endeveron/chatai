@@ -1,13 +1,16 @@
+import { redirect } from 'next/navigation';
+
 import { auth } from '@/auth';
 import ChatListClient from '@/components/chat/chat-list-client';
 import { fetchUserChats } from '@/lib/actions/chat.actions';
 import { TChatItem } from '@/lib/types/chat.types';
+import { DEFAULT_SIGNIN_REDIRECT } from '@/routes';
 
 type TChatListProps = {};
 
 const ChatList = async (props: TChatListProps) => {
   const session = await auth();
-  if (!session?.user) return null;
+  if (!session?.user) return redirect(DEFAULT_SIGNIN_REDIRECT);
 
   let userName = session.user.name!;
   let userEmail = session.user.email!;

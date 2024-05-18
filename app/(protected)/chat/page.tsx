@@ -1,29 +1,33 @@
-import { auth } from '@/auth';
+import { redirect } from 'next/navigation';
 
+import { auth } from '@/auth';
 import NewChat from '@/components/chat/new-chat';
 import Loading from '@/components/shared/loading-fragment';
 import { fetchPeople } from '@/lib/actions/person.actions';
 import { fetchUserByEmail } from '@/lib/actions/user.actions';
 import { TPersonCardData } from '@/lib/types/person.types';
+import { DEFAULT_SIGNIN_REDIRECT } from '@/routes';
 
 // Do not use edge runtime. See: https://mongoosejs.com/docs/nextjs.html
 
 // Page route: '/chat'
 export default async function Page() {
   const session = await auth();
-  if (!session?.user) return null;
+  if (!session?.user) return redirect(DEFAULT_SIGNIN_REDIRECT);
 
   let userId = session.user.id!;
   let userEmail = session.user.email!;
   let people: TPersonCardData[] | null = null;
+  let isUserHasChats = false;
 
   // Handle case if the user id provided by google
   if (userId.length !== 24) {
-    const userRes = await fetchUserByEmail(userEmail);
+    const userRes = await fetchUserByEmail(userEmail, true);
     if (!userRes?.success) {
       throw new Error('Could not fetch the user id.');
     }
-    userId = userRes.data.id;
+    userId = userRes.data.user.id;
+    if (userRes.data.hasChats) isUserHasChats = true;
   }
 
   const peopleRes = await fetchPeople();
@@ -33,12 +37,17 @@ export default async function Page() {
     people = peopleRes.data;
   }
 
-  // TODO: fetch the user's chats. Pass the `hasChats` prop to NewChat.
-  // Disable the navback button if the user doesn't have chats
-
   return (
     <main className="relative">
-      {people ? <NewChat userId={userId} people={people} /> : <Loading />}
+      {people ? (
+        <NewChat
+          userId={userId}
+          people={people}
+          isUserHasChats={isUserHasChats}
+        />
+      ) : (
+        <Loading />
+      )}
     </main>
   );
 }

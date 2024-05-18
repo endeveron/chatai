@@ -18,12 +18,14 @@ import MoonIcon from '@/public/assets/ui/moon.svg';
 import SignOutIcon from '@/public/assets/ui/sign-out.svg';
 import { User } from 'next-auth';
 import { TUserData } from '@/lib/types/user.types';
+import { cn } from '@/lib/utils';
 
 type TMenuProps = {
   user: TUserData;
+  className?: string;
 };
 
-const MainMenu = ({ user }: TMenuProps) => {
+const MainMenu = ({ user, className }: TMenuProps) => {
   const { setTheme, theme } = useTheme();
   const [signoutPending, setSignoutPending] = useState(false);
 
@@ -45,7 +47,7 @@ const MainMenu = ({ user }: TMenuProps) => {
     );
 
   return (
-    <div className="main-menu h-6">
+    <div className={cn('main-menu h-6', className)}>
       {signoutPending && (
         <div className="fixed z-40 inset-0 bg-background/90 flex flex-col items-center justify-center transition-colors">
           <LoadingIcon />
