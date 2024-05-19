@@ -1,6 +1,6 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { useState } from 'react';
 
 import NewChatForm from '@/components/chat/new-chat-form';
@@ -30,6 +30,7 @@ type TCreateChatProps = {
 
 const NewChat = ({ userId, people, isUserHasChats }: TCreateChatProps) => {
   const router = useRouter();
+  const pathname = usePathname();
   const { toastError } = useErrorHandler();
 
   const [isPending, setPending] = useState(false);
@@ -49,13 +50,14 @@ const NewChat = ({ userId, people, isUserHasChats }: TCreateChatProps) => {
         title: values.title,
         personId: person._id,
         personName,
+        path: pathname,
       });
       if (!res?.success) {
         toastError(res);
         return;
       }
-      const chatId = res.data;
       // Navigate to the chat page
+      const chatId = res.data;
       router.push(`/chat/${chatId}`);
     } catch (err: any) {
       toastError(err);

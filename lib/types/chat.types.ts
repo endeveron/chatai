@@ -60,6 +60,7 @@ export type TCreateChatArgs = {
   title: string;
   personId: string;
   personName: string;
+  path: string;
 };
 
 export type TCreateMessageArgs = Pick<TChatMessage, 'content' | 'role'> & {

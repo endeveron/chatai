@@ -10,6 +10,7 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 import { TChatItem } from '@/lib/types/chat.types';
 import { TUserData } from '@/lib/types/user.types';
 import { cn } from '@/lib/utils';
+import { useEffect } from 'react';
 
 type TChatListClientProps = {
   items: TChatItem[];
@@ -22,12 +23,14 @@ const ChatListClient = ({ items, user }: TChatListClientProps) => {
 
   const isChat = pathname.includes('chat');
   const isNewChat = pathname === '/chat';
+  const noItems = items.length === 0;
 
-  if (router && items.length === 0 && pathname !== '/chat')
-    router.push('/chat');
+  useEffect(() => {
+    if (noItems && pathname !== '/chat') router.push('/chat');
+  }, [noItems, pathname, router]);
 
   // New chat and the user has not chats
-  if (items.length === 0) {
+  if (noItems) {
     return <MainMenu user={user} className="main-menu--fixed" />;
   }
 

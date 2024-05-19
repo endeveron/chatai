@@ -30,6 +30,7 @@ export const createChat = async ({
   title,
   personId,
   personName,
+  path,
 }: TCreateChatArgs): Promise<TServerActionResult | undefined> => {
   try {
     await connectToDB();
@@ -50,9 +51,14 @@ export const createChat = async ({
     // Save the chat
     await chat.save();
 
+    const chatId = chat._id.toString();
+
+    // Update cache
+    revalidatePath('/');
+
     return {
       success: true,
-      data: chat._id.toString(),
+      data: chatId,
     };
   } catch (err: any) {
     return handleActionError('Could not create a chat', err);

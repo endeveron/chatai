@@ -269,10 +269,11 @@
   /* Chat Notification */
 
   .chat-notification {
-    @apply relative overflow-hidden flex flex-col items-center justify-center w-full cursor-default opacity-65;
+    @apply relative overflow-hidden flex flex-col items-center justify-center w-full cursor-default opacity-65 bg-background transition-colors;
   }
 
   .chat-notification__bg {
+    /* @apply absolute transition-colors; */
     position: absolute;
     inline-size: 631px;
     block-size: 329px;
