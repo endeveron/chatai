@@ -36,7 +36,7 @@ export const metadata: Metadata = {
       ),
       // { url: '/icon-dark.png', media: '(prefers-color-scheme: dark)' },
     ],
-    shortcut: ['/favicon.ico'],
+    shortcut: ['/assets/icons/favicon.ico'],
     apple: [
       {
         url: '/assets/icons/icon-180x180.png',
