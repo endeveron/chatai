@@ -13,7 +13,7 @@
     --card: var(--hue) 0% 100%; /* card, AI's chat message */
     --card-foreground: var(--hue) 10% 10%; /* main text */
 
-    --brand: var(--hue) 15% 90%; /* human's chat message */
+    --brand: var(--hue) 10% 92%; /* human's chat message */
     --brand-foreground: var(--hue) 75% 10%;
 
     --primary: var(--hue) 10% 10%; /* button primary */
