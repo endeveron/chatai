@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from 'next';
+import Head from 'next/head';
 import { Mulish } from 'next/font/google';
 
 import { ThemeProvider } from '@/components/ui/theme-provider';
@@ -18,11 +19,6 @@ export const metadata: Metadata = {
         width: 512,
         height: 512,
       },
-      {
-        url: 'https://chatai-sigma-three.vercel.app/assets/icons/icon-256x256.png', // Must be an absolute URL
-        width: 256,
-        height: 256,
-      },
     ],
     locale: 'en_US',
     type: 'website',
@@ -36,7 +32,7 @@ export const metadata: Metadata = {
       ),
       // { url: '/icon-dark.png', media: '(prefers-color-scheme: dark)' },
     ],
-    shortcut: ['/assets/icons/favicon.ico'],
+    shortcut: ['favicon.ico'],
     apple: [
       {
         url: '/assets/icons/icon-180x180.png',
@@ -46,8 +42,39 @@ export const metadata: Metadata = {
     ],
     other: [
       {
-        rel: 'apple-touch-icon-precomposed',
-        url: '/apple-touch-icon-precomposed.png',
+        rel: 'icon',
+        url: '/assets/icons/icon.svg',
+        type: 'image/svg+xml',
+      },
+      {
+        rel: 'android-icon-192x192',
+        url: '/assets/icons/icon-192x192.png',
+        type: 'image/png',
+      },
+      {
+        rel: 'android-icon-144x144',
+        url: '/assets/icons/icon-144x144.png',
+        type: 'image/png',
+      },
+      {
+        rel: 'android-icon-96x96',
+        url: '/assets/icons/icon-96x96.png',
+        type: 'image/png',
+      },
+      {
+        rel: 'favicon-32x32',
+        url: '/assets/icons/icon-32x32.png',
+        type: 'image/png',
+      },
+      {
+        rel: 'favicon-24x24',
+        url: '/assets/icons/icon-24x24.png',
+        type: 'image/png',
+      },
+      {
+        rel: 'favicon-16x16',
+        url: '/assets/icons/icon-16x16.png',
+        type: 'image/png',
       },
     ],
   },
@@ -72,6 +99,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
+      <Head>
+        <link rel="shortcut icon" href="/favicon.ico" />
+      </Head>
       <body className={font.className}>
         <ThemeProvider
           attribute="class"
