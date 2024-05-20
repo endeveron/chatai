@@ -7,8 +7,8 @@ export default function manifest(): MetadataRoute.Manifest {
     description: 'Conversational chatbot',
     start_url: '/',
     display: 'standalone',
-    background_color: '#931ea5',
-    theme_color: '#931ea5',
+    background_color: '#1b171c', // --primary
+    theme_color: '#1b171c',
     icons: [
       {
         src: '/assets/icons/favicon.ico',
