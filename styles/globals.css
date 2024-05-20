@@ -93,7 +93,7 @@
   h1,
   h2,
   h3 {
-    @apply tracking-tight font-bold scroll-m-20;
+    @apply tracking-tight font-bold scroll-m-20 cursor-default;
   }
 
   h1 {
