@@ -6,7 +6,13 @@ import { Toaster } from '@/components/ui/toaster';
 
 export const metadata: Metadata = {
   title: 'Chat AI',
-  description: '',
+  description: 'Conversational chatbot with LLM',
+  openGraph: {
+    title: 'Chat AI',
+    description: 'Conversational chatbot with LLM',
+    siteName: 'Chat AI',
+    type: 'website',
+  },
 };
 
 export const viewport: Viewport = {

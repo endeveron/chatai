@@ -18,16 +18,14 @@ export default async function Page() {
   let userId = session.user.id!;
   let userEmail = session.user.email!;
   let people: TPersonCardData[] | null = null;
-  let isUserHasChats = false;
 
   // Handle case if the user id provided by google
   if (userId.length !== 24) {
-    const userRes = await fetchUserByEmail(userEmail, true);
+    const userRes = await fetchUserByEmail(userEmail);
     if (!userRes?.success) {
       throw new Error('Could not fetch the user id.');
     }
     userId = userRes.data.user.id;
-    if (userRes.data.hasChats) isUserHasChats = true;
   }
 
   const peopleRes = await fetchPeople();
@@ -39,15 +37,7 @@ export default async function Page() {
 
   return (
     <main className="relative">
-      {people ? (
-        <NewChat
-          userId={userId}
-          people={people}
-          isUserHasChats={isUserHasChats}
-        />
-      ) : (
-        <Loading />
-      )}
+      {people ? <NewChat userId={userId} people={people} /> : <Loading />}
     </main>
   );
 }
