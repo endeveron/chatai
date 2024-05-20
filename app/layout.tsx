@@ -1,5 +1,4 @@
 import type { Metadata, Viewport } from 'next';
-import Head from 'next/head';
 import { Mulish } from 'next/font/google';
 
 import { ThemeProvider } from '@/components/ui/theme-provider';
@@ -13,28 +12,28 @@ export const metadata: Metadata = {
     title: 'Chat AI',
     description: 'Conversational chatbot with LLM',
     siteName: 'Chat AI',
+    locale: 'en_US',
+    type: 'website',
     images: [
       {
-        url: 'https://chatai-sigma-three.vercel.app/assets/icons/icon-512x512.png',
+        url: 'https://chatai-sigma-three.vercel.app/assets/icons/icon-512.png',
         width: 512,
         height: 512,
       },
     ],
-    locale: 'en_US',
-    type: 'website',
   },
   icons: {
     icon: {
-      url: '/assets/icons/favicon.ico',
+      url: '/assets/icons/icon.svg',
       type: 'image/svg+xml',
     },
     shortcut: {
       url: '/assets/icons/favicon.ico',
-      type: 'image/svg+xml',
+      type: 'image/ico',
     },
     apple: [
       {
-        url: '/assets/icons/icon-180x180.png',
+        url: '/assets/icons/icon-180.png',
         sizes: '180x180',
         type: 'image/png',
       },
@@ -47,32 +46,32 @@ export const metadata: Metadata = {
       },
       {
         rel: 'android-icon-192x192',
-        url: '/assets/icons/icon-192x192.png',
+        url: '/assets/icons/icon-192.png',
         type: 'image/png',
       },
       {
         rel: 'android-icon-144x144',
-        url: '/assets/icons/icon-144x144.png',
+        url: '/assets/icons/icon-144.png',
         type: 'image/png',
       },
       {
         rel: 'android-icon-96x96',
-        url: '/assets/icons/icon-96x96.png',
+        url: '/assets/icons/icon-96.png',
         type: 'image/png',
       },
       {
         rel: 'favicon-32x32',
-        url: '/assets/icons/icon-32x32.png',
+        url: '/assets/icons/icon-32.png',
         type: 'image/png',
       },
       {
         rel: 'favicon-24x24',
-        url: '/assets/icons/icon-24x24.png',
+        url: '/assets/icons/icon-24.png',
         type: 'image/png',
       },
       {
         rel: 'favicon-16x16',
-        url: '/assets/icons/icon-16x16.png',
+        url: '/assets/icons/icon-16.png',
         type: 'image/png',
       },
     ],
@@ -98,9 +97,6 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <Head>
-        <link rel="shortcut icon" href="/favicon.ico" />
-      </Head>
       <body className={font.className}>
         <ThemeProvider
           attribute="class"
