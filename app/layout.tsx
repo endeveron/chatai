@@ -24,15 +24,14 @@ export const metadata: Metadata = {
     type: 'website',
   },
   icons: {
-    icon: [
-      { url: '/assets/icons/icon.svg' },
-      new URL(
-        '/assets/icons/icon.svg',
-        'https://chatai-sigma-three.vercel.app'
-      ),
-      // { url: '/icon-dark.png', media: '(prefers-color-scheme: dark)' },
-    ],
-    shortcut: ['/favicon.ico'],
+    icon: {
+      url: '/assets/icons/favicon.ico',
+      type: 'image/svg+xml',
+    },
+    shortcut: {
+      url: '/assets/icons/favicon.ico',
+      type: 'image/svg+xml',
+    },
     apple: [
       {
         url: '/assets/icons/icon-180x180.png',
