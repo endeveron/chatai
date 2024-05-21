@@ -7,15 +7,15 @@ import { Toaster } from '@/components/ui/toaster';
 export const metadata: Metadata = {
   title: 'Chat AI',
   applicationName: 'Chat AI',
-  description: 'Conversational chatbot with LLM',
+  description: 'Conversational LLM chatbot',
   openGraph: {
     title: 'Chat AI',
-    description: 'Conversational chatbot with LLM',
+    description: 'Conversational LLM chatbot',
     siteName: 'Chat AI',
     type: 'website',
     images: [
       {
-        url: 'https://chatai-sigma-three.vercel.app/assets/icons/icon-512.png',
+        url: 'https://chatai-sigma-three.vercel.app/assets/icons/icon-512.svg',
         width: 512,
         height: 512,
       },
@@ -27,16 +27,9 @@ export const metadata: Metadata = {
       type: 'image/svg+xml',
     },
     shortcut: {
-      url: '/assets/icons/icon.svg',
-      type: 'image/svg+xml',
+      url: '/assets/icons/favicon.ico',
+      type: 'image/ico',
     },
-    apple: [
-      {
-        url: '/assets/icons/icon-180.png',
-        sizes: '180x180',
-        type: 'image/png',
-      },
-    ],
   },
 };
 
