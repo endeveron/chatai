@@ -33,7 +33,7 @@ const ChatItem = ({ chatId, title, person }: TChatItemProps) => {
         <div className="chat-item_name font-bold elipsis">
           {title || person.name}
         </div>
-        <div className="chat-item_status text-sm elipsis opacity-60 mt-0.5">
+        <div className="chat-item_status text-sm elipsis opacity-55 mt-0.5">
           {person.status}
         </div>
       </div>

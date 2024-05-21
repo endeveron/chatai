@@ -13,14 +13,14 @@
     --card: var(--hue) 0% 100%; /* card, AI's chat message */
     --card-foreground: var(--hue) 10% 10%; /* main text */
 
-    --brand: var(--hue) 100% 95%; /* human's chat message */
+    --brand: 275 100% 95%; /* human's chat message */
     --brand-foreground: var(--hue) 75% 10%;
 
     --primary: var(--hue) 10% 10%; /* button primary */
     --primary-foreground: var(--hue) 10% 95%;
 
     --secondary: var(--hue) 10% 99%; /* button secondary */
-    --secondary-foreground: var(--hue) 10% 65%;
+    --secondary-foreground: var(--hue) 10% 60%;
 
     --popover: var(--hue) 0% 100%; /* dropdown menu */
     --popover-foreground: var(--hue) 10% 45%;
@@ -35,7 +35,7 @@
     --background: var(--hue) 10% 97%; /* body */
     --foreground: var(--hue) 10% 10%; /* main text */
     --topbar: var(--hue) 0% 100%; /* .2 */
-    --sidebar: var(--hue) 10% 92%; /* sidebar */
+    --sidebar: var(--hue) 12% 95%; /* sidebar */
     --muted: var(--hue) 5% 75%;
     --border: var(--hue) 8% 80%;
     --icon: var(--hue) 10% 40%;
@@ -56,7 +56,7 @@
     --primary-foreground: var(--hue) 0% 0%;
 
     --secondary: var(--hue) 5% 18%; /* button secondary */
-    --secondary-foreground: var(--hue) 8% 65%;
+    --secondary-foreground: var(--hue) 8% 60%;
 
     --popover: var(--hue) 5% 15%; /* dropdown menu */
     --popover-foreground: var(--hue) 5% 85%;

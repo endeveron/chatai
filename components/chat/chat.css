@@ -378,7 +378,7 @@
   }
 
   :root.dark .chat-details_image {
-    opacity: 0.7;
+    opacity: 0.75;
   }
 
   .chat-details:hover .chat-details_image {
