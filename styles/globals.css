@@ -11,7 +11,7 @@
 @layer base {
   :root {
     --card: var(--hue) 0% 100%; /* card, AI's chat message */
-    --card-foreground: var(--hue) 10% 10%; /* main text */
+    --card-foreground: var(--hue) 5% 10%; /* main text */
 
     --brand: 275 100% 95%; /* human's chat message */
     --brand-foreground: var(--hue) 75% 10%;
@@ -47,7 +47,7 @@
 
   .dark {
     --card: var(--hue) 5% 15%; /* card, AI's chat message */
-    --card-foreground: var(--hue) 5% 85%; /* main text */
+    --card-foreground: var(--hue) 5% 90%; /* main text */
 
     --brand: var(--hue) 65% 25%; /* human's chat message */
     --brand-foreground: var(--hue) 5% 95%;
