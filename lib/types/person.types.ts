@@ -49,6 +49,7 @@ export enum AvatarKey {
   blonde = 'blonde',
   brunette = 'brunette',
   choco = 'choco',
+  cutie = 'cutie',
   honey = 'honey',
 }
 
