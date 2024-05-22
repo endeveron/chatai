@@ -42,6 +42,7 @@ export enum PersonKey {
   artFuture = 'artFuture',
   devJourney = 'devJourney',
   modelArtist = 'modelArtist',
+  musican = 'musican',
   positiveShot = 'positiveShot',
 }
 
