@@ -8,6 +8,7 @@
   --hue: 280;
   --brand-primary-hue: 290;
   --brand-secondary-hue: 334;
+  --error-hue: 347;
 }
 
 @layer base {
@@ -32,8 +33,8 @@
     --success: 154 85% 75%;
     --success-foreground: 154 85% 65%;
 
-    --error: 347 85% 95%;
-    --error-foreground: 347 85% 55%;
+    --error: var(--error-hue) 100% 60%;
+    --error-foreground: var(--error-hue) 100% 53%;
 
     --background: 0 0% 99%; /* body */
     --foreground: var(--hue) 5% 10%; /* main text */
@@ -69,8 +70,8 @@
     --success: 154 85% 55%;
     --success-foreground: 154 65% 80%;
 
-    --error: 347 75% 50%;
-    --error-foreground: 347 85% 75%;
+    --error: var(--error-hue) 75% 50%;
+    --error-foreground: var(--error-hue) 100% 60%;
 
     --background: var(--hue) 5% 10%; /* body */
     --foreground: var(--hue) 5% 95%; /* main text */

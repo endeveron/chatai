@@ -30,7 +30,7 @@ export const useErrorHandler = () => {
       variant: 'destructive',
       title,
       // description,
-      // duration: 10000,
+      // duration: 5000,
     });
   };
 
