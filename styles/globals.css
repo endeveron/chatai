@@ -6,6 +6,8 @@
 
 :root {
   --hue: 280;
+  --brand-primary-hue: 290;
+  --brand-secondary-hue: 334;
 }
 
 @layer base {
@@ -13,13 +15,14 @@
     --card: var(--hue) 0% 100%; /* card, AI's chat message */
     --card-foreground: var(--hue) 5% 10%; /* main text */
 
-    --brand: 275 100% 95%; /* human's chat message */
-    --brand-foreground: var(--hue) 75% 10%;
+    --brand: var(--brand-primary-hue) 67% 47%; /* human's chat message bg start */
+    --brand-secondary: var(--brand-secondary-hue) 74% 55%; /* human's chat message bg stop */
+    --brand-foreground: 0 0% 100%;
 
     --primary: var(--hue) 10% 10%; /* button primary */
     --primary-foreground: var(--hue) 10% 95%;
 
-    --secondary: var(--hue) 10% 99%; /* button secondary */
+    --secondary: var(--hue) 0% 100%; /* button secondary */
     --secondary-foreground: var(--hue) 10% 60%;
 
     --popover: var(--hue) 0% 100%; /* dropdown menu */
@@ -32,15 +35,15 @@
     --error: 347 85% 95%;
     --error-foreground: 347 85% 55%;
 
-    --background: var(--hue) 10% 97%; /* body */
-    --foreground: var(--hue) 10% 10%; /* main text */
-    --topbar: var(--hue) 0% 100%; /* .2 */
-    --sidebar: var(--hue) 12% 95%; /* sidebar */
+    --background: 0 0% 99%; /* body */
+    --foreground: var(--hue) 5% 10%; /* main text */
+    --topbar: var(--hue) 0% 100%; /* .4 */
+    --area: var(--hue) 10% 95%; /* auth, sidebar */
+    --blured: var(--hue) 10% 75%; /* blured card */
     --muted: var(--hue) 5% 75%;
     --border: var(--hue) 8% 80%;
     --icon: var(--hue) 10% 40%;
     --ring: var(--hue) 10% 4%;
-    --loading: var(--hue) 10% 25%;
 
     --radius: 0.5rem;
   }
@@ -49,13 +52,14 @@
     --card: var(--hue) 5% 15%; /* card, AI's chat message */
     --card-foreground: var(--hue) 5% 90%; /* main text */
 
-    --brand: var(--hue) 65% 25%; /* human's chat message */
-    --brand-foreground: var(--hue) 5% 95%;
+    --brand: var(--brand-primary-hue) 83% 31%; /* human's chat message bg start */
+    --brand-secondary: var(--brand-secondary-hue) 76% 37%; /* human's chat message bg stop */
+    --brand-foreground: 0 0% 100%;
 
     --primary: var(--hue) 5% 95%; /* button primary */
     --primary-foreground: var(--hue) 0% 0%;
 
-    --secondary: var(--hue) 5% 18%; /* button secondary */
+    --secondary: var(--hue) 5% 15%; /* button secondary */
     --secondary-foreground: var(--hue) 8% 60%;
 
     --popover: var(--hue) 5% 15%; /* dropdown menu */
@@ -71,12 +75,12 @@
     --background: var(--hue) 5% 10%; /* body */
     --foreground: var(--hue) 5% 95%; /* main text */
     --topbar: var(--hue) 5% 20%; /* .2 */
-    --sidebar: var(--hue) 5% 5%; /* sidebar */
+    --area: var(--hue) 5% 5%; /* auth, sidebar */
+    --blured: var(--hue) 5% 52%; /* blured card */
     --muted: var(--hue) 5% 45%;
     --border: var(--hue) 5% 20%;
     --icon: var(--hue) 5% 75%;
     --ring: var(--hue) 5% 45%;
-    --loading: var(--hue) 5% 75%;
   }
 }
 
@@ -196,7 +200,7 @@
   }
 
   .typing_circle {
-    @apply w-2 h-2 rounded-xl bg-loading;
+    @apply w-2 h-2 rounded-xl bg-primary;
     animation: pulse 1s ease-in-out infinite both;
     animation-delay: 0.4s;
   }

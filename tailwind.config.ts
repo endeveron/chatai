@@ -29,6 +29,7 @@ const config = {
         },
         brand: {
           DEFAULT: 'hsl(var(--brand) / <alpha-value>)',
+          secondary: 'hsl(var(--brand-secondary) / <alpha-value>)',
           foreground: 'hsl(var(--brand-foreground) / <alpha-value>)',
         },
         primary: {
@@ -55,13 +56,13 @@ const config = {
 
         background: 'hsl(var(--background) / <alpha-value>)',
         foreground: 'hsl(var(--foreground) / <alpha-value>)',
+        area: 'hsl(var(--area) / <alpha-value>)',
         topbar: 'hsl(var(--topbar) / <alpha-value>)',
-        sidebar: 'hsl(var(--sidebar) / <alpha-value>)',
+        blured: 'hsl(var(--blured) / <alpha-value>)',
         muted: 'hsl(var(--muted) / <alpha-value>)',
         border: 'hsl(var(--border) / <alpha-value>)',
         icon: 'hsl(var(--icon) / <alpha-value>)',
         ring: 'hsl(var(--ring) / <alpha-value>)',
-        loading: 'hsl(var(--loading) / <alpha-value>)',
       },
       borderRadius: {
         lg: 'var(--radius)',

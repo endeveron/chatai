@@ -13,7 +13,9 @@ import { askAI } from '@/lib/actions/chat.actions';
 import { errAnswerList } from '@/lib/data/person';
 import { TChatData, TChatMessage } from '@/lib/types/chat.types';
 import { MessageRole } from '@/lib/types/person.types';
-import { getRandom } from '@/lib/utils';
+import { getRandom, nanoid } from '@/lib/utils';
+
+const animationItems = new Array(10).fill(0);
 
 type TChatProps = TChatData & {
   chatId: string;
@@ -104,6 +106,14 @@ const Chat = ({
         isTyping={isPending}
       />
       <ChatInput onSubmit={handleInputSubmit} isPending={isPending} />
+      <div className="chat_bg">
+        <div className="chat_bg-blur"></div>
+        <div className="chat_bg-animation">
+          {animationItems.map((_) => (
+            <div className="chat_bg-item" key={nanoid()}></div>
+          ))}
+        </div>
+      </div>
     </section>
   );
 };
