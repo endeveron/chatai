@@ -21,14 +21,14 @@
     --brand-foreground: 0 0% 100%;
 
     --primary: var(--hue) 10% 10%; /* button primary */
-    --primary-foreground: var(--hue) 10% 95%;
+    --primary-foreground: var(--hue) 5% 95%;
 
     --secondary: var(--hue) 0% 100%; /* button secondary */
-    --secondary-foreground: var(--hue) 10% 60%;
+    --secondary-foreground: 0 0% 60%;
 
     --popover: var(--hue) 0% 100%; /* dropdown menu */
     --popover-foreground: var(--hue) 10% 45%;
-    --popover-focus: var(--hue) 10% 97%;
+    --popover-focus: var(--hue) 5% 97%;
 
     --success: 154 85% 75%;
     --success-foreground: 154 85% 65%;
@@ -36,12 +36,12 @@
     --error: var(--error-hue) 100% 60%;
     --error-foreground: var(--error-hue) 100% 53%;
 
-    --background: 0 0% 99%; /* body */
+    --background: var(--hue) 5% 98%; /* body */
     --foreground: var(--hue) 5% 10%; /* main text */
     --topbar: var(--hue) 0% 100%; /* .4 */
     --area: var(--hue) 10% 95%; /* auth, sidebar */
     --blured: var(--hue) 10% 75%; /* blured card */
-    --muted: var(--hue) 5% 75%;
+    --muted: 0 0% 75%;
     --border: var(--hue) 8% 80%;
     --icon: var(--hue) 10% 40%;
     --ring: var(--hue) 10% 4%;
@@ -61,11 +61,11 @@
     --primary-foreground: var(--hue) 0% 0%;
 
     --secondary: var(--hue) 5% 15%; /* button secondary */
-    --secondary-foreground: var(--hue) 8% 60%;
+    --secondary-foreground: 0 0% 60%;
 
     --popover: var(--hue) 5% 15%; /* dropdown menu */
     --popover-foreground: var(--hue) 5% 85%;
-    --popover-focus: var(--hue) 7% 19%;
+    --popover-focus: var(--hue) 5% 19%;
 
     --success: 154 85% 55%;
     --success-foreground: 154 65% 80%;
@@ -78,7 +78,7 @@
     --topbar: var(--hue) 5% 20%; /* .2 */
     --area: var(--hue) 5% 5%; /* auth, sidebar */
     --blured: var(--hue) 5% 52%; /* blured card */
-    --muted: var(--hue) 5% 45%;
+    --muted: 0 0% 45%;
     --border: var(--hue) 5% 20%;
     --icon: var(--hue) 5% 75%;
     --ring: var(--hue) 5% 45%;

@@ -8,14 +8,14 @@ import ChatMenu from '@/components/chat/chat-menu';
 import ChatMessages from '@/components/chat/chat-messages';
 import Topbar from '@/components/chat/topbar';
 import TopbarHeader from '@/components/chat/topbar-header';
-import { useToast } from '@/components/ui/use-toast';
 import { askAI } from '@/lib/actions/chat.actions';
 import { errAnswerList } from '@/lib/data/person';
 import { TChatData, TChatMessage } from '@/lib/types/chat.types';
 import { MessageRole } from '@/lib/types/person.types';
-import { getRandom, nanoid } from '@/lib/utils';
+import { cn, getRandom } from '@/lib/utils';
+import Image from 'next/image';
 
-const animationItems = new Array(10).fill(0);
+// const animationItems = new Array(10).fill(0);
 
 type TChatProps = TChatData & {
   chatId: string;
@@ -28,7 +28,7 @@ const Chat = ({
   messages: fetchedMessages,
 }: TChatProps) => {
   const pathname = usePathname();
-  const toast = useToast();
+  // const toast = useToast();
 
   const [messages, setMessages] = useState<TChatMessage[]>([]);
   const [isPending, setPending] = useState(false);
@@ -90,6 +90,20 @@ const Chat = ({
     setMessages(fetchedMessages);
   }, [fetchedMessages]);
 
+  const chatBgEl = (
+    <>
+      <div className="chat_bg-blur"></div>
+      <div
+        className={cn('chat_bg-image', {
+          'chat_bg-image--accent': fetchedMessages.length === 0,
+        })}
+        style={{
+          backgroundImage: `url('/assets/people/${person.avatarKey}/chat-bg.png')`,
+        }}
+      ></div>
+    </>
+  );
+
   return (
     <section className="chat">
       <Topbar>
@@ -106,14 +120,14 @@ const Chat = ({
         isTyping={isPending}
       />
       <ChatInput onSubmit={handleInputSubmit} isPending={isPending} />
-      <div className="chat_bg">
-        <div className="chat_bg-blur"></div>
-        <div className="chat_bg-animation">
+      {chatBgEl}
+      {/* <div className="chat_bg"> */}
+      {/* <div className="chat_bg-animation">
           {animationItems.map((_) => (
             <div className="chat_bg-item" key={nanoid()}></div>
           ))}
-        </div>
-      </div>
+        </div> */}
+      {/* </div> */}
     </section>
   );
 };

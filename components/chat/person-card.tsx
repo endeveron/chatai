@@ -20,7 +20,7 @@ const PersonCard = ({
   currentPersonId,
   onSelect,
 }: TPersonCardProps) => {
-  const imageSrc = `/assets/people/${avatarKey}/card/avatar.jpg`;
+  const imageSrc = `/assets/people/${avatarKey}/card.jpg`;
 
   return (
     <div

@@ -1,4 +1,3 @@
-import Topbar from '@/components/chat/topbar';
 import { TChatData } from '@/lib/types/chat.types';
 import Image from 'next/image';
 
@@ -7,20 +6,19 @@ type TChatDetailsProps = TChatData & {};
 const ChatDetails = async ({ person }: TChatDetailsProps) => {
   if (!person) return null;
 
-  const imageSrc = `/assets/people/${person.avatarKey}/card/avatar.jpg`;
+  const imageSrc = `/assets/people/${person.avatarKey}/card.jpg`;
 
   return (
     <div className="chat-details">
-      {/* <Topbar></Topbar> */}
       <div className="chat-details_content">
-        <div className="chat-details_image h-80 relative transition-opacity">
+        <div className="chat-details_image">
           <Image
             src={imageSrc}
             placeholder="blur"
             blurDataURL={person.imgBlur}
-            className="object-cover w-full h-auto"
-            sizes="280px"
-            fill
+            className="max-w-[288px]"
+            width={288}
+            height={352}
             alt={person.bio}
           />
         </div>

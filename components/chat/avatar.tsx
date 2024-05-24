@@ -15,7 +15,7 @@ const Avatar = ({
   avatarBlur,
   emotion = 'friendly',
 }: TAvatarProps) => {
-  const src = `/assets/people/${avatarKey}/${emotion}.jpg`;
+  const src = `/assets/people/${avatarKey}/emotions/${emotion}.jpg`;
 
   return (
     <div className="avatar">

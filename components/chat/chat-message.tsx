@@ -40,7 +40,7 @@ const ChatMessage = ({
 
   return (
     <div
-      className={cn('chat-message flex gap-2', {
+      className={cn('chat-message flex', {
         'role-hm': isHuman,
         'role-ai': isAi,
       })}

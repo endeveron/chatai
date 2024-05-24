@@ -16,8 +16,16 @@
 }
 
 .chat,
-.chat > * {
+.chat .topbar,
+.chat-messages,
+.chat-input {
   @apply relative;
+}
+
+.chat .topbar,
+.chat-messages,
+.chat-input {
+  @apply z-10;
 }
 
 .topbar {
@@ -93,7 +101,7 @@
 /* Chat */
 
 .chat {
-  align-items: center;
+  @apply items-center;
 }
 
 .chat-note {
@@ -130,21 +138,22 @@
 }
 
 .chat-message.role-ai .chat-message_content {
-  @apply bg-blured/10 text-card-foreground sm:mr-10;
-  backdrop-filter: blur(10px);
+  @apply bg-card/90 sm:mr-10;
+  border-top-left-radius: 0;
 }
 
 :root.dark .chat-message.role-ai .chat-message_content {
   @apply bg-blured/10;
+  backdrop-filter: blur(10px);
 }
 
 .chat-message.role-hm .chat-message_content {
-  @apply bg-gradient-to-r from-brand to-brand-secondary text-brand-foreground font-medium ml-[4.5rem];
+  @apply bg-gradient-to-r from-brand to-brand-secondary text-brand-foreground font-medium ml-14;
   border-bottom-right-radius: 0;
 }
 
 .chat-message .avatar {
-  @apply w-14 h-14 shrink-0;
+  @apply w-14 h-14 shrink-0 -translate-y-4;
 }
 
 /* Chat Input */
@@ -162,6 +171,20 @@
 
 .chat-notification {
   display: none;
+}
+
+/* Chat Background */
+
+.chat_bg-image {
+  @apply absolute inset-0 z-0;
+  background-position: center;
+  background-repeat: no-repeat;
+  transition: opacity 1s ease-in-out;
+  opacity: 0.25;
+}
+
+.chat_bg-image--accent {
+  opacity: 1;
 }
 
 /* Chat Details */
@@ -210,7 +233,6 @@
 
 .people-list_wrapper {
   @apply w-full pb-2 my-4 px-2;
-  /* max-width: 100dvw; */
   max-width: fit-content;
 }
 
@@ -387,139 +409,22 @@
   }
 
   .chat-details_image {
-    @apply text-muted opacity-85;
+    @apply h-[352px] relative transition-opacity overflow-hidden flex justify-center bg-card/50 text-muted opacity-85;
+  }
+
+  :root.light .chat-details_image {
+    opacity: 0.85;
   }
 
   :root.dark .chat-details_image {
-    opacity: 0.75;
+    opacity: 0.5;
   }
 
   .chat-details:hover .chat-details_image {
-    opacity: 100;
+    opacity: 1;
   }
-}
 
-/* Chat Background */
-
-.chat > * {
-  @apply z-20;
-}
-
-.chat_bg {
-  @apply absolute z-0 inset-0 overflow-hidden;
-}
-
-.chat_bg-blur {
-  @apply absolute z-10 inset-0;
-  backdrop-filter: blur(5px);
-}
-
-:root.light .chat_bg-blur {
-  @apply bg-gradient-to-b from-background/100 to-background/20;
-}
-
-:root.dark .chat_bg-blur {
-  @apply bg-gradient-to-b from-background/100 to-background/10;
-}
-
-.chat_bg-item {
-  position: absolute;
-  border-radius: 50%;
-  bottom: calc(var(--bar-h) * -1);
-  animation: chat-bg-animation 60s linear infinite;
-}
-
-.chat_bg-item:nth-child(odd) {
-  @apply bg-brand;
-}
-
-.chat_bg-item:nth-child(even) {
-  @apply bg-brand-secondary;
-}
-
-.chat_bg-item:nth-child(1) {
-  left: 25%;
-  width: 20px;
-  height: 20px;
-}
-
-.chat_bg-item:nth-child(2) {
-  left: 70%;
-  width: 30px;
-  height: 30px;
-  animation-delay: 2s;
-  animation-duration: 30s;
-}
-
-.chat_bg-item:nth-child(3) {
-  left: 50%;
-  width: 80px;
-  height: 80px;
-  opacity: 0.4;
-  animation-delay: 5s;
-  animation-duration: 20s;
-}
-
-.chat_bg-item:nth-child(4) {
-  left: 20%;
-  width: 20px;
-  height: 20px;
-  animation-delay: 10s;
-  animation-duration: 25s;
-}
-
-.chat_bg-item:nth-child(5) {
-  left: 65%;
-  width: 40px;
-  height: 40px;
-  animation-delay: 15s;
-}
-
-.chat_bg-item:nth-child(6) {
-  left: 15%;
-  width: 20px;
-  height: 20px;
-  opacity: 0.75;
-  animation-delay: 25s;
-}
-
-.chat_bg-item:nth-child(7) {
-  left: 35%;
-  width: 70px;
-  height: 70px;
-  opacity: 0.25;
-  animation-delay: 30s;
-}
-
-.chat_bg-item:nth-child(8) {
-  left: 50%;
-  width: 25px;
-  height: 25px;
-  animation-delay: 35s;
-  animation-duration: 35s;
-}
-
-.chat_bg-item:nth-child(9) {
-  left: 20%;
-  width: 15px;
-  height: 15px;
-  animation-delay: 40s;
-  animation-duration: 30s;
-}
-
-.chat_bg-item:nth-child(10) {
-  left: 25%;
-  width: 80px;
-  height: 80px;
-  opacity: 0.75;
-  animation-delay: 50s;
-}
-
-@keyframes chat-bg-animation {
-  0% {
-    transform: translateY(0);
-  }
-  100% {
-    transform: translateY(-100dvh);
+  :root.dark .chat-details:hover .chat-details_image {
+    opacity: 0.75;
   }
 }
