@@ -4,7 +4,6 @@ export const names = {
     'Ariana',
     'Caroline',
     'Daniela',
-    'Diana',
     'Emily',
     'Emma',
     'Elise',
