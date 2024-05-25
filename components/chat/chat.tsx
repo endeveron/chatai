@@ -90,20 +90,6 @@ const Chat = ({
     setMessages(fetchedMessages);
   }, [fetchedMessages]);
 
-  const chatBgEl = (
-    <>
-      <div className="chat_bg-blur"></div>
-      <div
-        className={cn('chat_bg-image', {
-          'chat_bg-image--accent': fetchedMessages.length === 0,
-        })}
-        style={{
-          backgroundImage: `url('/assets/people/${person.avatarKey}/chat-bg.png')`,
-        }}
-      ></div>
-    </>
-  );
-
   return (
     <section className="chat">
       <Topbar>
@@ -120,14 +106,21 @@ const Chat = ({
         isTyping={isPending}
       />
       <ChatInput onSubmit={handleInputSubmit} isPending={isPending} />
-      {chatBgEl}
-      {/* <div className="chat_bg"> */}
-      {/* <div className="chat_bg-animation">
-          {animationItems.map((_) => (
-            <div className="chat_bg-item" key={nanoid()}></div>
-          ))}
-        </div> */}
-      {/* </div> */}
+      <div
+        className={cn('chat_bg-image', {
+          'chat_bg-image--accent': fetchedMessages.length === 0,
+        })}
+      >
+        <Image
+          src={`/assets/people/${person.avatarKey}/chat-bg.png`}
+          className="fade"
+          placeholder="blur"
+          blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAMAAAC67D+PAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAAZQTFRF////AAAAVcLTfgAAAAF0Uk5TAEDm2GYAAAAOSURBVHjaYmCgJwAIMAAAbgABHA/EkAAAAABJRU5ErkJggg=="
+          width={900}
+          height={900}
+          alt="ackground image"
+        />
+      </div>
     </section>
   );
 };

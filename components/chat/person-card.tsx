@@ -37,13 +37,12 @@ const PersonCard = ({
       <div className="person-card_image relative">
         <Image
           src={imageSrc}
+          className="object-cover w-full h-auto"
           placeholder="blur"
           blurDataURL={imgBlur}
-          className="object-cover w-full h-auto"
           sizes="144px"
           fill
           alt={title}
-          // priority
         />
       </div>
       <div className="person-card_content">

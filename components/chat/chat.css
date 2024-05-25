@@ -117,6 +117,7 @@
 }
 
 .chat-message {
+  position: relative;
   margin-top: var(--gap-1-2);
   user-select: none;
 }
@@ -138,7 +139,7 @@
 }
 
 .chat-message.role-ai .chat-message_content {
-  @apply bg-card/90 sm:mr-10;
+  @apply bg-card/90 ml-11 sm:mr-10;
   border-top-left-radius: 0;
 }
 
@@ -153,7 +154,7 @@
 }
 
 .chat-message .avatar {
-  @apply w-14 h-14 shrink-0 -translate-y-4;
+  @apply absolute top-[-1px] left-0 z-10 w-14 h-14 shrink-0;
 }
 
 /* Chat Input */
@@ -176,10 +177,7 @@
 /* Chat Background */
 
 .chat_bg-image {
-  @apply absolute inset-0 z-0;
-  background-position: center;
-  background-repeat: no-repeat;
-  transition: opacity 1s ease-in-out;
+  @apply absolute inset-0 z-0 flex flex-col items-center justify-center overflow-hidden;
   opacity: 0.25;
 }
 
@@ -426,5 +424,13 @@
 
   :root.dark .chat-details:hover .chat-details_image {
     opacity: 0.75;
+  }
+
+  .chat-details_description {
+    @apply text-sm font-medium opacity-60 transition-opacity;
+  }
+
+  .chat-details:hover .chat-details_description--active {
+    opacity: 1;
   }
 }

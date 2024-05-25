@@ -22,13 +22,12 @@ const Avatar = ({
       <div className="avatar_image-wrapper text-muted h-full overflow-hidden relative rounded-full bg-muted">
         <Image
           src={src}
+          className="avatar_image object-cover aspect-square h-full w-full"
           placeholder="blur"
           blurDataURL={avatarBlur}
-          className="avatar_image object-cover aspect-square h-full w-full"
           sizes="56px"
           fill
           alt={emotion}
-          // priority
         />
       </div>
     </div>
