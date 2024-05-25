@@ -149,7 +149,7 @@
 }
 
 .chat-message.role-hm .chat-message_content {
-  @apply bg-gradient-to-r from-brand to-brand-secondary text-brand-foreground font-medium ml-14;
+  @apply bg-gradient-to-r from-brand to-brand-secondary text-brand-foreground font-medium ml-11;
   border-bottom-right-radius: 0;
 }
 

@@ -113,7 +113,7 @@ const Chat = ({
       >
         <Image
           src={`/assets/people/${person.avatarKey}/chat-bg.png`}
-          className="fade"
+          className="fade min-w-[900px]"
           placeholder="blur"
           blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAMAAAC67D+PAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAAZQTFRF////AAAAVcLTfgAAAAF0Uk5TAEDm2GYAAAAOSURBVHjaYmCgJwAIMAAAbgABHA/EkAAAAABJRU5ErkJggg=="
           width={900}
