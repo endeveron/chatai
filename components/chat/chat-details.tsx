@@ -9,12 +9,12 @@ const ChatDetails = async ({ person }: TChatDetailsProps) => {
   const imageSrc = `/assets/people/${person.avatarKey}/card.jpg`;
 
   return (
-    <div className="chat-details fade">
+    <div className="chat-details">
       <div className="chat-details_content">
         <div className="chat-details_image">
           <Image
             src={imageSrc}
-            className="max-w-[288px]"
+            className="fade max-w-[288px]"
             placeholder="blur"
             blurDataURL={person.imgBlur}
             width={288}

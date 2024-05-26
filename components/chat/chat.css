@@ -178,11 +178,11 @@
 
 .chat_bg-image {
   @apply absolute inset-0 z-0 flex flex-col items-center justify-center overflow-hidden;
-  opacity: 0.25;
+  opacity: 0.15;
 }
 
 .chat_bg-image--accent {
-  opacity: 1;
+  opacity: 0.75;
 }
 
 /* Chat Details */
