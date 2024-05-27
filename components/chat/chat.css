@@ -185,6 +185,11 @@
   opacity: 0.75;
 }
 
+.chat_bg-image img {
+  min-width: 900px;
+  animation: fade 0.5s ease-in;
+}
+
 /* Chat Details */
 
 .chat-details {
