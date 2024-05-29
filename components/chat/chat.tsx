@@ -15,8 +15,6 @@ import { MessageRole } from '@/lib/types/person.types';
 import { cn, getRandom } from '@/lib/utils';
 import Image from 'next/image';
 
-// const animationItems = new Array(10).fill(0);
-
 type TChatProps = TChatData & {
   chatId: string;
 };
@@ -91,7 +89,7 @@ const Chat = ({
   }, [fetchedMessages]);
 
   return (
-    <section className="chat">
+    <section className="chat fade">
       <Topbar>
         <TopbarHeader title={title} navPath="/">
           <ChatMenu

@@ -70,7 +70,7 @@ const NewChat = ({ userId, people }: TCreateChatProps) => {
   };
 
   return (
-    <section className="new-chat">
+    <section className="new-chat fade">
       <Topbar>
         <TopbarHeader title="New Chat" navPath=""></TopbarHeader>
       </Topbar>
