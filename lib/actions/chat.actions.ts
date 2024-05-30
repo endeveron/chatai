@@ -77,8 +77,8 @@ export const fetchChat = unstable_cache(
       await connectToDB();
 
       // Get user object id
-      const user = await fetchUserByEmail(userEmail);
-      if (!user?.success) {
+      const userRes = await fetchUserByEmail(userEmail);
+      if (!userRes?.success) {
         return handleActionError('Could not find the user', null, true);
       }
 
@@ -100,7 +100,7 @@ export const fetchChat = unstable_cache(
         return handleActionError('Could not find a chat');
       }
 
-      if (chat.user.toString() !== user.data.id) {
+      if (chat.user.toString() !== userRes.data.user.id) {
         return handleActionError(
           'User with te provided email is not allowed to fetch this chat',
           null,
@@ -161,7 +161,6 @@ export const fetchUserChats = async ({
         `Could not find a user for provided email ${userEmail}`
       );
     }
-
     const userId = user._id;
 
     // Find chats, populate person

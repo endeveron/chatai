@@ -18,7 +18,6 @@ const ChatList = async (props: TChatListProps) => {
 
   // Fetch user's chats
   const userChatsRes = await fetchUserChats({ userEmail });
-  // console.log('userChatsRes', userChatsRes);
   if (!userChatsRes?.success) {
     throw new Error(
       userChatsRes?.error.message || 'Could not fetch user chats.'
