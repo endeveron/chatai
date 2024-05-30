@@ -106,8 +106,6 @@ export const fetchUserByEmail = async (
 
     if (checkHasChats) {
       const userChats = await ChatModel.find({ user: user._id }).select('_id');
-
-      console.log('userChats', userChats);
       return {
         success: true,
         data: {
@@ -119,7 +117,9 @@ export const fetchUserByEmail = async (
 
     return {
       success: true,
-      data: user,
+      data: {
+        user,
+      },
     };
   } catch (err: any) {
     return handleActionError('Could not fetch user', err);
