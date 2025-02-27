@@ -61,6 +61,8 @@ export const sendVerificationEmail = async ({
     // Check if the user exists for the sign up case
     const user = await UserModel.findOne({ email: email });
 
+    console.log('user', user);
+
     // Signup case: check if email in use
     if (isSignup && user) {
       return handleActionError('Email already in use');
@@ -96,6 +98,7 @@ export const sendVerificationEmail = async ({
     const emailData = createVerificationEmail({ email, url: encodeURI(url) });
     // Send the email
     const messageId = await sendEmail(emailData);
+    console.log('messageId', messageId);
     if (!messageId) {
       handleActionError('An email transporter error occured', null, true);
     }

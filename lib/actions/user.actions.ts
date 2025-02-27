@@ -1,6 +1,7 @@
 'use server';
 
 import bcrypt from 'bcryptjs';
+import mongoose, { ObjectId } from 'mongoose';
 
 import UserModel from '@/lib/models/user.model';
 import { connectToDB } from '@/lib/db';
@@ -8,7 +9,6 @@ import { TCreateUserArgs } from '@/lib/types/auth.types';
 import { TOnboardUserArgs } from '@/lib/types/auth.types';
 import { TServerActionResult } from '@/lib/types/common.types';
 import { handleActionError } from '@/lib/utils/error';
-import mongoose, { ObjectId } from 'mongoose';
 import { TUser } from '@/lib/types/user.types';
 import ChatModel from '@/lib/models/chat.model';
 

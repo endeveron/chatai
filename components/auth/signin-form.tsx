@@ -111,7 +111,7 @@ const SignInForm = (props: TSignInFormProps) => {
         >
           Sign In
         </Button>
-        <SocialButtons />
+        {/* <SocialButtons /> */}
         <div className="flex justify-center">
           <Link href="/sign-up" className="auth-form_link">
             Create an account
