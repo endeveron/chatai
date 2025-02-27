@@ -15,7 +15,7 @@ export const metadata: Metadata = {
     type: 'website',
     images: [
       {
-        url: 'https://chatai-sigma-three.vercel.app/assets/icons/icon-512.svg',
+        url: 'https://chatai-sigma-three.vercel.app/icon.svg',
         width: 512,
         height: 512,
       },
@@ -23,12 +23,8 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: {
-      url: '/assets/icons/icon.svg',
+      url: '/icon.svg',
       type: 'image/svg+xml',
-    },
-    shortcut: {
-      url: '/assets/icons/favicon.ico',
-      type: 'image/ico',
     },
   },
 };
